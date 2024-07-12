@@ -42,9 +42,6 @@
     options = [ "fmask=0022" "dmask=0022" ];
   };
 
-  # Encryption
-  boot.initrd.luks.devices."luks-ca6794a7-62b3-4f12-bb03-d58f54c3c8d8".device = "/dev/disk/by-uuid/ca6794a7-62b3-4f12-bb03-d58f54c3c8d8";
-
   swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
