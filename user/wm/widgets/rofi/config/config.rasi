@@ -1,0 +1,21 @@
+// base: #232136;
+// surface: #2a273f;
+// text: #e0def4;
+// muted: #6e6a86;
+// foam: #9ccfd8;
+// pine: #3e8fb0;
+// rose: #ea9a97;
+// iris: #c4a7e7;
+// love: #eb6f92;
+// gold: #f6c177;
+
+* {
+    background:     rgba(35, 33, 54, 0.8);
+    background-alt: #2a273f;
+    foreground:     #e0def4;
+    selected:       #eb6f92;
+    active:         #c4a7e7;
+    urgent:         #f6c177;
+
+    font: "JetBrainsMono NF 14";
+}
