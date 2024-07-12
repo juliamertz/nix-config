@@ -13,6 +13,14 @@
     ../../user/development/rust.nix
   ];
 
+
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/julia/nix";
+  };
+
   users.users.julia = {
     isNormalUser = true;
     description = "Julia Mertz";
@@ -47,6 +55,7 @@
     fzf
     alsa-lib
     wezterm
+    lazygit
     kitty
     tmux
     ripgrep

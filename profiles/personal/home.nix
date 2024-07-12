@@ -17,6 +17,8 @@ in
     ../../user/app/browser/firefox.nix
     ../../user/wm/awesome/home.nix
     ../../user/wm/picom/picom.nix
+    ../../user/app/terminal/wezterm/home.nix
+    ../../user/app/nh.nix
   ];
 
   home.packages = [
