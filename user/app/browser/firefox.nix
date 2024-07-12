@@ -1,69 +1,105 @@
-{ pkgs, userSettings, ... }:
-{
-  home.packages = [ pkgs.firefox ];
+{ pkgs, inputs, settings, ... }:
+let
+  user = settings.user.username;
+in {
+  programs.firefox = {
+    enable = true;
+    profiles.${user} = {
 
-  programs.firefox.enable = true;
+      search.engines = {
+        "Nix Packages" = {
+          urls = [{
+            template = "https://search.nixos.org/packages";
+            params = [
+              { name = "type"; value = "packages"; }
+              { name = "query"; value = "{searchTerms}"; }
+            ];
+          }];
 
-  # home.file.".mozilla/defaults/pref/user.js".text /* javascript */ = ''
-  #   /* Personal preferences  */
-  #   user_pref("full-screen-api.warning.timeout", 0);
-  #   user_pref("full-screen-api.warning.delay", 0);
-  #   // This allows tabs to go fullscreen while the browser stays in windowed mode
-  #   user_pref("full-screen-api.ignore-widgets", true);
-  #   // user_pref("security.fileuri.strict_origin_policy", false);
-  #   user_pref("browser.urlbar.trimURLs", false);
-  #   user_pref("browser.aboutConfig.showWarning", false);
-  #   user_pref("browser.download.dir", "/home/joris/downloads");
-  #   user_pref("browser.translations.automaticallyPopup", false);
-  #   user_pref("accessibility.typeaheadfind", true);
-  #   user_pref("browser.startup.page", 0);
-  #   user_pref("browser.startup.homepage", "about:blank");
-  #   user_pref("browser.newtabpage.enabled", false);
-  #
-  #   /* Browser hardening */
-  #   user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", false);
-  #   user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
-  #   user_pref("privacy.fingerprintingProtection", true);
-  #   user_pref("browser.formfill.enable", false);
-  #   user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
-  #   user_pref("browser.newtabpage.activity-stream.showSponsored", false);
-  #   user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
-  #   user_pref("browser.newtabpage.activity-stream.default.sites", "");
-  #   user_pref("geo.provider.ms-windows-location", false);
-  #   user_pref("geo.provider.use_corelocation", false);
-  #   user_pref("geo.provider.use_gpsd", false);
-  #   user_pref("geo.provider.use_geoclue", false);
-  #   user_pref("extensions.getAddons.showPane", false);
-  #   user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
-  #   user_pref("browser.discovery.enabled", false);
-  #   user_pref("browser.shopping.experience2023.enabled", false);
-  #   user_pref("datareporting.policy.dataSubmissionEnabled", false);
-  #   user_pref("datareporting.healthreport.uploadEnabled", false);
-  #   user_pref("toolkit.telemetry.unified", false);
-  #   user_pref("toolkit.telemetry.enabled", false);
-  #   user_pref("toolkit.telemetry.server", "data:,");
-  #   user_pref("toolkit.telemetry.archive.enabled", false);
-  #   user_pref("toolkit.telemetry.newProfilePing.enabled", false);
-  #   user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
-  #   user_pref("toolkit.telemetry.updatePing.enabled", false);
-  #   user_pref("toolkit.telemetry.bhrPing.enabled", false);
-  #   user_pref("toolkit.telemetry.firstShutdownPing.enabled", false);
-  #   user_pref("toolkit.telemetry.coverage.opt-out", true);
-  #   user_pref("toolkit.coverage.opt-out", true);
-  #   user_pref("toolkit.coverage.endpoint.base", "");
-  #   user_pref("browser.ping-centre.telemetry", false);
-  #   user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
-  #   user_pref("browser.newtabpage.activity-stream.telemetry", false);
-  #   user_pref("app.shield.optoutstudies.enabled", false);
-  #   user_pref("app.normandy.enabled", false);
-  #   user_pref("app.normandy.api_url", "");
-  #   user_pref("network.proxy.socks_remote_dns", true);
-  #   user_pref("network.file.disable_unc_paths", true);
-  #   user_pref("network.gio.supported-protocols", "");
-  #   user_pref("signon.autofillForms", false);
-  #   user_pref("signon.formlessCapture.enabled", false);
-  #   user_pref("network.auth.subresource-http-auth-allow", 1);
-  #   user_pref("security.ssl.require_safe_negotiation", true);
-  #   user_pref("security.tls.enable_0rtt_data", false);
-  # '';
+          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          definedAliases = [ "@np" ];
+        };
+      };
+      search.force = true;
+
+      bookmarks = [
+        {
+          name = "wikipedia";
+          tags = [ "wiki" ];
+          keyword = "wiki";
+          url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
+        }
+      ];
+
+      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+        bitwarden
+        ublock-origin
+        sponsorblock
+        darkreader
+      ];
+
+      settings = {
+        "full-screen-api.warning.timeout" = 0;
+        "full-screen-api.warning.delay" = 0;
+        "full-screen-api.ignore-widgets" = true;
+        "browser.urlbar.trimURLs" = false;
+        "browser.aboutConfig.showWarning" = false;
+        "browser.download.dir" = "/home/joris/downloads";
+        "browser.translations.automaticallyPopup" = false;
+        "accessibility.typeaheadfind" = true;
+        "browser.startup.page" = 0;
+        "browser.startup.homepage" = "about:blank";
+        "browser.newtabpage.enabled" = false;
+        "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
+        "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+        "privacy.fingerprintingProtection" = true;
+        "browser.formfill.enable" = false;
+        "browser.privatebrowsing.forceMediaMemoryCache" = true;
+        "browser.newtabpage.activity-stream.showSponsored" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.newtabpage.activity-stream.default.sites" = "";
+        "geo.provider.ms-windows-location" = false;
+        "geo.provider.use_corelocation" = false;
+        "geo.provider.use_gpsd" = false;
+        "geo.provider.use_geoclue" = false;
+        "extensions.getAddons.showPane" = false;
+        "extensions.htmlaboutaddons.recommendations.enabled" = false;
+        "browser.discovery.enabled" = false;
+        "browser.shopping.experience2023.enabled" = false;
+        "datareporting.policy.dataSubmissionEnabled" = false;
+        "datareporting.healthreport.uploadEnabled" = false;
+        "toolkit.telemetry.unified" = false;
+        "toolkit.telemetry.enabled" = false;
+        "toolkit.telemetry.server" = "data:,";
+        "toolkit.telemetry.archive.enabled" = false;
+        "toolkit.telemetry.newProfilePing.enabled" = false;
+        "toolkit.telemetry.shutdownPingSender.enabled" = false;
+        "toolkit.telemetry.updatePing.enabled" = false;
+        "toolkit.telemetry.bhrPing.enabled" = false;
+        "toolkit.telemetry.firstShutdownPing.enabled" = false;
+        "toolkit.telemetry.coverage.opt-out" = true;
+        "toolkit.coverage.opt-out" = true;
+        "toolkit.coverage.endpoint.base" = "";
+        "browser.ping-centre.telemetry" = false;
+        "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+        "browser.newtabpage.activity-stream.telemetry" = false;
+        "app.shield.optoutstudies.enabled" = false;
+        "app.normandy.enabled" = false;
+        "app.normandy.api_url" = "";
+        "network.proxy.socks_remote_dns" = true;
+        "network.file.disable_unc_paths" = true;
+        "network.gio.supported-protocols" = "";
+        "signon.autofillForms" = false;
+        "signon.formlessCapture.enabled" = false;
+        "network.auth.subresource-http-auth-allow" = 1;
+        "security.ssl.require_safe_negotiation" = true;
+        "security.tls.enable_0rtt_data" = false;
+        "dom.security.https_only_mode" = true;
+        "browser.download.panel.shown" = true;
+        "identity.fxaccounts.enabled" = false;
+        "signon.rememberSignons" = false;
+      };
+    };
+  };
 }
+

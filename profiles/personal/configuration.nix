@@ -1,9 +1,10 @@
-{ config, pkgs, inputs, ... }:
-
-{
+{ config, pkgs, inputs, settings, ... }:
+let 
+  user = settings.user.username;
+in {
   imports = [
     ../../hardware/workstation.nix
-    ../../user/app/games/sunshine.nix
+    # ../../user/app/games/sunshine.nix
     ../../user/app/games/launchers.nix
     ../../user/app/input/keyd.nix
     ../../user/app/vm.nix
@@ -13,22 +14,21 @@
     ../../user/development/rust.nix
   ];
 
-
   programs.nh = {
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/julia/nix";
+    flake = "/home/${user}/nix";
   };
 
-  users.users.julia = {
+  users.users.${user} = {
     isNormalUser = true;
     description = "Julia Mertz";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     packages = with pkgs; [];
   };
 
-  services.getty.autologinUser = "julia";
+  services.getty.autologinUser = user;
 
   programs.neovim = {
     enable = true;
