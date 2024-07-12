@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     suyu = {
@@ -30,6 +30,8 @@
 
       systemSettings = {
         platform = "x86_64-linux";
+        timeZone = "Europe/Amsterdam";
+        defaultLocale = "en_US.UTF-8";
       };
 
       lib = nixpkgs.lib;
@@ -44,6 +46,8 @@
           inherit settings;
         };
         modules = [
+          ./hardware/generated.nix
+          ./hardware/workstation.nix
           ./profiles/base.nix
           ./profiles/personal/configuration.nix
         ];

@@ -16,10 +16,12 @@ in
   programs.home-manager.enable = true;
 
   imports = [
+    ../../user/app/tools/lazygit.nix
     ../../user/app/browser/firefox.nix
     ../../user/wm/awesome/home.nix
     ../../user/wm/picom/picom.nix
     ../../user/app/terminal/wezterm/home.nix
+    ../../user/app/shell/fish.nix
   ];
 
   home.packages = [
@@ -35,11 +37,6 @@ in
 
   home.sessionVariables = {
     EDITOR = "nvim";
-  };
-
-  programs.fish = {
-    inherit shellAliases;
-    enable = true;
   };
 
   home.stateVersion = "24.05";
