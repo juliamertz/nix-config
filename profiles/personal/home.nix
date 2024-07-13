@@ -22,8 +22,13 @@ in
     ../../user/wm/picom/picom.nix
     ../../user/app/terminal/wezterm/home.nix
     ../../user/app/shell/fish.nix
+    ../../user/app/shell/bash.nix
     ../../user/app/editor/nvim/home.nix
+    ../../user/app/terminal/tmux.nix
+    ../../user/app/affinity/home.nix
   ];
+
+  affinity.prefix = "/home/${user}/affinity/prefix";
 
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })

@@ -3,6 +3,7 @@ let
   user = settings.user.username;
 in {
   imports = [
+    # ../../user/themes/rose-pine/moon.nix
     ../../system/apps/sunshine.nix
     ../../system/apps/games.nix
     ../../system/apps/virtmanager.nix
@@ -11,12 +12,17 @@ in {
     ../../user/wm/awesome/configuration.nix
     ../../user/sops.nix
     ../../user/development/rust.nix
-    ../../user/app/shell/bash.nix
     ../../system/io/bluetooth.nix
     ../../system/io/pipewire.nix
   ];
 
   users.defaultUserShell = pkgs.bash;
+
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  stylix.image = "${config.xdg.configHome}/background";
+  stylix.enable = true;
+
+  programs.thunar.enable = true;
 
   networking.hostName = "workstation"; 
   users.users.${user} = {
@@ -27,11 +33,7 @@ in {
   };
 
 
-
   environment.systemPackages = with pkgs; [
-    wget
-    wezterm
-    tmux
     neofetch
     discord
     pavucontrol

@@ -9,6 +9,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,10 +31,12 @@
     let 
       userSettings = {
         username = "julia";
+        shell = "fish";
       };
 
       systemSettings = {
         editor = "nvim";
+        term = "xterm-256color";
         platform = "x86_64-linux";
         timeZone = "Europe/Amsterdam";
         defaultLocale = "en_US.UTF-8";
@@ -52,6 +58,7 @@
           ./hardware/workstation.nix
           ./profiles/base.nix
           ./profiles/personal/configuration.nix
+          inputs.stylix.nixosModules.stylix
         ];
       };
     };
