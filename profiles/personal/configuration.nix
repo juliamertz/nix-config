@@ -16,6 +16,8 @@ in {
     ../../system/io/pipewire.nix
   ];
 
+  users.defaultUserShell = pkgs.bash;
+
   networking.hostName = "workstation"; 
   users.users.${user} = {
     isNormalUser = true;
@@ -24,15 +26,7 @@ in {
     packages = with pkgs; [];
   };
 
-  services.getty.autologinUser = user;
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
-  };
-
-  users.defaultUserShell = pkgs.bash;
 
   environment.systemPackages = with pkgs; [
     wget

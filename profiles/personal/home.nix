@@ -22,6 +22,7 @@ in
     ../../user/wm/picom/picom.nix
     ../../user/app/terminal/wezterm/home.nix
     ../../user/app/shell/fish.nix
+    ../../user/app/editor/nvim/home.nix
   ];
 
   home.packages = [
