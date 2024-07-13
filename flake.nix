@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -29,6 +30,7 @@
       };
 
       systemSettings = {
+        editor = "nvim";
         platform = "x86_64-linux";
         timeZone = "Europe/Amsterdam";
         defaultLocale = "en_US.UTF-8";

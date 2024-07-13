@@ -1,15 +1,16 @@
-{ config, pkgs, inputs, ... }: {
-  environment.systemPackages = [
-    pkgs.sunshine
-  ];
-
-  services.udev.packages = [ pkgs.sunshine ];
+{ config, inputs, settings, ... }:
+let 
+  platform = settings.system.platform; 
+  pkg = inputs.nixpkgs-24_05.legacyPackages.${platform}.sunshine;
+in {
+  environment.systemPackages = [ pkg ];
+  services.udev.packages = [ pkg ];
 
   security.wrappers.sunshine = {
     owner = "root";
     group = "root";
     capabilities = "cap_sys_admin+p";
-    source = "${pkgs.sunshine}/bin/sunshine";
+    source = "${pkg}/bin/sunshine";
   };
 
   networking.firewall = {

@@ -1,6 +1,5 @@
 { lib, pkgs, ... }:
 {
-  home.packages = [ pkgs.fish ]; 
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -10,4 +9,11 @@
       echo hello world
     '';
   };
+
+  home.packages = with pkgs; [ 
+    bat
+    fzf
+    jq
+    ripgrep
+  ]; 
 }

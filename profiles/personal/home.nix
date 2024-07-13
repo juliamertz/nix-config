@@ -36,7 +36,7 @@ in
   ];
 
   home.sessionVariables = {
-    EDITOR = "nvim";
+    EDITOR = settings.system.editor; 
   };
 
   home.stateVersion = "24.05";

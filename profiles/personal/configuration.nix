@@ -3,17 +3,17 @@ let
   user = settings.user.username;
 in {
   imports = [
-    # ../../user/app/games/sunshine.nix
-    ../../user/app/games/launchers.nix
-    ../../user/app/io/keyd.nix
-    ../../user/app/vm.nix
+    ../../system/apps/sunshine.nix
+    ../../system/apps/games.nix
+    ../../system/apps/virtmanager.nix
+    ../../system/apps/zerotier.nix
+    ../../system/io/keyd.nix
     ../../user/wm/awesome/configuration.nix
-    ../../user/networks.nix
     ../../user/sops.nix
     ../../user/development/rust.nix
     ../../user/app/shell/bash.nix
-    ../../user/app/io/bluetooth.nix
-    ../../user/app/io/audio/pipewire.nix
+    ../../system/io/bluetooth.nix
+    ../../system/io/pipewire.nix
   ];
 
   networking.hostName = "workstation"; 
@@ -35,16 +35,11 @@ in {
   users.defaultUserShell = pkgs.bash;
 
   environment.systemPackages = with pkgs; [
-    bat
     wget
-    fzf
     wezterm
     tmux
-    ripgrep
-    jq
     neofetch
     discord
-    delta
     pavucontrol
     sops
     # inputs.suyu.packages.x86_64-linux.suyu

@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 {
-  home.packages = [ pkgs.lazygit ];
+  home.packages = with pkgs; [ lazygit delta ];
 
   home.file."${config.xdg.configHome}/lazygit/config.yml".text = /* yaml */''
     gui:
