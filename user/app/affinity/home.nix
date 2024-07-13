@@ -26,6 +26,7 @@ in {
 
   options.affinity = {
     prefix = lib.mkOption { type = lib.types.str; default = ""; };
+    setup_prefix = lib.mkOption { type = lib.types.bool; default = true; };
   };
 
   config = {

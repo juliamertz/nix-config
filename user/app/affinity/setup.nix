@@ -3,7 +3,7 @@ let
   cfg = config.affinity;
   script = /* bash */ ''
     #!/usr/bin/env bash
-    # https://codeberg.org/Wanesty/affinity-wine-docs
+    # https://github.com/lf-/affinity-crimes/blob/main/setup.sh
     set -eu
 
     winepath="${pkgs.wineElementalWarrior}"
@@ -25,5 +25,8 @@ let
 
   binary = (pkgs.writeShellScriptBin "setup" script);
 in {
-  home.activation.setup-affinity-wine = lib.hm.dag.entryAfter [ "writeBoundary" ] ''${binary}/bin/setup'';
+  home.activation.setup-affinity-wine = 
+    # FIX: This doesn't work yet, pathExists will always return false for some reason.
+    if builtins.pathExists config.affinity.prefix
+    then "" else lib.hm.dag.entryAfter [ "writeBoundary" ]''${binary}/bin/setup'';
 }

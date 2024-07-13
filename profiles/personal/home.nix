@@ -28,7 +28,10 @@ in
     ../../user/app/affinity/home.nix
   ];
 
-  affinity.prefix = "/home/${user}/affinity/prefix";
+  affinity = {
+    prefix = "/home/${user}/affinity/prefix";
+    setup_prefix = false; # Only enable for fresh/unconfigured prefix
+  };
 
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
