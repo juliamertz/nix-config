@@ -7,8 +7,8 @@
     ../../system/io/keyd.nix # Key remapping daemon
     ../../user/wm/awesome/configuration.nix # Window manager
     ../../user/sops.nix # Secrets management
-    ../../user/development/rust.nix #Rust toolchain
-    ../../system/io/bluetooth.nix #Bluetooth setup
+    ../../system/lang/rust.nix # Rust toolchain
+    ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../gaming/configuration.nix # Games & related apps
   ];
