@@ -11,19 +11,16 @@
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../gaming/configuration.nix # Games & related apps
-    # inputs.stylix.nixosModules.stylix
+    ../../user/themes/rose-pine/configuration.nix # Theme
+    ../../system/display-manager/sddm.nix
+    inputs.stylix.nixosModules.stylix
   ];
 
+  rose-pine.variant = "moon";
   users.defaultUserShell = pkgs.bash;
 
-  # stylix.image = "${config.xdg.configHome}/background";
-  # stylix.enable = true;
-  # stylix.polarity = "dark";
-  # environment.sessionVariables = {
-  #   QT_QPA_PLATFORMTHEME="qt6ct";
-  # };
-
   boot.supportedFilesystems = [ "ntfs" ];
+  nixpkgs.config.allowUnfree = true;
   programs.thunar.enable = true;
 
   environment.systemPackages = with pkgs; [

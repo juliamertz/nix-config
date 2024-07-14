@@ -8,9 +8,4 @@
     enable = true;
     luaModules = with pkgs.luaPackages; [ luarocks ];
   };
-
-  services.displayManager = {
-    sddm.enable = true;
-    defaultSession = "none+awesome";
-  };
 }

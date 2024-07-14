@@ -163,3 +163,5 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 screen.connect_signal("property::geometry", style.wallpaper.init)
+
+awful.spawn.with_shell("~/.config/awesome/autorun.sh")

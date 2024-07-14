@@ -21,8 +21,12 @@ in
     ../../user/app/terminal/tmux.nix
     ../../user/app/affinity/home.nix
     ../../user/app/jellyfin.nix
+    ../../user/app/spotify.nix
     ../../user/app/tools/neofetch.nix
+    ../../user/themes/rose-pine/home.nix # Theme
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   affinity = {
     prefix = "/home/${user}/affinity/prefix";

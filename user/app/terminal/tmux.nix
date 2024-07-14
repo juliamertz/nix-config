@@ -110,4 +110,33 @@
     bind -T copy-mode-vi y send -X copy-selection-and-cancel
     bind -T copy-mode-vi Escape send -X clear-selection
   '';
+
+  home.file.".config/tmux/scripts/sessionizer".text = /* bash */''
+    #!/usr/bin/env bash
+
+    if [[ $# -eq 1 ]]; then
+        selected=$1
+    else
+        selected=$(find ~/projects/2023 ~/projects/2024 ~/.config -mindepth 1 -maxdepth 1 -type d | fzf)
+    fi
+
+    if [[ -z $selected ]]; then
+        exit 0
+    fi
+    selected_name=$(basename "$selected" | tr . _)
+    tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+        tmux new-session -s $selected_name -c $selected
+        exit 0
+    fi
+
+    if ! tmux has-session -t=$selected_name 2> /dev/null; then
+        tmux new-session -ds $selected_name -c $selected; send ls Enter
+    fi
+
+    ~/.config/scripts/tmux/dev-env
+
+    tmux switch-client -t $selected_name
+  '';
 }

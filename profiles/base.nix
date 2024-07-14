@@ -7,7 +7,6 @@ in {
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
 
   networking.hostName = settings.system.hostname; 
   networking.firewall.enable = true;
