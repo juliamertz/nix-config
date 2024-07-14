@@ -54,7 +54,6 @@
           ./hardware/workstation.nix
           ./profiles/base.nix
           ./profiles/personal/configuration.nix
-          inputs.stylix.nixosModules.stylix
         ];
       };
     };

@@ -10,6 +10,7 @@ in
 
   imports = [
     ../../user/app/tools/lazygit.nix
+    ../../user/themes/rose-pine.nix # Theme
     ../../user/app/browser/firefox.nix
     ../../user/wm/awesome/home.nix
     ../../user/wm/picom/picom.nix
