@@ -8,6 +8,7 @@
     ../../user/wm/awesome/configuration.nix # Window manager
     ../../user/sops.nix # Secrets management
     ../../system/lang/rust.nix # Rust toolchain
+    ../../system/lang/go.nix # Rust toolchain
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../gaming/configuration.nix # Games & related apps

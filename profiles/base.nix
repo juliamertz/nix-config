@@ -19,7 +19,6 @@ in {
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
   };
 
-
   time.timeZone = settings.system.timeZone;
   i18n.defaultLocale = settings.system.defaultLocale;
   i18n.extraLocaleSettings = {
