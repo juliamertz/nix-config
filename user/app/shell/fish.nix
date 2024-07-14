@@ -4,6 +4,8 @@
     enable = true;
     shellAliases = {
       lg = "lazygit";
+      sctl = "sudo systemctl";
+      spt = "spotify_player";
     };
     shellInit = ''
       echo hello world

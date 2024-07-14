@@ -1,7 +1,11 @@
 { pkgs, inputs, ... }:
-{
+let 
+  isponsorblocktv = pkgs.callPackage ../../pkgs/isponsorblocktv.nix { };
+
+in {
   imports = [
     ../../system/apps/virtmanager.nix # Virtual machines
+    ../../system/apps/protonvpn.nix # Virtual machines
     ../../system/apps/zerotier.nix # Vpn tunnel
     ../../system/io/keyd.nix # Key remapping daemon
     ../../user/wm/awesome/configuration.nix # Window manager
@@ -13,6 +17,7 @@
     ../gaming/configuration.nix # Games & related apps
     ../../user/themes/rose-pine/configuration.nix # Theme
     ../../system/display-manager/sddm.nix
+    ../../system/apps/sponsorblock-atv.nix
     inputs.stylix.nixosModules.stylix
   ];
 
@@ -23,7 +28,8 @@
   nixpkgs.config.allowUnfree = true;
   programs.thunar.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    sops
+  environment.systemPackages = [
+    pkgs.sops
+    isponsorblocktv
   ];
 }
