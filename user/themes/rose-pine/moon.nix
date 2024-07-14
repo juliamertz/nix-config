@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ ... }:
 {
   stylix.base16Scheme = {
     base00 = "232136";
@@ -18,6 +18,4 @@
     base0E = "f6c177";
     base0F = "56526e";
   };
-
-  stylix.image = "${config.xdg.configHome}/background";
 }

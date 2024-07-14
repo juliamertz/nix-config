@@ -15,6 +15,7 @@ local opts = {
     rust = { "rustfmt" },
     handlebars = { "prettier" },
     sql = { "sql-formatter" },
+    nix = { "nixpkgs-fmt" },
     -- toml = { "taplo" },
   },
   formatters = {

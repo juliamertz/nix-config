@@ -12,7 +12,7 @@ in {
   sops.age.keyFile = "/home/julia/.config/sops/age/keys.txt";
 
   sops.secrets.zerotier_network_id = { };
-  sops.secrets."zerotier_network_id" = {
-    owner = "julia";
-  };
+  sops.secrets."zerotier_network_id" = { owner = "julia"; };
+  sops.secrets.zerotier_api_key = { };
+  sops.secrets."zerotier_api_key" = { owner = "julia"; };
 }

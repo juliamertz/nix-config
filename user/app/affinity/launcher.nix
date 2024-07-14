@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 let 
   cfg = config.affinity;
-  run_script = /*bash*/''
+  script = /*bash*/''
+    # https://github.com/lf-/affinity-crimes/blob/main/affinity.sh
     winepath="${pkgs.wineElementalWarrior}"
     (return 0 2>/dev/null) && sourced=1 || sourced=0
 
@@ -15,9 +16,8 @@ let
 
     if [[ $sourced == 0 ]]; then exec "$@"; fi
   '';
-  binary = (pkgs.writeShellScriptBin "affinity" run_script);
 in {
   nixpkgs.config.packageOverrides = pkgs: {
-    affinity = binary;
+    affinity = (pkgs.writeShellScriptBin "affinity" script);
   };
 }

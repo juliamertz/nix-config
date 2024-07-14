@@ -1,6 +1,4 @@
-# Required options
-# prefix: path to affinity wine prefix containing all affinity software
-{ pkgs, config, lib, settings, ... }:
+{ pkgs, config, lib, ... }:
 let
   cfg = config.affinity;
   bin = pkgs.writeShellScriptBin;
@@ -19,9 +17,9 @@ let
   };
 in {
   imports = [
-    ./wine.nix
+    ./wine.nix # ElementalWarrior wine build
     ./launcher.nix # Provides pkgs.affinity
-    ./setup.nix
+    ./setup.nix # Installation step to create wine prefix
   ];
 
   options.affinity = {

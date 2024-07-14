@@ -1,13 +1,6 @@
-{ config, pkgs, options, settings, ... }:
+{ pkgs, settings, ... }:
 let 
   user = settings.user.username;
-  shellAliases = {
-    cat = "bat -pp";
-    lg = "lazygit";
-    sctl = "sudo systemctl";
-    vpn = "protonvpn-cli";
-    spt = "spotify_player";
-  };
 in
 {
   home.username = user;
@@ -26,6 +19,8 @@ in
     ../../user/app/editor/nvim/home.nix
     ../../user/app/terminal/tmux.nix
     ../../user/app/affinity/home.nix
+    ../../user/app/jellyfin.nix
+    ../../user/app/tools/neofetch.nix
   ];
 
   affinity = {
@@ -35,13 +30,6 @@ in
 
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
 
   home.sessionVariables = {

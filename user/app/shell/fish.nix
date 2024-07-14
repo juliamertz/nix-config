@@ -14,6 +14,7 @@
     bat
     fzf
     jq
+    yq
     ripgrep
   ]; 
 }

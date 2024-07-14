@@ -1,5 +1,5 @@
-{ config, inputs, settings, ... }:
-let 
+{ inputs, settings, ... }:
+let
   platform = settings.system.platform; 
   pkg = inputs.nixpkgs-24_05.legacyPackages.${platform}.sunshine;
 in {
@@ -24,4 +24,4 @@ in {
   services.avahi.enable = true;
   services.avahi.publish.enable = true;
   services.avahi.publish.userServices = true;
-                               }
+}

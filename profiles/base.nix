@@ -2,10 +2,23 @@
 let 
   user = settings.user.username;
 in {
+  imports = [
+    ../system/apps/ssh.nix
+  ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
+  networking.hostName = settings.system.hostname; 
+  networking.firewall.enable = true;
   networking.networkmanager.enable = true;
+
+  users.users.${user} = {
+    isNormalUser = true;
+    description = settings.user.fullName;
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+  };
+
 
   time.timeZone = settings.system.timeZone;
   i18n.defaultLocale = settings.system.defaultLocale;
@@ -23,7 +36,6 @@ in {
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "ntfs" ];
 
   programs.nh = {
     enable = true;
@@ -32,21 +44,12 @@ in {
     flake = "/home/${user}/nix";
   };
 
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  services.openssh.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedUDPPorts = [ 22 ];
-  networking.firewall.enable = true;
-
   environment.systemPackages = with pkgs; [
     openssl
     curl
     git
     tldr
   ];
+
+  system.stateVersion = "24.05";
 }
