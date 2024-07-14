@@ -55,7 +55,7 @@
       settings = { user = userSettings; system = systemSettings; };
     in {
     nixosConfigurations = {
-      workstation = lib.nixosSystem {
+      ${settings.system.hostname} = lib.nixosSystem {
         system = systemSettings.platform;
         specialArgs = { 
           inherit inputs;
@@ -64,8 +64,6 @@
         modules = [
           ./hardware-configuration.nix
           ./profiles/base.nix
-          # ./profiles/personal/configuration.nix
-          # ./hardware/workstation.nix
           (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
           (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
         ];
