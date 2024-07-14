@@ -32,6 +32,7 @@
       userSettings = {
         username = "julia";
         fullName = "Julia Mertz";
+        email = "info@juliamertz.dev";
         shell = "fish";
         browser = "firefox";
         terminal = "wezterm";

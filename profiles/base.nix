@@ -45,7 +45,6 @@ in {
   environment.systemPackages = with pkgs; [
     openssl
     curl
-    git
     tldr
   ];
 

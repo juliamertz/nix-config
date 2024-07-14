@@ -4,5 +4,6 @@
   services.home-assistant = {
     enable = true;    
     configDir = /home/${settings.user.username}/home-assistant;
+    config = { };
   }; 
 }
