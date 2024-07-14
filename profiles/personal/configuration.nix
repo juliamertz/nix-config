@@ -1,8 +1,5 @@
 { pkgs, inputs, ... }:
-let 
-  isponsorblocktv = pkgs.callPackage ../../pkgs/isponsorblocktv.nix { };
-
-in {
+{
   imports = [
     ../../system/apps/virtmanager.nix # Virtual machines
     ../../system/apps/protonvpn.nix # Virtual machines
@@ -30,6 +27,5 @@ in {
 
   environment.systemPackages = [
     pkgs.sops
-    isponsorblocktv
   ];
 }

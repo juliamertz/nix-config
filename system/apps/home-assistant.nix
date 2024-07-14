@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, settings, ... }:
 let 
   cfg = config.home-assistant;
   toStr = builtins.toString;
@@ -8,9 +8,19 @@ in {
   ];
 
   options = {
-    home-assistant.port = lib.mkOption {
-      type = lib.types.number;
-      default = 8123;
+    home-assistant = {
+      tag = lib.mkOption {
+        type = lib.types.str;
+        default = "latest"; # stable / latest / beta
+      };
+      port = lib.mkOption {
+        type = lib.types.number;
+        default = 8123;
+      };
+      configPath = lib.mkOption {
+        type = lib.types.str;
+        default = "/home/${config.user.username}/home-assistant";
+      };
     };
   };
   config = {
@@ -19,11 +29,11 @@ in {
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {
       home-assistant = {
-        image = "docker.io/homeassistant/home-assistant:latest";
+        image = "docker.io/homeassistant/home-assistant:${cfg.tag}";
         autoStart = true;
         ports = [ "${toStr cfg.port}:${toStr cfg.port}" ];
         volumes = [
-          "/home/julia/home-assistant:/config"
+          "${cfg.configPath}:/config"
           "/etc/localtime:/etc/localtime:ro"
         ];
         extraOptions = [
@@ -34,7 +44,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d /home/julia/home-assistant 0755 root root"
+      "d ${cfg.configPath} 0755 root root"
     ];
   };
 }
