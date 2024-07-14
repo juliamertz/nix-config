@@ -36,6 +36,7 @@
         shell = "fish";
         browser = "firefox";
         terminal = "wezterm";
+        editor = "nvim";
         windowManager = "awesome";
       };
 
@@ -44,7 +45,6 @@
         hostname = "workstation";
         hardware =  systemSettings.hostname;
 
-        editor = "nvim";
         term = "xterm-256color";
         platform = "x86_64-linux";
         timeZone = "Europe/Amsterdam";

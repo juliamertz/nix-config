@@ -9,7 +9,6 @@ in
   programs.home-manager.enable = true;
 
   imports = [
-    ../../user/app/tools/lazygit.nix
     ../../user/app/browser/firefox.nix
     ../../user/wm/awesome/home.nix
     ../../user/wm/picom/picom.nix
@@ -22,6 +21,7 @@ in
     ../../user/app/jellyfin.nix
     ../../user/app/spotify.nix
     ../../user/app/tools/neofetch.nix
+    ../../user/app/tools/lazygit.nix
     ../../user/app/git.nix
     ../../user/themes/rose-pine/home.nix # Theme
   ];
@@ -38,7 +38,7 @@ in
   ];
 
   home.sessionVariables = {
-    EDITOR = settings.system.editor; 
+    EDITOR = settings.user.editor; 
   };
 
   home.stateVersion = "24.05";

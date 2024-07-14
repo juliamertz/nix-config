@@ -16,12 +16,13 @@ in
     ../../user/app/terminal/tmux.nix
     # ../../user/app/jellyfin.nix
     ../../user/app/tools/neofetch.nix
+    ../../user/app/git.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   home.sessionVariables = {
-    EDITOR = settings.system.editor; 
+    EDITOR = settings.user.editor; 
   };
 
   home.stateVersion = "24.05";
