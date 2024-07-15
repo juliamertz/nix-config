@@ -5,12 +5,12 @@
   home.activation.tmuxPluginManager = lib.hm.dag.entryAfter [ "writeBoundary" ] /* sh */ ''
       TARGET_DIR=${config.xdg.configHome}/tmux/plugins/tpm
       REPO=https://github.com/tmux-plugins/tpm
-
+      
       if [ ! -e "$TARGET_DIR" ]; then
         mkdir -p $TARGET_DIR;
         ${pkgs.git}/bin/git clone --depth=1 --single-branch $REPO $TARGET_DIR;
-        nix-shell -p tmux git --run "$TARGET_DIR/bin/install_plugins"
       fi
+      nix-shell -p tmux git --run "$TARGET_DIR/bin/install_plugins"
   '';
 
   home.file.".config/tmux/tmux.conf".text = /* tmux */ ''

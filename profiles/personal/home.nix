@@ -30,12 +30,14 @@ in
 
   affinity = {
     prefix = "/home/${user}/affinity/prefix";
-    setup_prefix = false; # Only enable for fresh/unconfigured prefix
+    license_violations = "/home/${user}/affinity/license_violations";
 
     photo.enable = true;
     designer.enable = true;
     publisher.enable = true;
   };
+
+  rose-pine.variant = "moon";
 
   home.packages = [
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
