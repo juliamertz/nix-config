@@ -17,7 +17,7 @@ in
     ../../user/app/shell/bash.nix
     ../../user/app/editor/nvim/home.nix
     ../../user/app/terminal/tmux.nix
-    ../../user/app/affinity/home.nix
+    ../../user/app/affinity
     ../../user/app/jellyfin.nix
     ../../user/app/spotify.nix
     ../../user/app/tools/neofetch.nix
@@ -31,6 +31,10 @@ in
   affinity = {
     prefix = "/home/${user}/affinity/prefix";
     setup_prefix = false; # Only enable for fresh/unconfigured prefix
+
+    photo.enable = true;
+    designer.enable = true;
+    publisher.enable = true;
   };
 
   home.packages = [

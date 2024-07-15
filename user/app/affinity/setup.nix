@@ -25,9 +25,8 @@ let
 
   binary = (pkgs.writeShellScriptBin "setup" script);
 in {
-  home.activation.setup-affinity-wine = 
-    # FIX: This doesn't work yet, pathExists will always return false for some reason.
-    # if builtins.pathExists config.affinity.prefix
-    if config.affinity.setup_prefix then lib.hm.dag.entryAfter [ "writeBoundary" ]''${binary}/bin/setup''
-    else "";
+  home.activation = {
+    ${if lib.pathExists config.affinity.prefix then "create-affinity-wine-prefix" else null} =
+      lib.hm.dag.entryAfter [ "writeBoundary" ]''${binary}/bin/setup'' ;
+  };
 }
