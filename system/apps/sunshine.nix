@@ -1,7 +1,11 @@
 { inputs, settings, ... }:
 let
   platform = settings.system.platform; 
-  pkg = inputs.nixpkgs-24_05.legacyPackages.${platform}.sunshine;
+  pkgs = import inputs.nixpkgs-24_05 { system = platform; config.allowUnfree = true; };
+  pkg = pkgs.sunshine.override {
+    cudaSupport = true;
+    stdenv = pkgs.cudaPackages.backendStdenv;
+  };
 in {
   environment.systemPackages = [ pkg ];
   services.udev.packages = [ pkg ];
