@@ -2,16 +2,18 @@
 {
   home.packages = with pkgs; [ tmux git ];
 
-  home.activation.install-tpm = lib.hm.dag.entryAfter [ "writeBoundary" ] /* sh */ ''
+  home.activation.tmuxPluginManager = lib.hm.dag.entryAfter [ "writeBoundary" ] /* sh */ ''
       TARGET_DIR=${config.xdg.configHome}/tmux/plugins/tpm
       REPO=https://github.com/tmux-plugins/tpm
 
-      rm -rf $TARGET_DIR &> /dev/null;
-      mkdir -p $TARGET_DIR;
-      ${pkgs.git}/bin/git clone --depth=1 --single-branch $REPO $TARGET_DIR;
+      if [ ! -e "$TARGET_DIR" ]; then
+        mkdir -p $TARGET_DIR;
+        ${pkgs.git}/bin/git clone --depth=1 --single-branch $REPO $TARGET_DIR;
+        nix-shell -p tmux git --run "$TARGET_DIR/bin/install_plugins"
+      fi
   '';
 
-  home.file.".tmux.conf".text = /* tmux */ ''
+  home.file.".config/tmux/tmux.conf".text = /* tmux */ ''
     source-file ~/.config/tmux/tmux.reset.conf
 
     set -g prefix ^A
