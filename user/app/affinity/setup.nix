@@ -17,7 +17,7 @@ let
   binary = (pkgs.writeShellScriptBin "setup" script);
 in {
   home.activation.affinityCrimes = lib.hm.dag.entryAfter [ "writeBoundary" ] /*bash*/''
-      license_violations=${cfg.license_violations}/WinMetadata
+      license_violations=${cfg.licenseViolations}/WinMetadata
       prefix=${cfg.prefix}
       winmd_path=$prefix/drive_c/windows/system32/WinMetadata
 
@@ -32,9 +32,9 @@ in {
           echo Symlinked winmd files to wine prefix
         fi
       else
-        echo WARNING ! Path ${cfg.license_violations} not found.
+        echo WARNING ! Path ${cfg.licenseViolations} not found.
         echo you will need winmd files from a windows install if you wish to use a Affinity version newer than the 1.10.3
-        echo they are located in C:/windows/system32/WinMetadata and need to go in ${cfg.license_violations}
+        echo they are located in C:/windows/system32/WinMetadata and need to go in ${cfg.licenseViolations}
       fi
       '';
 }

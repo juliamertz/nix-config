@@ -31,22 +31,9 @@ in {
       type = lib.types.str;
       default = "";
     };
-    license_violations = lib.mkOption { 
+    licenseViolations = lib.mkOption { 
       type = lib.types.str;
       default = "";
-    };
-    env = lib.mkOption {
-      type = lib.types.str;
-      default = /*bash*/''
-        winepath="${pkgs.wineElementalWarrior}"
-        export WINEPREFIX="${cfg.prefix}"
-        export PATH="$winepath/bin:$PATH"
-        export LD_LIBRARY_PATH="$winepath/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-        export WINEDLLOVERRIDES="winemenubuilder.exe=d"
-        export WINESERVER="$winepath/bin/wineserver"
-        export WINELOADER="$winepath/bin/wine"
-        export WINEDLLPATH="$winepath/lib/wine"
-      '';
     };
 
     designer.enable = lib.mkOption {
@@ -61,6 +48,24 @@ in {
       type = lib.types.bool;
       default = false;
     };
+
+    desktopEntries.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+    env = lib.mkOption {
+      type = lib.types.str;
+      default = /*bash*/''
+        winepath="${pkgs.wineElementalWarrior}"
+        export WINEPREFIX="${cfg.prefix}"
+        export PATH="$winepath/bin:$PATH"
+        export LD_LIBRARY_PATH="$winepath/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        export WINEDLLOVERRIDES="winemenubuilder.exe=d"
+        export WINESERVER="$winepath/bin/wineserver"
+        export WINELOADER="$winepath/bin/wine"
+        export WINEDLLPATH="$winepath/lib/wine"
+      '';
+    };
   };
 
   config = {
@@ -69,7 +74,7 @@ in {
       ++ lib.optionals cfg.designer.enable [ pkg.designer ]
       ++ lib.optionals cfg.publisher.enable [ pkg.publisher ];
 
-    xdg.desktopEntries = {
+    xdg.${if cfg.desktopEntries.enable then "desktopEntries" else null} = {
       ${if cfg.photo.enable then "photo" else null} = {
         name = "Affinity Photo";
         genericName = "Image Editor";

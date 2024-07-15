@@ -30,7 +30,7 @@ in
 
   affinity = {
     prefix = "/home/${user}/affinity/prefix";
-    license_violations = "/home/${user}/affinity/license_violations";
+    licenseViolations = "/home/${user}/affinity/license_violations";
 
     photo.enable = true;
     designer.enable = true;
