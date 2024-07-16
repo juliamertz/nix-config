@@ -4,7 +4,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
+# nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +32,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
     let 
       userSettings = {
         username = "julia";
@@ -41,47 +46,54 @@
         home = "/home/${userSettings.username}";
       };
 
-      systemSettings = {
-        profile = "personal";
-        hostname = "workstation";
-        hardware =  systemSettings.hostname;
+  systemSettings = {
+    profile = "laptop";
+    hostname = "macbookpro";
+    hardware =  systemSettings.hostname;
 
-        term = "xterm-256color";
-        platform = "x86_64-linux";
-        timeZone = "Europe/Amsterdam";
-        defaultLocale = "en_US.UTF-8";
-      };
+    term = "xterm-256color";
+    platform = "aarch64-darwin";
+    timeZone = "Europe/Amsterdam";
+    defaultLocale = "en_US.UTF-8";
+  };
 
-      lib = nixpkgs.lib;
-      pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
-      settings = { user = userSettings; system = systemSettings; };
-    in {
+  specialArgs = { 
+    inherit inputs;
+    inherit settings;
+  };
+  linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
+  darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
+  lib = nixpkgs.lib;
+  pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
+  settings = { user = userSettings; system = systemSettings; };
+  in {
     nixosConfigurations = {
       ${settings.system.hostname} = lib.nixosSystem {
         system = systemSettings.platform;
-        specialArgs = { 
-          inherit inputs;
-          inherit settings;
-        };
+        inherit specialArgs;
         modules = [
           ./hardware-configuration.nix
-          ./profiles/base.nix
-          (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
-          (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
+            ./profiles/base.nix
+            (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
+            (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
         ];
       };
     };
     homeConfigurations = {
       ${settings.user.username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit settings;
-        };
+        extraSpecialArgs = specialArgs;
         modules = [
           (./. + "/profiles" + ("/" + systemSettings.profile) + "/home.nix")
         ];
       };
+    };
+    darwinConfigurations.${settings.system.hostname} = nix-darwin.lib.darwinSystem {
+      inherit specialArgs;
+      modules = [ 
+        ./profiles/laptop/configuration.nix 
+        ./hardware/macbookpro.nix
+      ];
     };
   };
 }
