@@ -21,6 +21,10 @@
 
     aliases = {
       s = "status";
+
+      wa = "worktree add";
+      wr = "worktree remove";
+      wl = "worktree list";
     };
   };
 }

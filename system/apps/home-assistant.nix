@@ -1,4 +1,4 @@
-{ lib, config, settings, ... }:
+{ lib, config, pkgs, ... }:
 let 
   cfg = config.home-assistant;
   toStr = builtins.toString;
@@ -25,6 +25,7 @@ in {
   };
   config = {
     networking.firewall.allowedTCPPorts = [ cfg.port ];
+    environment.systemPackages = with pkgs; [ python312Packages.tinytuya ];
 
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {

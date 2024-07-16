@@ -50,5 +50,6 @@
 
   environment.systemPackages = [
     pkgs.sops
+    pkgs.usbutils
   ];
 }
