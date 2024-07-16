@@ -29,7 +29,6 @@ rec {
     qtquickcontrols2
   ];
 
-
   installPhase = ''
     mkdir -p $out/share/sddm/themes
     cp -aR $src $out/share/sddm/themes/tokyo-night-sddm

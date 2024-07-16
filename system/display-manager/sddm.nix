@@ -1,12 +1,13 @@
-{ pkgs, settings, ... }:
+{ pkgs, settings, lib, ... }:
 let
-  tokyo-night-sddm = pkgs.libsForQt5.callPackage ../../pkgs/sddm-tokyo-night.nix { };
+  # tokyo-night-sddm = pkgs.libsForQt5.callPackage ../../pkgs/sddm-tokyo-night.nix { };
+  rose-pine-sddm = pkgs.libsForQt5.callPackage ../../pkgs/sddm-rose-pine.nix { };
 in {
-  environment.systemPackages = [ tokyo-night-sddm ];
+  environment.systemPackages = [ rose-pine-sddm ];
 
-  services.xserver.displayManager.sddm.theme = "tokyo-night-sddm";
+  services.xserver.displayManager.sddm.theme = "rose-pine";
   services.xserver.displayManager.setupCommands = /*bash*/''
-    xrandr --output HDMI-0 --off
+    ${lib.getExe pkgs.xorg.xrandr} --output HDMI-0 --off
   '';
   services.displayManager = {
     sddm.enable = true;
