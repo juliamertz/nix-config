@@ -2,6 +2,7 @@
 let
   g920 = {
     vendorId = "046d";
+    # productId = "c261";
     productId = "c261";
     id = g920.vendorId + ":" + g920.productId;
   };
@@ -28,6 +29,9 @@ in {
 '';
 
   environment.systemPackages = with pkgs; [
+    wine
+    winetricks
+    protontricks
     usbutils
     usb-modeswitch
     oversteer
