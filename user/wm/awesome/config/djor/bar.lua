@@ -47,7 +47,7 @@ M.main_menu = awful.menu({
 })
 
 M.launcher = awful.widget.launcher({
-  image = utils.config_path() .. "awesome/icons/nixos.svg",
+  image = utils.config_path() .. "awesome/icons/nixos.png",
   menu = M.main_menu
 })
 
