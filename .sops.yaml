@@ -5,7 +5,3 @@ creation_rules:
     key_groups:
     - age:
       - *workstation
-  # - path_regex: secrets/personal.yaml$
-  #   key_groups:
-  #   - age:
-  #     - *workstation

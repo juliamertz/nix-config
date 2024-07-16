@@ -2,6 +2,7 @@
 {
   imports = [
     ../../system/apps/home-assistant.nix
+    ../../system/apps/sponsorblock-atv.nix
     ../../system/apps/zerotier.nix # Vpn tunnel
     ../../user/sops.nix # Secrets management
   ];
