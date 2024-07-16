@@ -21,6 +21,8 @@
 
     aliases = {
       s = "status";
+      a = "add";
+      c = "commit -m";
 
       wa = "worktree add";
       wr = "worktree remove";
