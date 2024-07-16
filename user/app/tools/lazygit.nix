@@ -1,5 +1,7 @@
 { pkgs, config, ... }:
-{
+let
+  inherit (pkgs) stdenv;
+in{
   home.packages = with pkgs; [ lazygit delta ];
 
   home.file."${config.xdg.configHome}/lazygit/config.yml".text = /* yaml */''

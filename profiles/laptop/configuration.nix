@@ -15,7 +15,7 @@ in {
     ];
 
     users.users.${user} = {
-      # home = "/Users/${user}";
+      home = "/Users/${user}";
       shell = "${pkgs.fish}/bin/fish";
     };
 
