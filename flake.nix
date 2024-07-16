@@ -38,6 +38,7 @@
         terminal = "wezterm";
         editor = "nvim";
         windowManager = "awesome";
+        home = "/home/${userSettings.username}";
       };
 
       systemSettings = {

@@ -1,18 +1,30 @@
-{ pkgs, inputs, config, ...}:
+{ pkgs, inputs, settings, lib, config, ...}:
 let 
-  profile = "personal";
   format = "yaml";
+  cfg = config.secrets;
 in {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
 
-  sops.defaultSopsFile = ../secrets/${profile}.${format};
-  sops.defaultSopsFormat = format;
-  sops.age.keyFile = "/home/julia/.config/sops/age/keys.txt";
-
-  sops.secrets.zerotier_network_id = { };
-  sops.secrets."zerotier_network_id" = { owner = "julia"; };
-  sops.secrets.zerotier_api_key = { };
-  sops.secrets."zerotier_api_key" = { owner = "julia"; };
+  options.secrets = {
+    profile = lib.mkOption {
+      type = lib.types.str;
+      default = settings.system.username;
+    };
+    format = lib.mkOption {
+      type = lib.types.str;
+      default = "yaml";
+    };
+  };
+  
+  # Secrets attribute should be set in per-profile configuration
+  config = {
+    environment.systemPackages = [ pkgs.sops ];
+    sops = {
+      defaultSopsFile = ../secrets/${cfg.profile}.${cfg.format};
+      defaultSopsFormat = format;
+      age.keyFile = "${settings.user.home}/.config/sops/age/keys.txt";
+    };
+  };
 }

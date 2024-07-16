@@ -8,11 +8,5 @@
   ];
 
   users.defaultUserShell = pkgs.bash;
-
   nixpkgs.config.allowUnfree = true;
-  programs.thunar.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    sops
-  ];
 }

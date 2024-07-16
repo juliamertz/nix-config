@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, settings, ... }:
 {
   imports = [
     ../../system/apps/virtmanager.nix # Virtual machines
@@ -18,38 +18,25 @@
     inputs.stylix.nixosModules.stylix
   ];
 
-  xdg.portal = {
-  enable = true;
-  extraPortals = with pkgs; [
-    xdg-desktop-portal-wlr
-    xdg-desktop-portal-kde
-    xdg-desktop-portal-gtk
-  ];
-  # wlr = {
-  #   enable = true;
-  #   settings = { # uninteresting for this problem, for completeness only
-  #     screencast = {
-  #       output_name = "eDP-1";
-  #       max_fps = 30;
-  #       chooser_type = "simple";
-  #       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-  #     };
-  #   };
-  # };
-};
-  services.flatpak.enable = true;
-
   rose-pine.variant = "moon";
   users.defaultUserShell = pkgs.bash;
 
-  boot.supportedFilesystems = [ "ntfs" ];
-
-  nixpkgs.config.allowUnfree = true;
-
+  services.flatpak.enable = true;
   programs.thunar.enable = true;
 
-  environment.systemPackages = [
-    pkgs.sops
-    pkgs.usbutils
-  ];
+  secrets.profile = "personal";
+  sops.secrets = {
+    zerotier_network_id = { owner = settings.user.username; };
+  };
+
+  boot.supportedFilesystems = [ "ntfs" ];
+  environment.systemPackages = with pkgs; [ usbutils ];
+  nixpkgs.config.allowUnfree = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+    ];
+  };
 }
