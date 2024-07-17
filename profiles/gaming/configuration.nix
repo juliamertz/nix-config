@@ -29,8 +29,8 @@ in {
 '';
 
   environment.systemPackages = with pkgs; [
-    wine
-    winetricks
+    # wine
+    # winetricks
     protontricks
     usbutils
     usb-modeswitch

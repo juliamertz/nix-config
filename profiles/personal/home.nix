@@ -20,7 +20,7 @@ in
     ../../user/app/shell/bash.nix
     ../../user/app/editor/nvim
     ../../user/app/terminal/tmux.nix
-    ../../user/app/affinity
+    # ../../user/app/affinity
     ../../user/app/jellyfin.nix
     ../../user/app/spotify.nix
     ../../user/app/tools/neofetch.nix
@@ -30,14 +30,14 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  affinity = {
-    prefix = "/home/${user}/affinity/prefix";
-    licenseViolations = "/home/${user}/affinity/license_violations";
-
-    photo.enable = true;
-    designer.enable = true;
-    publisher.enable = true;
-  };
+  # affinity = {
+  #   prefix = "/home/${user}/affinity/prefix";
+  #   licenseViolations = "/home/${user}/affinity/license_violations";
+  #
+  #   photo.enable = true;
+  #   designer.enable = true;
+  #   publisher.enable = true;
+  # };
 
   rose-pine.variant = "moon";
 

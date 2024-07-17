@@ -9,6 +9,7 @@ in {
     alias spt "spotify_player"
     alias poweroff "sudo shutdown -h now"
     
+    fish_add_path /run/wrappers/bin
     fish_add_path "$NIX_LINK/bin"
     fish_add_path "/nix/var/nix/profiles/default/bin"
     fish_add_path "/etc/profiles/per-user/${user}/bin"
@@ -19,10 +20,10 @@ in {
     end
   '';
 
-  home.activation = {
-    ${if stdenv.isDarwin then "setFishAsShell" else null} = lib.hm.dag.entryAfter [ "writeBoundary" ] /*bash*/''
+  home.activation = lib.mkIf stdenv.isDarwin {
+    setFishAsShell = lib.hm.dag.entryAfter [ "writeBoundary" ] /*sh*/''
       /usr/bin/sudo /usr/bin/dscl . -create /Users/${user} UserShell ${pkgs.fish}/sw/bin/fish
-    '';
+      '';
   };
 
   home.packages = with pkgs; [ 

@@ -35,24 +35,24 @@
   outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
     let 
       userSettings = {
-        username = "juliamertz";
+        username = "julia";
         fullName = "Julia Mertz";
         email = "info@juliamertz.dev";
         shell = "fish";
         browser = "firefox";
         terminal = "wezterm";
         editor = "nvim";
-        windowManager = "yabai";
-        home = "/Users/${userSettings.username}";
+        windowManager = "awesome";
+        home = "/home/${userSettings.username}";
       };
 
   systemSettings = {
-    profile = "laptop";
-    hostname = "macbookpro";
+    profile = "personal";
+    hostname = "workstation";
     hardware =  systemSettings.hostname;
 
     term = "xterm-256color";
-    platform = "aarch64-darwin";
+    platform = "x86_64-linux";
     timeZone = "Europe/Amsterdam";
     defaultLocale = "en_US.UTF-8";
   };
