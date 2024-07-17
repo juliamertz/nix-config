@@ -15,6 +15,7 @@
     ../../user/themes/rose-pine/configuration.nix # Theme
     ../../system/display-manager/sddm.nix
     ../../system/apps/sponsorblock-atv.nix
+    ../../user/scripts/home-assistant.nix
     inputs.stylix.nixosModules.stylix
   ];
 
@@ -27,6 +28,8 @@
   secrets.profile = "personal";
   sops.secrets = {
     zerotier_network_id = { owner = settings.user.username; };
+    home_assistant_ip = { owner = settings.user.username; };
+    home_assistant_token = { owner = settings.user.username; };
   };
 
   boot.supportedFilesystems = [ "ntfs" ];
