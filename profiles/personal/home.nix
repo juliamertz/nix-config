@@ -9,13 +9,16 @@ in
   programs.home-manager.enable = true;
 
   imports = [
-    ../../user/app/browser/firefox.nix
+    # System
     ../../user/wm/awesome/home.nix
     ../../user/wm/picom/picom.nix
-    ../../user/app/terminal/wezterm/home.nix
+    ../../user/themes/rose-pine/home.nix
+    # Apps
+    ../../user/app/browser/firefox.nix
+    ../../user/app/terminal/wezterm
     ../../user/app/shell/fish.nix
     ../../user/app/shell/bash.nix
-    ../../user/app/editor/nvim/home.nix
+    ../../user/app/editor/nvim
     ../../user/app/terminal/tmux.nix
     ../../user/app/affinity
     ../../user/app/jellyfin.nix
@@ -23,7 +26,6 @@ in
     ../../user/app/tools/neofetch.nix
     ../../user/app/tools/lazygit.nix
     ../../user/app/git.nix
-    ../../user/themes/rose-pine/home.nix # Theme
   ];
 
   nixpkgs.config.allowUnfree = true;

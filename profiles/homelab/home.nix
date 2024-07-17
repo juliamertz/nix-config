@@ -12,7 +12,7 @@ in
     ../../user/app/tools/lazygit.nix
     ../../user/app/shell/fish.nix
     ../../user/app/shell/bash.nix
-    ../../user/app/editor/nvim/home.nix
+    ../../user/app/editor/nvim
     ../../user/app/terminal/tmux.nix
     # ../../user/app/jellyfin.nix
     ../../user/app/tools/neofetch.nix

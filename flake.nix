@@ -35,15 +35,15 @@
   outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
     let 
       userSettings = {
-        username = "julia";
+        username = "juliamertz";
         fullName = "Julia Mertz";
         email = "info@juliamertz.dev";
         shell = "fish";
         browser = "firefox";
         terminal = "wezterm";
         editor = "nvim";
-        windowManager = "awesome";
-        home = "/home/${userSettings.username}";
+        windowManager = "yabai";
+        home = "/Users/${userSettings.username}";
       };
 
   systemSettings = {

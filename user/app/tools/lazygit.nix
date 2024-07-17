@@ -1,10 +1,12 @@
-{ pkgs, config, ... }:
+{ pkgs, config, settings, ... }:
 let
   inherit (pkgs) stdenv;
+  # home = settings.user.home;
+  configPath = if stdenv.isLinux then ".config/lazygit" else "Library/Application Support/lazygit";
 in{
   home.packages = with pkgs; [ lazygit delta ];
 
-  home.file."${config.xdg.configHome}/lazygit/config.yml".text = /* yaml */''
+  home.file."${configPath}/config.yml".text = /* yaml */''
     gui:
       # stuff relating to the UI
       windowSize: "normal" # one of "normal" | "half" | "full" default is "normal"
@@ -116,3 +118,4 @@ in{
     promptToReturnFromSubprocess: true # display confirmation when subprocess terminates
   '';
 }
+
