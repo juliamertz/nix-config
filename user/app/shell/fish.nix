@@ -1,6 +1,7 @@
 { lib, pkgs, settings, ... }:
 let
   user = settings.user.username;
+  inherit (pkgs) stdenv;
 in {
   home.file.".config/fish/config.fish".text = /*fish*/ ''
     alias lg "lazygit"
@@ -18,6 +19,12 @@ in {
     end
   '';
 
+  home.activation = {
+    ${if stdenv.isDarwin then "setFishAsShell" else null} = lib.hm.dag.entryAfter [ "writeBoundary" ] /*bash*/''
+      /usr/bin/sudo /usr/bin/dscl . -create /Users/${user} UserShell ${pkgs.fish}/sw/bin/fish
+    '';
+  };
+
   home.packages = with pkgs; [ 
     cowsay
     fortune
@@ -29,5 +36,6 @@ in {
     yq
     ripgrep
     grc
+    tldr
   ]; 
 }

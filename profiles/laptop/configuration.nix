@@ -6,6 +6,7 @@ let
 in {
   imports = [
     home-manager
+    ../../user/scripts/fzf.nix
   ];
 
   services.nix-daemon.enable = true;
@@ -16,9 +17,6 @@ in {
     pkgs.fish
   ];
 
-  # system.activationScripts.setFishAsShell.text = ''
-  #   dscl . -create /Users/${user} UserShell /run/current-system/sw/bin/fish
-  # '';
 
   users.knownUsers = [ user ];
 

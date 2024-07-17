@@ -1,7 +1,6 @@
 { pkgs, config, settings, ... }:
 let
   inherit (pkgs) stdenv;
-  # home = settings.user.home;
   configPath = if stdenv.isLinux then ".config/lazygit" else "Library/Application Support/lazygit";
 in{
   home.packages = with pkgs; [ lazygit delta ];
