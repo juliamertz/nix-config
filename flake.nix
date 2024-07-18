@@ -33,39 +33,45 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
-    let 
-      userSettings = {
-        username = "julia";
-        fullName = "Julia Mertz";
-        email = "info@juliamertz.dev";
-        shell = "fish";
-        browser = "firefox";
-        terminal = "wezterm";
-        editor = "nvim";
-        windowManager = "awesome";
-        home = "/home/${userSettings.username}";
-      };
+  let 
+    # dotfiles = import ./pkgs/dotfiles.nix { stdenvNoCC = pkgs.stdenvNoCC; } { 
+    #   rev = "75b211bec64532922feec4d080de9310fb877ab5";
+    #   localPath = "${userSettings.home}/dotfiles";
+    #   useLocalPath = false;
+    # };
+    # dotfiles = "${userSettings.home}/dotfiles";
 
-  systemSettings = {
-    profile = "personal";
-    hostname = "workstation";
-    hardware =  systemSettings.hostname;
+    userSettings = {
+      username = "julia";
+      fullName = "Julia Mertz";
+      email = "info@juliamertz.dev";
+      shell = "fish";
+      browser = "firefox";
+      terminal = "wezterm";
+      editor = "nvim";
+      windowManager = "awesome";
+      home = "/home/${userSettings.username}";
+    };
 
-    term = "xterm-256color";
-    platform = "x86_64-linux";
-    timeZone = "Europe/Amsterdam";
-    defaultLocale = "en_US.UTF-8";
-  };
+    systemSettings = {
+      profile = "personal";
+      hostname = "workstation";
+      hardware =  systemSettings.hostname;
 
-  specialArgs = { 
-    inherit inputs;
-    inherit settings;
-  };
-  linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
-  darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
-  lib = nixpkgs.lib;
-  pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
-  settings = { user = userSettings; system = systemSettings; };
+      term = "xterm-256color";
+      platform = "x86_64-linux";
+      timeZone = "Europe/Amsterdam";
+      defaultLocale = "en_US.UTF-8";
+    };
+
+    specialArgs = { 
+      inherit inputs;
+      inherit settings;
+      # inherit dotfiles;
+    };
+    lib = nixpkgs.lib;
+    pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
+    settings = { user = userSettings; system = systemSettings; };
   in {
     nixosConfigurations = {
       ${settings.system.hostname} = lib.nixosSystem {

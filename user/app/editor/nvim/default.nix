@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home.packages = with pkgs; [ ripgrep ];
 
@@ -8,8 +8,8 @@
     vimAlias = true;
   };
 
-  home.file."${config.xdg.configHome}/nvim" = {
-    source = ./config;
+  home.file.".config/nvim" = {
+    source = "${config.dotfiles.path}/nvim";
     recursive = true;
   };
 }

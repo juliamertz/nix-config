@@ -13,7 +13,7 @@ in
     ../../user/app/shell/fish.nix
     ../../user/app/shell/bash.nix
     ../../user/app/editor/nvim
-    ../../user/app/terminal/tmux.nix
+    ../../user/app/terminal/tmux
     # ../../user/app/jellyfin.nix
     ../../user/app/tools/neofetch.nix
     ../../user/app/git.nix

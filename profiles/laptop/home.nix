@@ -13,7 +13,7 @@ in
     ../../user/app/shell/bash.nix
     ../../user/app/terminal/wezterm
     ../../user/app/editor/nvim
-    ../../user/app/terminal/tmux.nix
+    ../../user/app/terminal/tmux
     ../../user/app/tools/neofetch.nix
     ../../user/app/git.nix
   ];

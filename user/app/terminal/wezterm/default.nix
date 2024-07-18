@@ -3,7 +3,7 @@
   home.packages = [ pkgs.wezterm ];
 
   home.file."${config.xdg.configHome}/wezterm" = {
-    source = ./config;
+    source = "${config.dotfiles.path}/wezterm";
     recursive = true;
   };
 }

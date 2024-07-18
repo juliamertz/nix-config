@@ -9,7 +9,7 @@ in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = settings.system.hostname; 
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
   networking.networkmanager.enable = true;
 
   users.users.${user} = {

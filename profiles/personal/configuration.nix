@@ -1,4 +1,4 @@
-{ pkgs, inputs, settings, ... }:
+{ pkgs, inputs, settings, config, ... }:
 {
   imports = [
     ../../system/apps/virtmanager.nix # Virtual machines
@@ -16,14 +16,20 @@
     ../../system/display-manager/sddm.nix
     ../../system/apps/sponsorblock-atv.nix
     ../../user/scripts/home-assistant.nix
+    ../../user/scripts/deref.nix
+    ../../system/networking/openvpn
     inputs.stylix.nixosModules.stylix
   ];
 
-  rose-pine.variant = "moon";
   users.defaultUserShell = pkgs.bash;
 
-  services.flatpak.enable = true;
+  # services.flatpak.enable = true;
   programs.thunar.enable = true;
+
+  openvpn.proton = {
+    enable = true;
+    profile = "de-protonvpn";
+  };
 
   secrets.profile = "personal";
   sops.secrets = {
@@ -32,14 +38,19 @@
     home_assistant_token = { owner = settings.user.username; };
   };
 
+  environment.systemPackages = [ 
+    pkgs.qbittorrent
+    pkgs.networkmanagerapplet
+    pkgs.usbutils 
+  ];
+
   boot.supportedFilesystems = [ "ntfs" ];
-  environment.systemPackages = with pkgs; [ usbutils ];
   nixpkgs.config.allowUnfree = true;
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-wlr
-        xdg-desktop-portal-gtk
+      xdg-desktop-portal-gtk
     ];
   };
 }

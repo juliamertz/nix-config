@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let
   fd = /*bash*/ ''
     find ''${@:-.} -type d | fzf

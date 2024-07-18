@@ -8,7 +8,7 @@ in {
   options = {
     rose-pine.variant = lib.mkOption {
       type = lib.types.str;
-      default = "main";
+      default = "moon";
     };
   };
 
