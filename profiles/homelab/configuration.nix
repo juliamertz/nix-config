@@ -1,12 +1,21 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-wrapped, ... }:
 {
   imports = [
-    ../../system/apps/home-assistant.nix
-    ../../system/apps/sponsorblock-atv.nix
-    ../../system/apps/zerotier.nix # Vpn tunnel
-    ../../user/sops.nix # Secrets management
+    ../../system/containers/home-assistant.nix
+    ../../system/containers/sponsorblock-atv.nix
+    ../../system/networking/zerotier # Vpn tunnel
+    ../../system/sops.nix # Secrets management
+    ../../system/apps/git.nix
   ];
 
   users.defaultUserShell = pkgs.bash;
   nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = [ ] 
+  ++ (with pkgs-wrapped; [
+      lazygit
+      nvim
+      kitty
+      tmux
+    ]);
 }

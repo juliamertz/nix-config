@@ -1,50 +1,90 @@
-{ pkgs, inputs, settings, config, ... }:
+{ pkgs, inputs, settings, pkgs-wrapped, ... }:
 {
   imports = [
-    ../../system/apps/virtmanager.nix # Virtual machines
-    ../../system/apps/protonvpn.nix # Virtual machines
-    ../../system/apps/zerotier.nix # Vpn tunnel
-    ../../system/io/keyd.nix # Key remapping daemon
-    ../../user/wm/awesome/configuration.nix # Window manager
-    ../../user/sops.nix # Secrets management
+    ../../system/networking/zerotier # Vpn tunnel
+    ../../system/networking/openvpn # Protonvpn configurations
     ../../system/lang/rust.nix # Rust toolchain
     ../../system/lang/go.nix # Rust toolchain
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
+    ../../system/io/keyd.nix # Key remapping daemon
+    ../../system/containers/sponsorblock-atv.nix
+    ../../system/apps/jellyfin.nix
+    # ../../system/containers/jellyfin.nix
+    ../../system/apps/virtmanager.nix # Virtual machines
+    ../../system/sops.nix # Secrets management
+    ../../system/themes/rose-pine
     ../gaming/configuration.nix # Games & related apps
-    ../../user/themes/rose-pine/configuration.nix # Theme
     ../../system/display-manager/sddm.nix
-    ../../system/apps/sponsorblock-atv.nix
-    ../../user/scripts/home-assistant.nix
-    ../../user/scripts/deref.nix
-    ../../system/networking/openvpn
+    ../../system/scripts/home-assistant.nix
+    ../../system/scripts/deref.nix
+    ../../system/dotfiles.nix
+    ../../system/apps/git.nix
+    ../../system/apps/spotify.nix
+    ../../user/wm/awesome/configuration.nix
     inputs.stylix.nixosModules.stylix
+    inputs.affinity.nixosModules.affinity
   ];
+
+  affinity = let path = "${settings.user.home}/affinity"; in {
+    prefix ="${path}/prefix"; 
+    licenseViolations ="${path}/license_violations"; 
+    user = settings.user.username;
+
+    photo.enable = true;
+    designer.enable = true;
+  };
 
   users.defaultUserShell = pkgs.bash;
-
-  # services.flatpak.enable = true;
-  programs.thunar.enable = true;
-
-  openvpn.proton = {
-    enable = true;
-    profile = "de-protonvpn";
-  };
-
   secrets.profile = "personal";
-  sops.secrets = {
-    zerotier_network_id = { owner = settings.user.username; };
-    home_assistant_ip = { owner = settings.user.username; };
-    home_assistant_token = { owner = settings.user.username; };
+
+  # jellyfin = {
+  #   volumes = [
+  #    "${settings.user.home}/jellyfin/config:/config"
+  #    "${settings.user.home}/jellyfin/cache:/cache"
+  #    "${settings.user.home}/media:/media"
+  #   ];
+  # };
+
+  dotfiles = {
+    local = {
+      enable = true;
+      path = settings.user.dotfiles;
+    };
+  };
+  
+  openvpn.proton = {
+    enable = false;
+    profile = "nl-protonvpn";
   };
 
-  environment.systemPackages = [ 
-    pkgs.qbittorrent
-    pkgs.networkmanagerapplet
-    pkgs.usbutils 
-  ];
+  programs.ssh = {
+    forwardX11 = true;
+  };
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  environment.systemPackages = [ ]
+  ++ (with pkgs-wrapped; [
+      lazygit
+      nvim
+      kitty
+      tmux
+      fish
+      wezterm
+    ])
+  ++ (with pkgs; [
+      qbittorrent
+      qdirstat
+      nautilus
+      mpv
+      xorg.xhost
+      networkmanagerapplet
+      usbutils 
+      killall
+      ffmpeg
+      firefox
+      ethtool
+    ]);
+
   nixpkgs.config.allowUnfree = true;
   xdg.portal = {
     enable = true;

@@ -7,9 +7,9 @@
 
   hardware.opengl = {
     enable = true;
-    # driSupport = true;
-    # driSupport32Bit = true;
   };
+
+  boot.supportedFilesystems = [ "ntfs" ];
 
   services.xserver.videoDrivers = [ "nvidia" ]; 
   hardware.nvidia = {

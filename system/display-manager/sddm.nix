@@ -11,6 +11,6 @@ in {
   '';
   services.displayManager = {
     sddm.enable = true;
-    defaultSession = "none+${settings.user.windowManager}";
+    # defaultSession = "${settings.user.windowManager}";
   };
 }

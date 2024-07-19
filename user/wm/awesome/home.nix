@@ -1,7 +1,8 @@
-{ settings, pkgs, ... }:
+{ settings, pkgs, config, ... }:
 {
   imports = [
     ../widgets/rofi/rofi.nix
+    ../picom
   ];
 
   home.packages = with pkgs; [ pamixer playerctl ];
@@ -9,7 +10,7 @@
   xsession.windowManager.awesome.enable = true;
 
   home.file.".config/awesome" = {
-    source = ./config;
+    source = "${config.dotfiles.path}/awesome";
     recursive = true;
   };
 

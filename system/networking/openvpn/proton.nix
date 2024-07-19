@@ -1,14 +1,16 @@
-{ }:
+{ lib, cfg }:
 let 
   concat = builtins.concatStringsSep;
   serializeRemote = ip: port: "remote ${ip} ${toString port}";
   serializeRemotes = ip: ports: concat "\n" (map (port: serializeRemote ip port) ports);
+  ifProfile = profile: val: lib.mkIf ( cfg.enable && cfg.profile == profile ) val;
 
   defaultPorts = ip: serializeRemotes ip [ 51820 1194 4569 80 5060 ];
 in {
   inherit defaultPorts;
   inherit serializeRemote;
   inherit serializeRemotes;
+  inherit ifProfile;
   mkConfig = ip: {
     autoStart = true;
     updateResolvConf = true;

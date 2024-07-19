@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, settings, config, ... }:
+{ pkgs, lib, pkgs-wrapped, inputs, settings, config, ... }:
 let
   user = settings.user.username;
   platform = settings.system.platform;
@@ -6,7 +6,7 @@ let
 in {
   imports = [
     home-manager
-    ../../user/scripts/fzf.nix
+    ../../system/apps/git.nix
   ];
 
   services.nix-daemon.enable = true;
@@ -15,7 +15,12 @@ in {
   environment.systemPackages = [
     inputs.nix-darwin
     pkgs.fish
-  ];
+  ] ++ (with pkgs-wrapped; [
+    lazygit
+    nvim
+    kitty
+    tmux
+  ]);
 
 
   users.knownUsers = [ user ];
