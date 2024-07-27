@@ -4,17 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
-    # nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    # affinity.url = "github:juliamertz/affinity-nixos/main";
-    affinity = {
-      url = "git+file:///home/julia/projects/2024/affinityCrimes/";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    affinity.url = "github:juliamertz/affinity-nixos/main";
+    wezterm.url = "github:wez/wezterm?dir=nix";
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,13 +25,6 @@
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
-    wezterm = {
-      url = "github:wez/wezterm?dir=nix";
-    };
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs-24_05";
-    };
     flake-programs-sqlite = {
       url = "github:wamserma/flake-programs-sqlite";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,11 +37,11 @@
       username = "julia";
       fullName = "Julia Mertz";
       email = "info@juliamertz.dev";
-      shell = "fish";
+      shell = "zsh";
       browser = "firefox";
       terminal = "wezterm";
       editor = "nvim";
-      windowManager = "hyprland";
+      windowManager = "awesome";
       home = "/home/${userSettings.username}";
       dotfiles = "${userSettings.home}/dotfiles";
     };
@@ -71,11 +58,10 @@
     };
 
     dotfiles = pkgs.callPackage ./pkgs/dotfiles.nix {
-      inherit pkgs; 
       repo = "https://github.com/juliamertz/dotfiles";
-      rev = "e1086c71f9547471bfa4469be9406b317ed5bbab";
+      rev = "6b6e8b5ba2165c3af7067ab2bab37f13e756c86d";
       local = {
-        enable = true; # Enabling this will make the build impure.
+        enable = false; # When set to true the configuration has to be built with --impure
         path = userSettings.dotfiles;
       };
     };
@@ -83,19 +69,13 @@
     lib = nixpkgs.lib;
     pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
     settings = { user = userSettings; system = systemSettings; };
-
-    pkgs-wrapped = pkgs.callPackage ./pkgs/wrappedPkgs {
-      inherit pkgs;
-      inherit inputs;
-      inherit settings;
-      configPath = dotfiles.path;
-    };
+    helpers = pkgs.callPackage ./helpers { };
 
     specialArgs = { 
       inherit inputs;
       inherit dotfiles;
       inherit settings;
-      inherit pkgs-wrapped;
+      inherit helpers;
     };
   in {
     nixosConfigurations = {
@@ -105,29 +85,13 @@
         modules = [
           ./hardware-configuration.nix
           ./profiles/base.nix
+          ./system/home-manager.nix
           (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
-          (./. + "/user/wm" + ("/" + userSettings.windowManager) + "/configuration.nix")
+          # (./. + "/user/wm" + ("/" + userSettings.windowManager) + "/configuration.nix")
           (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
           inputs.flake-programs-sqlite.nixosModules.programs-sqlite
         ];
       };
-    };
-    homeConfigurations = {
-      ${settings.user.username} = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = specialArgs;
-        modules = [
-          (./. + "/profiles" + ("/" + systemSettings.profile) + "/home.nix")
-          (./. + "/user/wm" + ("/" + userSettings.windowManager) + "/home.nix")
-        ];
-      };
-    };
-    darwinConfigurations.${settings.system.hostname} = nix-darwin.lib.darwinSystem {
-      inherit specialArgs;
-      modules = [ 
-        ./profiles/laptop/configuration.nix 
-        ./hardware/macbookpro.nix
-      ];
     };
   };
 }

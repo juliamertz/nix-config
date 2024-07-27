@@ -3,7 +3,7 @@ let
   user = settings.user.username;
 in {
   imports = [
-    ../system/apps/ssh.nix
+    ../system/io/ssh.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

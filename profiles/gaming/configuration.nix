@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, settings, ... }:
 let
   g920 = {
     vendorId = "046d";
@@ -37,6 +37,7 @@ in {
     oversteer
     mangohud
     discord
+    wine
     inputs.suyu.packages.x86_64-linux.suyu
   ];
 }

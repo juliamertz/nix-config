@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, settings, ... }:
 let
   cfg = config.rose-pine;
   colors = pkgs.callPackage ./colors.nix {};
@@ -18,7 +18,7 @@ in {
   };
 
   config = {
-    stylix.image = "${config.xdg.configHome}/background";
+    stylix.image = ./bg.jpeg;
     stylix.enable = true;
     stylix.polarity = "dark";
     stylix.base16Scheme = colors.${cfg.variant};
@@ -28,8 +28,9 @@ in {
       rose-pine-icon-theme
     ];
 
-    environment.etc."/gtk-2.0/gtkrc".text = gtkSettings;
-    environment.etc."/gtk-3.0/settings.ini".text = ''
+    home.config.stylix.targets.gtk.enable = false;
+    home.file.".config/gtk-2.0/gtkrc".text = gtkSettings;
+    home.file.".config/gtk-3.0/settings.ini".text = ''
       [Settings]
       ${gtkSettings}
     '';

@@ -1,6 +1,13 @@
-{ pkgs, rev, local, repo }: 
+{
+  stdenvNoCC,
+  fetchFromGitHub,
+  pkgs,
+  rev,
+  local,
+  repo
+}: 
 let 
-  pkg = pkgs.stdenvNoCC.mkDerivation {
+  pkg = stdenvNoCC.mkDerivation {
     installPhase = ''
       cp -aR $src $out
     '';
@@ -13,5 +20,7 @@ let
     };
   };
 in {
-  path = if local.enable then local.path else builtins.toString pkg;
+  path = 
+    if local.enable then local.path
+    else builtins.toString pkg;
 }

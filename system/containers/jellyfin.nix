@@ -17,6 +17,10 @@ in {
         type = lib.types.number;
         default = 8096;
       };
+      configDir = lib.mkOption {
+        type = lib.types.nonEmptyStr;
+        default = "";
+      };
       volumes = lib.mkOption {
         type = lib.types.listOf lib.types.str;
         default = [ ];
@@ -33,7 +37,14 @@ in {
         image = "docker.io/jellyfin/jellyfin:${cfg.tag}";
         autoStart = true;
         ports = [ "${toStr cfg.port}:${toStr cfg.port}" ];
-        volumes = cfg.volumes;
+        volumes = cfg.volumes ++ [
+          "${cfg.configDir}/config:/config"
+          "${cfg.configDir}/cache:/cache"
+          "${cfg.configDir}/log:/log"
+        ];
+        environment = {
+          JELLYFIN_LOG_DIR = "/log";
+        };
         extraOptions = [ "--network=host" ];
       };
     };
