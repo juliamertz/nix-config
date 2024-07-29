@@ -6,7 +6,4 @@ let
     extraFlags = "--use-config-file ${dotfiles.path}/lazygit/config.yml";
     dependencies = with pkgs; [ delta ];
   };
-in
-{
-  environment.systemPackages = [ lazygit ];
-}
+in { environment.systemPackages = [ lazygit ]; }

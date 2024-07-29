@@ -14,8 +14,6 @@
     };
   };
 
-  sops.secrets = {
-    protonvpn_key = { owner = settings.user.username; };
-  };
+  sops.secrets = { protonvpn_key = { owner = settings.user.username; }; };
 }
 

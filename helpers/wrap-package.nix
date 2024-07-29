@@ -1,11 +1,11 @@
 # https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
-{ symlinkJoin, makeWrapper, lib }: 
+{ symlinkJoin, makeWrapper, lib }:
 args:
-let 
+let
   defaultValues = {
     extraFlags = "";
     extraArgs = "";
-    dependencies = [];
+    dependencies = [ ];
     postWrap = "";
     preWrap = "";
   };
@@ -13,12 +13,8 @@ let
   cfg = defaultValues // args;
 
   join = value:
-    if builtins.isList value then
-      lib.concatStringsSep " " value
-    else
-      value;
-in
-symlinkJoin {
+    if builtins.isList value then lib.concatStringsSep " " value else value;
+in symlinkJoin {
   name = cfg.name;
   paths = [ cfg.package ] ++ cfg.dependencies;
   buildInputs = [ makeWrapper ];

@@ -1,11 +1,6 @@
-{ pkgs, ... }:
-{
-  imports = [
-    ./tui.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./tui.nix ];
 
   # TODO: spicetify
-  environment.systemPackages = [ 
-    pkgs.spotify
-  ];
+  environment.systemPackages = [ pkgs.spotify ];
 }

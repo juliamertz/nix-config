@@ -1,5 +1,4 @@
-{ pkgs, inputs, settings, helpers, ... }:
-{
+{ pkgs, inputs, settings, helpers, ... }: {
   imports = [
     ../../system/networking/zerotier # Vpn tunnel
     ../../system/networking/openvpn # Protonvpn configurations
@@ -18,7 +17,7 @@
     ../../system/wm/awesome
     ../../system/wm/hyprland
     ../gaming/configuration.nix # Games & related apps
-    ../../system/display-manager/sddm.nix
+    ../../system/display-manager/sddm
     ../../system/scripts/home-assistant.nix
     ../../system/scripts/remote.nix
     ../../system/scripts/deref.nix
@@ -37,9 +36,10 @@
   ];
 
   config = {
-    affinity = let path = "${settings.user.home}/affinity"; in {
-      prefix ="${path}/prefix"; 
-      licenseViolations ="${path}/license_violations"; 
+    affinity = let path = "${settings.user.home}/affinity";
+    in {
+      prefix = "${path}/prefix";
+      licenseViolations = "${path}/license_violations";
       user = settings.user.username;
 
       photo.enable = true;
@@ -60,14 +60,13 @@
 
     openvpn.proton = {
       enable = true;
-      profile = "nl-protonvpn";
+      profile = "nl-393";
     };
 
     programs.zsh.enable = true;
 
-    fonts.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-    ];
+    fonts.packages = with pkgs;
+      [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
     environment.systemPackages = with pkgs; [
       qdirstat
@@ -86,14 +85,15 @@
       xorg.xhost
       networkmanagerapplet
       brave
-      usbutils 
+      usbutils
       killall
       firefox
       ethtool
       (helpers.wrapPackage {
         name = "ffmpeg";
         package = pkgs.ffmpeg-full;
-        extraFlags = "-hwaccel cuda -hwaccel_output_format cuda"; # (https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html#hwaccel-transcode-without-scaling)
+        extraFlags =
+          "-hwaccel cuda -hwaccel_output_format cuda"; # (https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html#hwaccel-transcode-without-scaling)
       })
     ];
 

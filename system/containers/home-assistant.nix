@@ -1,11 +1,9 @@
 { lib, config, pkgs, ... }:
-let 
+let
   cfg = config.home-assistant;
   toStr = builtins.toString;
 in {
-  imports = [
-    ./default.nix
-  ];
+  imports = [ ./default.nix ];
 
   options = {
     home-assistant = {
@@ -33,19 +31,12 @@ in {
         image = "docker.io/homeassistant/home-assistant:${cfg.tag}";
         autoStart = true;
         ports = [ "${toStr cfg.port}:${toStr cfg.port}" ];
-        volumes = [
-          "${cfg.configPath}:/config"
-          "/etc/localtime:/etc/localtime:ro"
-        ];
-        extraOptions = [
-          "--privileged"
-          "--network=host"
-        ];
+        volumes =
+          [ "${cfg.configPath}:/config" "/etc/localtime:/etc/localtime:ro" ];
+        extraOptions = [ "--privileged" "--network=host" ];
       };
     };
 
-    systemd.tmpfiles.rules = [
-      "d ${cfg.configPath} 0755 root root"
-    ];
+    systemd.tmpfiles.rules = [ "d ${cfg.configPath} 0755 root root" ];
   };
 }

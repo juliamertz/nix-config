@@ -1,5 +1,4 @@
-{ pkgs, pkgs-wrapped, ... }:
-{
+{ pkgs, pkgs-wrapped, ... }: {
   imports = [
     ../../system/containers/home-assistant.nix
     ../../system/containers/sponsorblock-atv.nix
@@ -11,11 +10,6 @@
   users.defaultUserShell = pkgs.bash;
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = [ ] 
-  ++ (with pkgs-wrapped; [
-      lazygit
-      nvim
-      kitty
-      tmux
-    ]);
+  environment.systemPackages = [ ]
+    ++ (with pkgs-wrapped; [ lazygit nvim kitty tmux ]);
 }

@@ -1,7 +1,8 @@
 { settings, pkgs, lib, config, ... }:
-let 
-  proton = pkgs.callPackage ./proton.nix { inherit lib; cfg = config.openvpn.proton; };
+let proton = pkgs.callPackage ./proton.nix { cfg = config.openvpn.proton; };
 in {
+  imports = [ ./cli.nix ];
+
   options = {
     openvpn.proton = {
       enable = lib.mkOption {
@@ -18,8 +19,14 @@ in {
 
   config = {
     services.openvpn.servers = {
-      nl-393-protonvpn = proton.ifProfile "nl-protonvpn" (proton.mkConfig "212.92.104.209");
-      de-200-protonvpn = proton.ifProfile "de-protonvpn" (proton.mkConfig "217.138.216.130");
+      nl-393-protonvpn = (proton.mkConfig {
+        ip = "212.92.104.209";
+        name = "nl-393";
+      });
+      de-200-protonvpn = (proton.mkConfig {
+        ip = "217.138.216.130";
+        name = "de-200";
+      });
     };
 
     sops.secrets = {
@@ -28,10 +35,7 @@ in {
       openvpn_tls_crypt = { owner = settings.user.username; };
     };
 
-    environment.systemPackages = with pkgs; [
-      networkmanager-openvpn 
-      openvpn
-    ];
+    environment.systemPackages = with pkgs; [ networkmanager-openvpn openvpn ];
   };
 }
 

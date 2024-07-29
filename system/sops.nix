@@ -1,11 +1,9 @@
-{ pkgs, inputs, settings, lib, config, ...}:
-let 
+{ pkgs, inputs, settings, lib, config, ... }:
+let
   format = "yaml";
   cfg = config.secrets;
 in {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
+  imports = [ inputs.sops-nix.nixosModules.sops ];
 
   options.secrets = {
     profile = lib.mkOption {
@@ -17,7 +15,7 @@ in {
       default = "yaml";
     };
   };
-  
+
   # Secrets attribute should be set in per-profile configuration
   config = {
     environment.systemPackages = [ pkgs.sops ];

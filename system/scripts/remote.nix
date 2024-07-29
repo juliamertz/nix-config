@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let 
+let
   script = ''
     #!/usr/bin/env bash
     API_KEY=$(cat /run/secrets/zerotier_api_key)

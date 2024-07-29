@@ -1,14 +1,11 @@
 { pkgs, settings, ... }:
-let 
-  user = settings.user.username;
+let user = settings.user.username;
 in {
-  imports = [
-    ../system/io/ssh.nix
-  ];
+  imports = [ ../system/io/ssh.nix ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = settings.system.hostname; 
+  networking.hostName = settings.system.hostname;
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
@@ -30,7 +27,7 @@ in {
     LC_PAPER = "nl_NL.UTF-8";
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
-  }; 
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -42,11 +39,7 @@ in {
     flake = "/home/${user}/nix";
   };
 
-  environment.systemPackages = with pkgs; [
-    openssl
-    curl
-    tldr
-  ];
+  environment.systemPackages = with pkgs; [ openssl curl tldr ];
 
   system.stateVersion = "24.05";
 }

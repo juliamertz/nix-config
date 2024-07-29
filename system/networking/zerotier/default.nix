@@ -1,15 +1,12 @@
 { settings, ... }:
-let 
-  port = 9993;
+let port = 9993;
 in {
   services.zerotierone = {
     inherit port;
     enable = true;
   };
 
-  sops.secrets = {
-    zerotier_network_id = { owner = settings.user.username; };
-  };
+  sops.secrets = { zerotier_network_id = { owner = settings.user.username; }; };
 
   system.activationScripts.script.text = ''
     #!/bin/bash

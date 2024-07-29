@@ -1,5 +1,4 @@
-{ settings, ... }:
-{
+{ settings, ... }: {
   programs.git = {
     enable = true;
     config = {
@@ -11,12 +10,8 @@
       core.editor = settings.user.editor;
       pull.rebase = true;
       url = {
-        "https://github.com/" = {
-          insteadOf = [ "gh:" "github:" ];
-        };
-        "git@github.com:juliamertz/" = {
-          insteadOf = [ "julia:" ];
-        };
+        "https://github.com/" = { insteadOf = [ "gh:" "github:" ]; };
+        "git@github.com:juliamertz/" = { insteadOf = [ "julia:" ]; };
       };
       alias = {
         s = "status";

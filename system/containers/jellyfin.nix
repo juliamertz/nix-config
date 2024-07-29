@@ -1,11 +1,9 @@
 { lib, config, ... }:
-let 
+let
   cfg = config.jellyfin;
   toStr = builtins.toString;
 in {
-  imports = [
-    ./default.nix
-  ];
+  imports = [ ./default.nix ];
 
   options = {
     jellyfin = {
@@ -27,6 +25,7 @@ in {
       };
     };
   };
+
   config = {
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
@@ -42,9 +41,7 @@ in {
           "${cfg.configDir}/cache:/cache"
           "${cfg.configDir}/log:/log"
         ];
-        environment = {
-          JELLYFIN_LOG_DIR = "/log";
-        };
+        environment = { JELLYFIN_LOG_DIR = "/log"; };
         extraOptions = [ "--network=host" ];
       };
     };

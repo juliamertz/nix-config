@@ -32,66 +32,71 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
-  let 
-    userSettings = {
-      username = "julia";
-      fullName = "Julia Mertz";
-      email = "info@juliamertz.dev";
-      shell = "zsh";
-      browser = "firefox";
-      terminal = "wezterm";
-      editor = "nvim";
-      windowManager = "awesome";
-      home = "/home/${userSettings.username}";
-      dotfiles = "${userSettings.home}/dotfiles";
-    };
+    let
+      userSettings = {
+        username = "julia";
+        fullName = "Julia Mertz";
+        email = "info@juliamertz.dev";
+        shell = "zsh";
+        browser = "firefox";
+        terminal = "wezterm";
+        editor = "nvim";
+        windowManager = "awesome";
+        home = "/home/${userSettings.username}";
+        dotfiles = "${userSettings.home}/dotfiles";
+      };
 
-    systemSettings = {
-      profile = "personal";
-      hostname = "workstation";
-      hardware =  systemSettings.hostname;
+      systemSettings = {
+        profile = "personal";
+        hostname = "workstation";
+        hardware = systemSettings.hostname;
 
-      term = "xterm-256color";
-      platform = "x86_64-linux";
-      timeZone = "Europe/Amsterdam";
-      defaultLocale = "en_US.UTF-8";
-    };
+        term = "xterm-256color";
+        platform = "x86_64-linux";
+        timeZone = "Europe/Amsterdam";
+        defaultLocale = "en_US.UTF-8";
+      };
 
-    dotfiles = pkgs.callPackage ./pkgs/dotfiles.nix {
-      repo = "https://github.com/juliamertz/dotfiles";
-      rev = "6b6e8b5ba2165c3af7067ab2bab37f13e756c86d";
-      local = {
-        enable = false; # When set to true the configuration has to be built with --impure
-        path = userSettings.dotfiles;
+      dotfiles = pkgs.callPackage ./system/dotfiles.nix {
+        repo = "https://github.com/juliamertz/dotfiles";
+        rev = "6b6e8b5ba2165c3af7067ab2bab37f13e756c86d";
+        local = {
+          enable =
+            true; # When set to true the configuration has to be built with --impure
+          path = userSettings.dotfiles;
+        };
+      };
+
+      lib = nixpkgs.lib;
+      pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
+      settings = {
+        user = userSettings;
+        system = systemSettings;
+      };
+      helpers = pkgs.callPackage ./helpers { };
+
+      specialArgs = {
+        inherit inputs;
+        inherit dotfiles;
+        inherit settings;
+        inherit helpers;
+      };
+    in {
+      nixosConfigurations = {
+        ${settings.system.hostname} = lib.nixosSystem {
+          system = systemSettings.platform;
+          inherit specialArgs;
+          modules = [
+            ./hardware-configuration.nix
+            ./profiles/base.nix
+            ./system/home-manager.nix
+            (./. + "/profiles" + ("/" + systemSettings.profile)
+              + "/configuration.nix")
+            # (./. + "/user/wm" + ("/" + userSettings.windowManager) + "/configuration.nix")
+            (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
+            inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+          ];
+        };
       };
     };
-
-    lib = nixpkgs.lib;
-    pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
-    settings = { user = userSettings; system = systemSettings; };
-    helpers = pkgs.callPackage ./helpers { };
-
-    specialArgs = { 
-      inherit inputs;
-      inherit dotfiles;
-      inherit settings;
-      inherit helpers;
-    };
-  in {
-    nixosConfigurations = {
-      ${settings.system.hostname} = lib.nixosSystem {
-        system = systemSettings.platform;
-        inherit specialArgs;
-        modules = [
-          ./hardware-configuration.nix
-          ./profiles/base.nix
-          ./system/home-manager.nix
-          (./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")
-          # (./. + "/user/wm" + ("/" + userSettings.windowManager) + "/configuration.nix")
-          (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
-          inputs.flake-programs-sqlite.nixosModules.programs-sqlite
-        ];
-      };
-    };
-  };
 }

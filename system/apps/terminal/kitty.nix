@@ -5,7 +5,4 @@ let
     package = pkgs.kitty;
     extraFlags = "--config ${dotfiles.path}/kitty/kitty.conf";
   };
-in
-{
-  environment.systemPackages = [ kitty ];
-}
+in { environment.systemPackages = [ kitty ]; }

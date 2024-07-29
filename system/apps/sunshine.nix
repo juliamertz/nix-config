@@ -1,7 +1,10 @@
 { inputs, settings, ... }:
 let
-  platform = settings.system.platform; 
-  pkgs = import inputs.nixpkgs-24_05 { system = platform; config.allowUnfree = true; };
+  platform = settings.system.platform;
+  pkgs = import inputs.nixpkgs-24_05 {
+    system = platform;
+    config.allowUnfree = true;
+  };
   pkg = pkgs.sunshine.override {
     cudaSupport = true;
     stdenv = pkgs.cudaPackages.backendStdenv;
@@ -20,8 +23,14 @@ in {
   networking.firewall = {
     allowedTCPPorts = [ 47984 47989 47990 48010 ];
     allowedUDPPortRanges = [
-    { from = 47998; to = 48000; }
-    { from = 8000; to = 8010; }
+      {
+        from = 47998;
+        to = 48000;
+      }
+      {
+        from = 8000;
+        to = 8010;
+      }
     ];
   };
 

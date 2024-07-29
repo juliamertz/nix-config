@@ -1,16 +1,15 @@
 { lib, pkgs, config, ... }:
-let 
+let
   cfg = config.sponsorblock-atv;
   scripts = {
-    setup = /*bash*/ ''
-      sudo mkdir -p ${cfg.configPath}
-      podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli
-    ''; 
+    setup = # bash
+      ''
+        sudo mkdir -p ${cfg.configPath}
+        podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli
+      '';
   };
 in {
-  imports = [
-    ./default.nix
-  ];
+  imports = [ ./default.nix ];
 
   options = {
     sponsorblock-atv = {
@@ -26,9 +25,8 @@ in {
   };
 
   config = {
-    environment.systemPackages = [ 
-      (pkgs.writeShellScriptBin "sponsorblock-atv-setup" scripts.setup) 
-    ];
+    environment.systemPackages =
+      [ (pkgs.writeShellScriptBin "sponsorblock-atv-setup" scripts.setup) ];
 
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {

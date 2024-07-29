@@ -1,7 +1,1 @@
-{ pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    sqlite
-    litecli
-  ];
-}
+{ pkgs, ... }: { environment.systemPackages = with pkgs; [ sqlite litecli ]; }

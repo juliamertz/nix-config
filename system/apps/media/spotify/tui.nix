@@ -1,4 +1,4 @@
-{ lib, pkgs, dotfiles, helpers, ... }: 
+{ lib, pkgs, dotfiles, helpers, ... }:
 let
   base = pkgs.spotify-player.override {
     withAudioBackend = "alsa";
@@ -7,7 +7,7 @@ let
     withLyrics = false;
   };
 
-  overlay = base.overrideAttrs (old:  {
+  overlay = base.overrideAttrs (old: {
     name = "spotify_player";
     src = pkgs.fetchFromGitHub {
       owner = "juliamertz";
@@ -27,11 +27,10 @@ let
     package = overlay;
     name = "spotify_player";
     extraFlags = "--config-folder ${dotfiles.path}/spotify-player";
-    postWrap = /*sh*/ ''
-      ln -sf $out/bin/spotify_player $out/bin/spt
-    '';
+    postWrap = # sh
+      ''
+        ln -sf $out/bin/spotify_player $out/bin/spt
+      '';
   };
-in {
-  environment.systemPackages = [ wrapped ];
-}
- 
+in { environment.systemPackages = [ wrapped ]; }
+

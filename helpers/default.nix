@@ -1,4 +1,1 @@
-{ callPackage }:
-{
-  wrapPackage = callPackage ./wrap-package.nix { };
-}
+{ callPackage }: { wrapPackage = callPackage ./wrap-package.nix { }; }
