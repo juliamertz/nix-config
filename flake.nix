@@ -61,8 +61,8 @@
         repo = "https://github.com/juliamertz/dotfiles";
         rev = "6b6e8b5ba2165c3af7067ab2bab37f13e756c86d";
         local = {
-          enable =
-            true; # When set to true the configuration has to be built with --impure
+          # When set to true the configuration has to be built with --impure
+          enable = true;
           path = userSettings.dotfiles;
         };
       };
@@ -86,14 +86,15 @@
         ${settings.system.hostname} = lib.nixosSystem {
           system = systemSettings.platform;
           inherit specialArgs;
-          modules = [
+          modules = let
+            profile = systemSettings.profile;
+            hardware = systemSettings.hardware;
+          in [
             ./hardware-configuration.nix
             ./profiles/base.nix
             ./system/home-manager.nix
-            (./. + "/profiles" + ("/" + systemSettings.profile)
-              + "/configuration.nix")
-            # (./. + "/user/wm" + ("/" + userSettings.windowManager) + "/configuration.nix")
-            (./. + "/hardware" + ("/" + systemSettings.hardware) + ".nix")
+            (./. + "/profiles" + ("/" + profile) + "/configuration.nix")
+            (./. + "/hardware" + ("/" + hardware) + ".nix")
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite
           ];
         };

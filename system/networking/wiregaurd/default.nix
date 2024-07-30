@@ -1,4 +1,6 @@
-{ settings, ... }: {
+{ settings, ... }:
+let user = settings.user.username;
+in {
   networking.wireguard.interfaces = {
     wg0 = {
       ips = [ "10.75.130.74/32" ];
@@ -14,6 +16,6 @@
     };
   };
 
-  sops.secrets = { protonvpn_key = { owner = settings.user.username; }; };
+  sops.secrets = helpers.ownedSecrets user [ "protonvpn_key" ];
 }
 

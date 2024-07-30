@@ -1,5 +1,7 @@
-{ settings, pkgs, lib, config, ... }:
-let proton = pkgs.callPackage ./proton.nix { cfg = config.openvpn.proton; };
+{ settings, pkgs, lib, config, helpers, ... }:
+let
+  proton = pkgs.callPackage ./proton.nix { cfg = config.openvpn.proton; };
+  user = settings.user.username;
 in {
   imports = [ ./cli.nix ];
 
@@ -29,11 +31,11 @@ in {
       });
     };
 
-    sops.secrets = {
-      openvpn_auth = { owner = settings.user.username; };
-      openvpn_ca = { owner = settings.user.username; };
-      openvpn_tls_crypt = { owner = settings.user.username; };
-    };
+    sops.secrets = helpers.ownedSecrets user [
+      "openvpn_auth"
+      "openvpn_ca"
+      "openvpn_tls_crypt"
+    ];
 
     environment.systemPackages = with pkgs; [ networkmanager-openvpn openvpn ];
   };
