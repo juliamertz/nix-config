@@ -32,19 +32,19 @@
     ../../system/apps/neovim.nix
     ../../system/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
-    inputs.affinity.nixosModules.affinity
+    # inputs.affinity.nixosModules.affinity
   ];
 
   config = {
-    affinity = let path = "${settings.user.home}/affinity";
-    in {
-      prefix = "${path}/prefix";
-      licenseViolations = "${path}/license_violations";
-      user = settings.user.username;
-
-      photo.enable = true;
-      designer.enable = true;
-    };
+    # affinity = let path = "${settings.user.home}/affinity";
+    # in {
+    #   prefix = "${path}/prefix";
+    #   licenseViolations = "${path}/license_violations";
+    #   user = settings.user.username;
+    #
+    #   photo.enable = true;
+    #   designer.enable = true;
+    # };
 
     jellyfin = {
       configDir = "${settings.user.home}/jellyfin";
@@ -68,34 +68,41 @@
     fonts.packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
-    environment.systemPackages = with pkgs; [
-      qdirstat
-      blender
-      activate-linux
-      veracrypt
-      handbrake
-      dolphin
-      nautilus
-      mpv
-      scrot
-      sxiv
-      cudatoolkit
-      zip
-      unzip
-      xorg.xhost
-      networkmanagerapplet
-      brave
-      usbutils
-      killall
-      firefox
-      ethtool
-      (helpers.wrapPackage {
-        name = "ffmpeg";
-        package = pkgs.ffmpeg-full;
-        extraFlags =
-          "-hwaccel cuda -hwaccel_output_format cuda"; # (https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html#hwaccel-transcode-without-scaling)
-      })
-    ];
+    nixpkgs.config.packageOverrides = self: rec {
+      blender = self.blender.override { cudaSupport = true; };
+    };
+
+    environment.systemPackages =
+      let json_repair = pkgs.callPackage ../../pkgs/json_repair.nix { };
+      in with pkgs; [
+        # json_repair
+        qdirstat
+        blender
+        activate-linux
+        veracrypt
+        handbrake
+        dolphin
+        nautilus
+        mpv
+        scrot
+        sxiv
+        cudatoolkit
+        zip
+        unzip
+        xorg.xhost
+        networkmanagerapplet
+        brave
+        usbutils
+        killall
+        firefox
+        ethtool
+        (helpers.wrapPackage {
+          name = "ffmpeg";
+          package = pkgs.ffmpeg-full;
+          extraFlags =
+            "-hwaccel cuda -hwaccel_output_format cuda"; # (https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html#hwaccel-transcode-without-scaling)
+        })
+      ];
 
     programs.thunar.enable = true;
     nixpkgs.config.allowUnfree = true;

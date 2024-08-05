@@ -1,1 +1,3 @@
-{ pkgs, ... }: { environment.systemPackages = with pkgs; [ libcap go gcc ]; }
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ libcap go gcc gopls ];
+}
