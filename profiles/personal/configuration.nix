@@ -8,7 +8,6 @@
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../../system/io/keyd.nix # Key remapping daemon
-    ../../system/containers/sponsorblock-atv.nix
     # ../../system/apps/jellyfin.nix
     ../../system/containers/jellyfin.nix
     ../../system/apps/virtmanager.nix # Virtual machines
