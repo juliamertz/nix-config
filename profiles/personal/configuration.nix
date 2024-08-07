@@ -91,9 +91,7 @@
         unzip
         xorg.xhost
         networkmanagerapplet
-        brave
         usbutils
-        killall
         firefox
         ethtool
         (helpers.wrapPackage {

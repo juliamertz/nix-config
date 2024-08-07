@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, settings, ... }:
 let
   cfg = config.jellyfin;
   toStr = builtins.toString;
@@ -29,6 +29,13 @@ in {
   config = {
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
+
+    system.activationScripts.jellyfin.text = /*sh*/ ''
+      dir=${cfg.configDir}
+      if [ ! -e $dir ]; then
+        mkdir -p $dir/config $dir/cache $dir/log
+      fi
+    '';
 
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {

@@ -59,7 +59,7 @@
 
       dotfiles = pkgs.callPackage ./system/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "a9ffe9940682b4aa8c38f90955fd80c866d303cd";
+        rev = "f5c95f8d802ef63a12a8538107d888a294db7346";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;
