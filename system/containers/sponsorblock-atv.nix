@@ -1,13 +1,5 @@
-{ lib, pkgs, config, ... }:
-let
-  cfg = config.sponsorblock-atv;
-  scripts = {
-    setup = # bash
-      ''
-        sudo mkdir -p ${cfg.configPath}
-        podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli
-      '';
-  };
+{ lib, pkgs, config, settings, ... }:
+let cfg = config.sponsorblock-atv;
 in {
   imports = [ ./default.nix ];
 
@@ -15,7 +7,7 @@ in {
     sponsorblock-atv = {
       configPath = lib.mkOption {
         type = lib.types.path;
-        default = /etc/sponsorblock-atv;
+        default = "${settings.user.home}/sponsorblock-atv";
       };
       image = lib.mkOption {
         type = lib.types.str;
@@ -25,8 +17,13 @@ in {
   };
 
   config = {
-    environment.systemPackages =
-      [ (pkgs.writeShellScriptBin "sponsorblock-atv-setup" scripts.setup) ];
+    systemd.tmpfiles.rules = let user = settings.user.username;
+    in [ "d ${cfg.configPath} 0755 ${user} ${user}" ];
+
+    environment.systemPackages = [
+      (pkgs.writeShellScriptBin "sponsorblock-setup"
+        "sudo podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli")
+    ];
 
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {

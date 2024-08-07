@@ -10,7 +10,7 @@ in {
 
   sops.secrets = helpers.ownedSecrets user [ "zerotier_network_id" ];
 
-  system.activationScripts.script.text = ''
+  system.activationScripts.joinZerotierNetwork.text = /*sh*/ ''
     #!/bin/bash
     NETWORK_ID=$(cat /run/secrets/zerotier_network_id)
     /run/current-system/sw/bin/zerotier-cli join $NETWORK_ID

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, settings, ... }:
 let
   cfg = config.home-assistant;
   toStr = builtins.toString;
@@ -17,7 +17,7 @@ in {
       };
       configPath = lib.mkOption {
         type = lib.types.str;
-        default = "/home/${config.user.username}/home-assistant";
+        default = "/home/${settings.user.username}/home-assistant";
       };
     };
   };

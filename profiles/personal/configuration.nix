@@ -2,9 +2,9 @@
   imports = [
     ../../system/networking/zerotier # Vpn tunnel
     ../../system/networking/openvpn # Protonvpn configurations
-    ../../system/lang/rust.nix # Rust toolchain
-    ../../system/lang/sql.nix # Rust toolchain
-    ../../system/lang/go.nix # Rust toolchain
+    ../../system/lang/rust.nix 
+    ../../system/lang/sql.nix 
+    ../../system/lang/go.nix 
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../../system/io/keyd.nix # Key remapping daemon
