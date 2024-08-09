@@ -11,6 +11,7 @@
     ../../system/apps/neovim.nix
     ../../system/apps/lazygit.nix
     ../../system/lang/lua.nix 
+    ../../system/networking/openvpn # Protonvpn configurations
     ../../system/apps/qbittorrent.nix
   ];
 
@@ -22,7 +23,10 @@
     ];
   };
 
-  qbittorrent.gui.enable = false;
+  openvpn.proton = {
+    enable = true;
+    profile = "nl-393";
+  };
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;

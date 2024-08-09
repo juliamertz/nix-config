@@ -28,9 +28,8 @@
     ../../system/apps/shell/fish.nix
     ../../system/apps/shell/zsh.nix
     ../../system/apps/neovim.nix
-    ../../system/apps/qbittorrent.nix
+    # ../../system/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
-    inputs.vpnconfinement.nixosModules.default
     # inputs.affinity.nixosModules.affinity
   ];
 
@@ -58,16 +57,16 @@
     fonts.packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
-    # nixpkgs.config.packageOverrides = self: rec {
-    #   blender = self.blender.override { cudaSupport = true; };
-    # };
+    nixpkgs.config.packageOverrides = self: rec {
+      blender = self.blender.override { cudaSupport = true; };
+    };
 
     environment.systemPackages =
       let json_repair = pkgs.callPackage ../../pkgs/json_repair.nix { };
       in with pkgs; [
         # json_repair
         qdirstat
-        # blender
+        blender
         activate-linux
         veracrypt
         handbrake

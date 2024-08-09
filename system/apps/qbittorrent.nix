@@ -1,4 +1,4 @@
-{ config, lib, pkgs, helpers, settings, ... }:
+{ config, lib, pkgs, helpers, settings, inputs, ... }:
 with lib;
 let cfg = config.services.qbittorrent;
 in {
@@ -18,24 +18,16 @@ in {
         qBittorrent web UI port.
       '';
     };
-
-    namespaceAddress = mkOption {
-      type = types.str;
-      default = "192.168.15.1";
-      description = mdDoc ''
-        The address of the veth interface connected to the vpn namespace.
-
-        This is the address used to reach the vpn namespace from other
-        namespaces connected to the linux bridge.
-      '';
-    };
   };
 
   config = {
+    networking.firewall.allowedTCPPorts = [ cfg.port ];
+    networking.firewall.allowedUDPPorts = [ cfg.port ];
+
     systemd.services.qbittorrent = {
       description = "qBittorrent-nox service";
       documentation = [ "man:qbittorrent-nox(1)" ];
-      after = [ "network.target" "wg.service" ];
+      after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       requires = [ "network-online.target" ];
 
@@ -67,35 +59,6 @@ in {
     users.users.qbittorrent = {
       group = "qbittorrent";
       uid = 888;
-    };
-
-    # VPN & forwarding
-    vpnnamespaces.wg = {
-      enable = true;
-      wireguardConfigFile = ../../secrets/wg0.conf;
-      accessibleFrom = [ "192.168.0.0/24" "172.27.0.0/24" ];
-      portMappings = [{
-        from = cfg.port;
-        to = cfg.port;
-      }];
-      openVPNPorts = [{
-        port = cfg.port;
-        protocol = "both";
-      }];
-    };
-
-    systemd.services.qbittorrent.vpnconfinement = {
-      enable = true;
-      vpnnamespace = "wg";
-    };
-
-    services.caddy = {
-      enable = true;
-      extraConfig = ''
-        http://0.0.0.0:8280, http://192.168.0.101:8280, http://172.27.21.207:8280 {
-          reverse_proxy ${cfg.namespaceAddress}:${builtins.toString cfg.port}
-        }
-      '';
     };
   };
 }
