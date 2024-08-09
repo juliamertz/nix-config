@@ -13,14 +13,16 @@
         #!/usr/bin/env sh
 
         run() {
-            if ! pgrep -f "$1"; then
+            if ! pgrep -f "$(basename $1)"; then
                 "$@" &
             fi
         }
 
-        ${pkgs.spotify-player}/bin/spotify_player --daemon
-        run "${settings.user.browser}"
-        run "${pkgs.wezterm}/bin/wezterm start -- ${pkgs.tmux}/bin/tmux a || ${pkgs.tmux}/bin/tmux new"
+        run ${pkgs.spotify-player}/bin/spotify_player --daemon
+        run ${pkgs.firefox}/bin/firefox
+        run ${pkgs.picom}/bin/picom -b
+        
+        # run "${pkgs.wezterm}/bin/wezterm start -- ${pkgs.tmux}/bin/tmux a || ${pkgs.tmux}/bin/tmux new"
       '';
 
     environment.systemPackages = with pkgs; [ rofi pamixer playerctl ];

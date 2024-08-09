@@ -39,7 +39,7 @@ in {
     flake = "/home/${user}/nix";
   };
 
-  environment.systemPackages = with pkgs; [ openssl curl tldr ];
+  environment.systemPackages = with pkgs; [ openssl curl tldr xclip ];
 
   system.stateVersion = "24.05";
 }

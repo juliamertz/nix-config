@@ -10,6 +10,6 @@ in {
     '';
   services.displayManager = {
     sddm.enable = true;
-    # defaultSession = "${settings.user.windowManager}";
+    defaultSession = "none+awesome";
   };
 }

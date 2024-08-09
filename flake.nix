@@ -2,24 +2,25 @@
   description = "My nixos configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    affinity.url = "github:juliamertz/affinity-nixos/main";
-    wezterm.url = "github:wez/wezterm?dir=nix";
-
+    affinity = {
+      url = "github:juliamertz/affinity-nixos/main";
+    };
+    wezterm = {
+      url = "github:wez/wezterm?dir=nix";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
       url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
     suyu = {
       url = "git+https://git.suyu.dev/suyu/nix-flake";
@@ -27,11 +28,15 @@
     };
     flake-programs-sqlite = {
       url = "github:wamserma/flake-programs-sqlite";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-24_05";
+    };
+    vpnconfinement = {
+      url = "github:Maroka-chan/VPN-Confinement";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
+  outputs = { self, home-manager, ... }@inputs:
     let
       userSettings = {
         username = "julia";
@@ -59,7 +64,7 @@
 
       dotfiles = pkgs.callPackage ./system/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "f5c95f8d802ef63a12a8538107d888a294db7346";
+        rev = "1dcb6e8311565ddde939701b7bf79342c6a28ef1";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;
@@ -67,6 +72,7 @@
         };
       };
 
+      nixpkgs = inputs.nixpkgs-24_05;
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
       settings = {

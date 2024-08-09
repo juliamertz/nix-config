@@ -1,15 +1,14 @@
 { pkgs, inputs, settings, helpers, ... }: {
   imports = [
     ../../system/networking/zerotier # Vpn tunnel
-    ../../system/networking/openvpn # Protonvpn configurations
+    # ../../system/networking/openvpn # Protonvpn configurations
+    # ../../system/networking/wiregaurd # Protonvpn configurations
     ../../system/lang/rust.nix 
     ../../system/lang/sql.nix 
     ../../system/lang/go.nix 
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../../system/io/keyd.nix # Key remapping daemon
-    # ../../system/apps/jellyfin.nix
-    ../../system/containers/jellyfin.nix
     ../../system/apps/virtmanager.nix # Virtual machines
     ../../system/sops.nix # Secrets management
     ../../system/themes/rose-pine
@@ -31,6 +30,7 @@
     ../../system/apps/neovim.nix
     ../../system/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
+    inputs.vpnconfinement.nixosModules.default
     # inputs.affinity.nixosModules.affinity
   ];
 
@@ -45,43 +45,33 @@
     #   designer.enable = true;
     # };
 
-    jellyfin = {
-      configDir = "${settings.user.home}/jellyfin";
-      volumes = [
-        "${settings.user.home}/media/series:/shows"
-        "${settings.user.home}/media/movies:/movies"
-      ];
-    };
-
     # programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
     secrets.profile = "personal";
 
-    openvpn.proton = {
-      enable = true;
-      profile = "nl-393";
-    };
-
+    # openvpn.proton = {
+    #   enable = true;
+    #   profile = "nl-393";
+    # };
     programs.zsh.enable = true;
 
     fonts.packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
-    nixpkgs.config.packageOverrides = self: rec {
-      blender = self.blender.override { cudaSupport = true; };
-    };
+    # nixpkgs.config.packageOverrides = self: rec {
+    #   blender = self.blender.override { cudaSupport = true; };
+    # };
 
     environment.systemPackages =
       let json_repair = pkgs.callPackage ../../pkgs/json_repair.nix { };
       in with pkgs; [
         # json_repair
         qdirstat
-        blender
+        # blender
         activate-linux
         veracrypt
         handbrake
         dolphin
-        nautilus
         mpv
         scrot
         sxiv
