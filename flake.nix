@@ -6,18 +6,10 @@
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    affinity = {
-      url = "github:juliamertz/affinity-nixos/main";
-    };
-    wezterm = {
-      url = "github:wez/wezterm?dir=nix";
-    };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-    };
-    stylix = {
-      url = "github:danth/stylix";
-    };
+    affinity = { url = "github:juliamertz/affinity-nixos/main"; };
+    wezterm = { url = "github:wez/wezterm?dir=nix"; };
+    sops-nix = { url = "github:Mic92/sops-nix"; };
+    stylix = { url = "github:danth/stylix"; };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -73,13 +65,12 @@
       };
 
       nixpkgs = inputs.nixpkgs-24_05;
-      lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
+      helpers = pkgs.callPackage ./helpers { };
       settings = {
         user = userSettings;
         system = systemSettings;
       };
-      helpers = pkgs.callPackage ./helpers { };
 
       specialArgs = {
         inherit inputs;
@@ -89,7 +80,7 @@
       };
     in {
       nixosConfigurations = {
-        ${settings.system.hostname} = lib.nixosSystem {
+        ${settings.system.hostname} = nixpkgs.lib.nixosSystem {
           system = systemSettings.platform;
           inherit specialArgs;
           modules = let

@@ -1,5 +1,6 @@
 { lib, inputs, dotfiles, helpers, settings, ... }:
 let
+  user = user.settings.username;
   pkgs = inputs.nixpkgs-unstable.legacyPackages.${settings.system.platform};
   base = pkgs.spotify-player.override {
     withAudioBackend = "alsa";
@@ -13,18 +14,21 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "juliamertz";
       repo = "spotify-player";
-      rev = "d68c80cf7d6711e611ba3e58e83679fbd44601ac";
-      sha256 = "sha256-NC2WfwFiJGFqojCQJ9WPblyDU2K+pF7ahkLl/gQ8x7Y=";
+      rev = "50dcde62f933ef3da251db914eb71ad89a3566b0";
+      sha256 = "sha256-I03hQWgCUiXL9v46mlkW9T2hjARoxIMZEgz7V0HHcts=";
     };
-    # cargoHash = "sha256-R9N/+29YNWlNnl2+q/MMUZ/MbfFL538z5DLBZxDeaUM=";
-    # cargoHash = "";
     hash = "";
     cargoDeps = old.cargoDeps.overrideAttrs (lib.const {
       name = "${base.name}-vendor.tar.gz";
       src = base.src;
-      # outputHash = base.cargoHash;
     });
   });
+
+  # sops.secrets = helpers.ownedSecrets user [ "spotify_client_id" ];
+
+  sops.secrets = {
+    spotify_client_id = { owner = settings.user.username; };
+  };
 
   wrapped = helpers.wrapPackage {
     package = overlay;

@@ -21,6 +21,7 @@
     ../../system/scripts/deref.nix
     ../../system/apps/git.nix
     ../../system/apps/media/spotify
+    ../../system/apps/ollama.nix
     ../../system/apps/lazygit.nix
     ../../system/apps/terminal/kitty.nix
     ../../system/apps/terminal/wezterm.nix
@@ -28,21 +29,25 @@
     ../../system/apps/shell/fish.nix
     ../../system/apps/shell/zsh.nix
     ../../system/apps/neovim.nix
+    ../../system/networking/samba/client.nix
     # ../../system/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
-    # inputs.affinity.nixosModules.affinity
+    inputs.affinity.nixosModules.affinity
   ];
 
   config = {
-    # affinity = let path = "${settings.user.home}/affinity";
-    # in {
-    #   prefix = "${path}/prefix";
-    #   licenseViolations = "${path}/license_violations";
-    #   user = settings.user.username;
-    #
-    #   photo.enable = true;
-    #   designer.enable = true;
-    # };
+    sops.secrets = {
+      spotify_client_id = { owner = settings.user.username; };
+    };
+    affinity = let path = "${settings.user.home}/affinity";
+    in {
+      prefix = "${path}/prefix";
+      licenseViolations = "${path}/license_violations";
+      user = settings.user.username;
+
+      photo.enable = true;
+      designer.enable = true;
+    };
 
     # programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
