@@ -13,6 +13,7 @@
     ../../system/lang/lua.nix 
     ../../system/networking/openvpn # Protonvpn configurations
     ../../system/apps/qbittorrent.nix
+    ../../system/networking/samba/server.nix
   ];
 
   jellyfin = let user = settings.user.home; in {
@@ -20,12 +21,21 @@
     volumes = [
       "${user}/media/shows:/shows"
       "${user}/media/movies:/movies"
+      "${user}/media/music:/music"
     ];
   };
 
   openvpn.proton = {
     enable = true;
     profile = "nl-393";
+  };
+
+  services.qbittorrent = {
+    enable = true;
+    port = 8280;
+
+    user = settings.user.username;
+    group = "users";
   };
 
   programs.zsh.enable = true;

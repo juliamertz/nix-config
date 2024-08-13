@@ -7,16 +7,16 @@ in {
     fsType = "cifs";
     options = [
       "credentials=${config.sops.templates."smb-secrets".path}"
-      "soft"
-      "softreval"
-      "timeo=100"
-      "noatime"
-      "nodiratime"
-      "noauto" 
+      # "soft"
+      # "softreval"
+      # "timeo=100"
+      # "noatime"
+      # "nodiratime"
+      # "noauto" 
       "x-systemd.automount" 
-      "_netdev" 
-      "x-systemd.mount-timeout=5"
-      "x-systemd.idle-timeout=3600"
+      # "_netdev" 
+      # "x-systemd.mount-timeout=5"
+      # "x-systemd.idle-timeout=3600"
     ];
   };
 

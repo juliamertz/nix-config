@@ -43,5 +43,6 @@ in {
 
         script-security 2
       '';
+        # pull-filter ignore redirect-gateway
   };
 }
