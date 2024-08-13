@@ -11,5 +11,5 @@
     let formatEnvVar = name: value: "--set ${name} '${value}'";
     in lib.concatStringsSep " " (lib.mapAttrsToList formatEnvVar envVars);
 
-  getPkgs = branch: branch.legacyPackages.${settings.system.platform}.neovim;
+  getPkgs = branch: branch.legacyPackages.${settings.system.platform};
 }

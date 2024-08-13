@@ -1,11 +1,11 @@
 { pkgs, inputs, settings, helpers, ... }: {
   imports = [
     ../../system/networking/zerotier # Vpn tunnel
-    # ../../system/networking/openvpn # Protonvpn configurations
+    ../../system/networking/openvpn # Protonvpn configurations
     # ../../system/networking/wiregaurd # Protonvpn configurations
-    ../../system/lang/rust.nix 
-    ../../system/lang/sql.nix 
-    ../../system/lang/go.nix 
+    ../../system/lang/rust.nix
+    ../../system/lang/sql.nix
+    ../../system/lang/go.nix
     ../../system/io/bluetooth.nix # Bluetooth setup
     ../../system/io/pipewire.nix # Audio server
     ../../system/io/keyd.nix # Key remapping daemon
@@ -36,9 +36,7 @@
   ];
 
   config = {
-    sops.secrets = {
-      spotify_client_id = { owner = settings.user.username; };
-    };
+    sops.secrets = { spotify_client_id = { owner = settings.user.username; }; };
     affinity = let path = "${settings.user.home}/affinity";
     in {
       prefix = "${path}/prefix";
@@ -49,15 +47,19 @@
       designer.enable = true;
     };
 
-    # programs.zsh.enable = true;
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
     secrets.profile = "personal";
 
-    # openvpn.proton = {
-    #   enable = true;
-    #   profile = "nl-393";
-    # };
-    programs.zsh.enable = true;
+    openvpn.proton = {
+      enable = true;
+      profile = "nl-393";
+    };
 
     fonts.packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
@@ -106,3 +108,5 @@
     };
   };
 }
+
+# sudo etherwake -i enp0s10 04:7C:16:EB:DF:9B

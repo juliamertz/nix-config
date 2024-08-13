@@ -66,7 +66,7 @@
 
       nixpkgs = inputs.nixpkgs-24_05;
       pkgs = nixpkgs.legacyPackages.${systemSettings.platform};
-      helpers = pkgs.callPackage ./helpers { };
+      helpers = pkgs.callPackage ./helpers { inherit settings; };
       settings = {
         user = userSettings;
         system = systemSettings;
