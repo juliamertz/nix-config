@@ -30,6 +30,7 @@
     ../../system/apps/shell/zsh.nix
     ../../system/apps/neovim.nix
     ../../system/networking/samba/client.nix
+    ../../system/apps/browser/librewolf.nix
     # ../../system/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
     inputs.affinity.nixosModules.affinity
@@ -89,6 +90,7 @@
         usbutils
         firefox
         ethtool
+        (pkgs.callPackage ../../system/bluegone.nix {})
         (helpers.wrapPackage {
           name = "ffmpeg";
           package = pkgs.ffmpeg-full;
