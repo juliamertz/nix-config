@@ -54,7 +54,7 @@
         defaultLocale = "en_US.UTF-8";
       };
 
-      dotfiles = pkgs.callPackage ./system/dotfiles.nix {
+      dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
         rev = "1dcb6e8311565ddde939701b7bf79342c6a28ef1";
         local = {
@@ -89,7 +89,7 @@
           in [
             ./hardware-configuration.nix
             ./profiles/base.nix
-            ./system/home-manager.nix
+            ./modules/home-manager.nix
             (./. + "/profiles" + ("/" + profile) + "/configuration.nix")
             (./. + "/hardware" + ("/" + hardware) + ".nix")
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite

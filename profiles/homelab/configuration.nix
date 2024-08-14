@@ -1,19 +1,19 @@
 { pkgs, settings, ... }: {
   imports = [
-    ../../system/containers/home-assistant.nix
-    ../../system/containers/jellyfin.nix
-    ../../system/containers/sponsorblock-atv.nix
-    ../../system/networking/zerotier # Vpn tunnel
-    ../../system/sops.nix # Secrets management
-    ../../system/apps/git.nix
-    ../../system/apps/terminal/tmux.nix
-    ../../system/apps/shell/zsh.nix
-    ../../system/apps/neovim.nix
-    ../../system/apps/lazygit.nix
-    ../../system/lang/lua.nix 
-    ../../system/networking/openvpn # Protonvpn configurations
-    ../../system/apps/qbittorrent.nix
-    ../../system/networking/samba/server.nix
+    ../../modules/containers/home-assistant.nix
+    ../../modules/containers/jellyfin.nix
+    ../../modules/containers/sponsorblock-atv.nix
+    ../../modules/networking/zerotier # Vpn tunnel
+    ../../modules/sops.nix # Secrets management
+    ../../modules/apps/git.nix
+    ../../modules/apps/terminal/tmux.nix
+    ../../modules/apps/shell/zsh.nix
+    ../../modules/apps/neovim.nix
+    ../../modules/apps/lazygit.nix
+    ../../modules/lang/lua.nix 
+    ../../modules/networking/openvpn # Protonvpn configurations
+    ../../modules/apps/qbittorrent.nix
+    ../../modules/networking/samba/server.nix
   ];
 
   jellyfin = let user = settings.user.home; in {

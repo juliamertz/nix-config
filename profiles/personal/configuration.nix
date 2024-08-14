@@ -1,37 +1,37 @@
 { pkgs, inputs, settings, helpers, ... }: {
   imports = [
-    ../../system/networking/zerotier # Vpn tunnel
-    ../../system/networking/openvpn # Protonvpn configurations
-    # ../../system/networking/wiregaurd # Protonvpn configurations
-    ../../system/lang/rust.nix
-    ../../system/lang/sql.nix
-    ../../system/lang/go.nix
-    ../../system/io/bluetooth.nix # Bluetooth setup
-    ../../system/io/pipewire.nix # Audio server
-    ../../system/io/keyd.nix # Key remapping daemon
-    ../../system/apps/virtmanager.nix # Virtual machines
-    ../../system/sops.nix # Secrets management
-    ../../system/themes/rose-pine
-    ../../system/wm/awesome
-    ../../system/wm/hyprland
+    ../../modules/networking/zerotier # Vpn tunnel
+    ../../modules/networking/openvpn # Protonvpn configurations
+    # ../../modules/networking/wiregaurd # Protonvpn configurations
+    ../../modules/lang/rust.nix
+    ../../modules/lang/sql.nix
+    ../../modules/lang/go.nix
+    ../../modules/io/bluetooth.nix # Bluetooth setup
+    ../../modules/io/pipewire.nix # Audio server
+    ../../modules/io/keyd.nix # Key remapping daemon
+    ../../modules/apps/virtmanager.nix # Virtual machines
+    ../../modules/sops.nix # Secrets management
+    ../../modules/themes/rose-pine
+    ../../modules/wm/awesome
+    ../../modules/wm/hyprland
     ../gaming/configuration.nix # Games & related apps
-    ../../system/display-manager/sddm
-    ../../system/scripts/home-assistant.nix
-    ../../system/scripts/remote.nix
-    ../../system/scripts/deref.nix
-    ../../system/apps/git.nix
-    ../../system/apps/media/spotify
-    ../../system/apps/ollama.nix
-    ../../system/apps/lazygit.nix
-    ../../system/apps/terminal/kitty.nix
-    ../../system/apps/terminal/wezterm.nix
-    ../../system/apps/terminal/tmux.nix
-    ../../system/apps/shell/fish.nix
-    ../../system/apps/shell/zsh.nix
-    ../../system/apps/neovim.nix
-    ../../system/networking/samba/client.nix
-    ../../system/apps/browser/librewolf.nix
-    # ../../system/apps/qbittorrent.nix
+    ../../modules/display-manager/sddm
+    ../../modules/scripts/home-assistant.nix
+    ../../modules/scripts/remote.nix
+    ../../modules/scripts/deref.nix
+    ../../modules/apps/git.nix
+    ../../modules/apps/media/spotify
+    ../../modules/apps/ollama.nix
+    ../../modules/apps/lazygit.nix
+    ../../modules/apps/terminal/kitty.nix
+    ../../modules/apps/terminal/wezterm.nix
+    ../../modules/apps/terminal/tmux.nix
+    ../../modules/apps/shell/fish.nix
+    ../../modules/apps/shell/zsh.nix
+    ../../modules/apps/neovim.nix
+    ../../modules/networking/samba/client.nix
+    ../../modules/apps/browser/librewolf.nix
+    # ../../modules/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
     inputs.affinity.nixosModules.affinity
   ];
@@ -90,7 +90,7 @@
         usbutils
         firefox
         ethtool
-        (pkgs.callPackage ../../system/bluegone.nix {})
+        (pkgs.callPackage ../../modules/bluegone.nix {})
         (helpers.wrapPackage {
           name = "ffmpeg";
           package = pkgs.ffmpeg-full;

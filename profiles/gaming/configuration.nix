@@ -8,7 +8,7 @@ let
   };
 in {
   imports =
-    [ ../../system/apps/sunshine.nix ../../system/apps/game-launchers.nix ];
+    [ ../../modules/apps/sunshine.nix ../../modules/apps/game-launchers.nix ];
 
   hardware.new-lg4ff.enable = true;
   services.udev.packages = with pkgs; [ oversteer ];

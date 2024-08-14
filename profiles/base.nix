@@ -1,7 +1,7 @@
 { pkgs, settings, ... }:
 let user = settings.user.username;
 in {
-  imports = [ ../system/io/ssh.nix ];
+  imports = [ ../modules/io/ssh.nix ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
