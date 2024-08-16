@@ -53,32 +53,6 @@
       nix-direnv.enable = true;
     };
 
-    services.qbittorrent = {
-      enable = false;
-      settings = {
-        Meta = { MigrationVersion = 6; };
-
-        BitTorrent = {
-          "Session\\Port" = 54406;
-          "Session\\QueueingSystemEnabled" = false;
-          "Session\\Interface" = "tun0";
-          "Session\\InterfaceName" = "tun0";
-        };
-
-        Preferences = {
-          "General\\Locale" = "en";
-          "MailNotification\\req_auth" = true;
-          "WebUI\\AuthSubnetWhitelist" = "@Invalid()";
-          "WebUI\\LocalHostAuth" = false;
-          "WebUI\\AlternativeUIEnabled" = true;
-          "Session\\DefaultSavePath" = "${settings.user.home}/downloads";
-          "WebUI\\Password_PBKDF2" =
-            "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
-          # "WebUI\\RootFolder" = alternativeWebUI;
-        };
-      };
-    };
-
     programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
     secrets.profile = "personal";
