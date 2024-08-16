@@ -2,16 +2,35 @@
 with lib;
 let
   cfg = config.services.qbittorrent;
+  qbittorrentConf = let
+    toString = value:
+      if lib.isBool value then
+        if value then "true" else "false"
+      else
+        builtins.toString value;
 
-  alternativeWebUI = with pkgs;
-    stdenv.mkDerivation {
-      name = "iQbit";
-      installPhase = "cp -rv $src/release $out";
-      src = fetchgit {
-        url = "https://github.com/ntoporcov/iQbit.git";
-        hash = "sha256-UBFNJIRx/u8xJrK/rJ0//32DzG6nwSqMt3YillyDWno";
-      };
-    };
+    formatSection = sectionName: sectionAttrs: ''
+      [${sectionName}]
+      ${lib.concatMapStringsSep "\n"
+      (name: "${name}=${toString sectionAttrs.${name}}")
+      (lib.attrNames sectionAttrs)}
+    '';
+
+    formatAttrset = attrs:
+      lib.concatStringsSep "\n" (lib.mapAttrsToList
+        (sectionName: sectionAttrs: formatSection sectionName sectionAttrs)
+        attrs);
+  in pkgs.writeText "qBittorrent.conf" (formatAttrset cfg.settings);
+
+  # alternativeWebUI = with pkgs;
+  #   stdenv.mkDerivation {
+  #     name = "iQbit";
+  #     installPhase = "cp -rv $src/release $out";
+  #     src = fetchgit {
+  #       url = "https://github.com/ntoporcov/iQbit.git";
+  #       hash = "sha256-UBFNJIRx/u8xJrK/rJ0//32DzG6nwSqMt3YillyDWno";
+  #     };
+  #   };
 in {
   options.services.qbittorrent = {
     enable = mkEnableOption (lib.mdDoc "qBittorrent headless");
@@ -47,13 +66,20 @@ in {
         Group under which qBittorrent runs.
       '';
     };
+
+    settings = mkOption {
+      type = types.attrsOf types.attrs;
+      default = { };
+      description =
+        "An attribute set with generic key names, each containing another attribute set.";
+    };
   };
 
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
 
-    environment.systemPackages = [ alternativeWebUI ];
+    # environment.systemPackages = [ alternativeWebUI ];
 
     systemd.services.qbittorrent = {
       description = "qBittorrent-nox service";
@@ -69,6 +95,7 @@ in {
 
         ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
         ExecStartPre = let
+
           preStartScript = pkgs.writeScript "qbittorrent-run-prestart" # sh
             ''
               #!${pkgs.bash}/bin/bash
@@ -77,7 +104,11 @@ in {
                 install -d -m 0755 -o "${cfg.user}" -g "${cfg.group}" "$QBT_PROFILE"
               fi
 
-              ${config.system.activationScripts.qbittorrent.text}
+              CONFIG=$QBT_PROFILE/qBittorrent/config
+              mkdir -p $CONFIG
+              rm -vf $CONFIG/qBittorrent.conf
+              # ln -svf ${qbittorrentConf} $CONFIG/qBittorrent.conf
+              install -m 0555 -o "${cfg.user}" -g "${cfg.group}" ${qbittorrentConf} $CONFIG/qBittorrent.conf
             '';
         in "!${preStartScript}";
       };
@@ -98,34 +129,5 @@ in {
     users.groups =
       mkIf (cfg.group == "qbittorrent") { qbittorrent = { gid = 888; }; };
 
-    system.activationScripts.qbittorrent.text = let
-      config = pkgs.writeText "qBittorrent.conf" ''
-        [Meta]
-        MigrationVersion=6
-
-        [BitTorrent]
-        Session\Port=54406
-        Session\QueueingSystemEnabled=false
-        Session\DefaultSavePath=${settings.user.home}/downloads
-        Session\Interface=tun0
-        Session\InterfaceName=tun0
-
-        [Preferences]
-        General\Locale=en
-        MailNotification\req_auth=true
-        WebUI\AuthSubnetWhitelist=@Invalid()
-        WebUI\LocalHostAuth=false
-        WebUI\Password_PBKDF2="@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)"
-        WebUI\Port=${builtins.toString cfg.port}
-        WebUI\AlternativeUIEnabled=true
-        WebUI\RootFolder=${alternativeWebUI}
-      '';
-      # sh
-    in ''
-      target=${cfg.dataDir}/qBittorrent/config
-      mkdir -p $target
-      rm -vf $target/qBittorrent.conf
-      ln -svf ${config} $target/qBittorrent.conf
-    '';
   };
 }
