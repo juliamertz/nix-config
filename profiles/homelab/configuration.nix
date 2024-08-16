@@ -52,7 +52,7 @@
         "MailNotification\\req_auth" = true;
         "WebUI\\AuthSubnetWhitelist" = "@Invalid()";
         "WebUI\\LocalHostAuth" = false;
-        "WebUI\\AlternativeUIEnabled" = true;
+        "WebUI\\AlternativeUIEnabled" = false;
         "Session\\DefaultSavePath" = "${settings.user.home}/downloads";
         "WebUI\\Password_PBKDF2" =
           "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
