@@ -14,7 +14,7 @@
         '';
 
         shares.media = {
-          path = "${settings.user.home}/media";
+          path = "/home/media";
           writable = "true";
           "create mask" = "0644";
           "directory mask" = "0755";

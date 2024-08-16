@@ -19,9 +19,9 @@
   jellyfin = let user = settings.user.home; in {
     configDir = "${user}/jellyfin";
     volumes = [
-      "${user}/media/shows:/shows"
-      "${user}/media/movies:/movies"
-      "${user}/media/music:/music"
+      "/home/media/shows:/shows"
+      "/home/media/movies:/movies"
+      "/home/media/music:/music"
     ];
   };
 

@@ -1,9 +1,12 @@
-{ lib, config, settings, ... }:
+{ lib, config, settings, helpers, inputs, ... }:
 let
   cfg = config.jellyfin;
   toStr = builtins.toString;
 in {
-  imports = [ ./default.nix ];
+  imports = [ 
+    ./default.nix
+    ../multimedia/jellyseerr.nix
+  ];
 
   options = {
     jellyfin = {
@@ -23,19 +26,30 @@ in {
         type = lib.types.listOf lib.types.str;
         default = [ ];
       };
+      enableTorrent = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
     };
   };
 
   config = {
+    users.groups.multimedia = { };
+    users.users."${settings.user.username}".extraGroups = [ "multimedia" ];
+
+    systemd.tmpfiles.rules =
+      [ "d /home/media 0770 - multimedia - -" ];
+
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
 
-    system.activationScripts.jellyfin.text = /*sh*/ ''
-      dir=${cfg.configDir}
-      if [ ! -e $dir ]; then
-        mkdir -p $dir/config $dir/cache $dir/log
-      fi
-    '';
+    system.activationScripts.jellyfin.text = # sh
+      ''
+        dir=${cfg.configDir}
+        if [ ! -e $dir ]; then
+          mkdir -p $dir/config $dir/cache $dir/log
+        fi
+      '';
 
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {
@@ -52,5 +66,7 @@ in {
         extraOptions = [ "--network=host" ];
       };
     };
+
   };
+
 }
