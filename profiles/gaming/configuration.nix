@@ -1,8 +1,7 @@
-{ pkgs, inputs, settings, ... }:
+{ pkgs, inputs, ... }:
 let
   g920 = {
     vendorId = "046d";
-    # productId = "c261";
     productId = "c261";
     id = g920.vendorId + ":" + g920.productId;
   };
@@ -18,7 +17,6 @@ in {
 
   environment.etc."usb_modeswitch.d/${g920.id}".text = # ini
     ''
-      # Logitech G920 Racing Wheel
       DefaultVendor=${g920.vendorId}
       DefaultProduct=${g920.productId}
       MessageEndpoint=01
@@ -28,8 +26,6 @@ in {
     '';
 
   environment.systemPackages = with pkgs; [
-    # wine
-    # winetricks
     protontricks
     usbutils
     usb-modeswitch
@@ -37,6 +33,7 @@ in {
     mangohud
     discord
     wine
+    winetricks
     inputs.suyu.packages.x86_64-linux.suyu
   ];
 }
