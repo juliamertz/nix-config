@@ -1,36 +1,8 @@
-{ config, lib, pkgs, helpers, settings, inputs, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.services.qbittorrent;
-  qbittorrentConf = let
-    toString = value:
-      if lib.isBool value then
-        if value then "true" else "false"
-      else
-        builtins.toString value;
-
-    formatSection = sectionName: sectionAttrs: ''
-      [${sectionName}]
-      ${lib.concatMapStringsSep "\n"
-      (name: "${name}=${toString sectionAttrs.${name}}")
-      (lib.attrNames sectionAttrs)}
-    '';
-
-    formatAttrset = attrs:
-      lib.concatStringsSep "\n" (lib.mapAttrsToList
-        (sectionName: sectionAttrs: formatSection sectionName sectionAttrs)
-        attrs);
-  in pkgs.writeText "qBittorrent.conf" (formatAttrset cfg.settings);
-
-  # alternativeWebUI = with pkgs;
-  #   stdenv.mkDerivation {
-  #     name = "iQbit";
-  #     installPhase = "cp -rv $src/release $out";
-  #     src = fetchgit {
-  #       url = "https://github.com/ntoporcov/iQbit.git";
-  #       hash = "sha256-UBFNJIRx/u8xJrK/rJ0//32DzG6nwSqMt3YillyDWno";
-  #     };
-  #   };
+  qbittorrentConf = import ./config.nix { inherit config pkgs lib; };
 in {
   options.services.qbittorrent = {
     enable = mkEnableOption (lib.mdDoc "qBittorrent headless");
@@ -70,16 +42,24 @@ in {
     settings = mkOption {
       type = types.attrsOf types.attrs;
       default = { };
-      description =
+      description = lib.mkDoc
         "An attribute set with generic key names, each containing another attribute set.";
+    };
+
+    userInterfaces = mkOption {
+      type = types.attrsOf types.package;
+      description = lib.mkDoc
+        "List of alternative webui packages, not meant to be set by user";
     };
   };
 
   config = mkIf cfg.enable {
+    services.qbittorrent = {
+      userInterfaces = mkForce (pkgs.callPackage ./webui.nix { });
+    };
+
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
-
-    # environment.systemPackages = [ alternativeWebUI ];
 
     systemd.services.qbittorrent = {
       description = "qBittorrent-nox service";
@@ -107,8 +87,8 @@ in {
               CONFIG=$QBT_PROFILE/qBittorrent/config
               mkdir -p $CONFIG
               rm -vf $CONFIG/qBittorrent.conf
-              # ln -svf ${qbittorrentConf} $CONFIG/qBittorrent.conf
-              install -m 0555 -o "${cfg.user}" -g "${cfg.group}" ${qbittorrentConf} $CONFIG/qBittorrent.conf
+              install -m 0555 -o "${cfg.user}" -g "${cfg.group}" \
+                ${qbittorrentConf} $CONFIG/qBittorrent.conf
             '';
         in "!${preStartScript}";
       };
@@ -128,6 +108,5 @@ in {
 
     users.groups =
       mkIf (cfg.group == "qbittorrent") { qbittorrent = { gid = 888; }; };
-
   };
 }

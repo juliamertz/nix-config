@@ -1,8 +1,7 @@
-{ pkgs, inputs, settings, helpers, ... }: {
+{ pkgs, inputs, settings, helpers, config, ... }: {
   imports = [
     ../../modules/networking/zerotier # Vpn tunnel
     ../../modules/networking/openvpn # Protonvpn configurations
-    # ../../modules/networking/wiregaurd # Protonvpn configurations
     ../../modules/lang/rust.nix
     ../../modules/lang/sql.nix
     ../../modules/lang/go.nix
@@ -31,13 +30,11 @@
     ../../modules/apps/neovim.nix
     ../../modules/networking/samba/client.nix
     ../../modules/apps/browser/librewolf.nix
-    ../../modules/apps/qbittorrent.nix
     inputs.stylix.nixosModules.stylix
     inputs.affinity.nixosModules.affinity
   ];
 
   config = {
-    sops.secrets = { spotify_client_id = { owner = settings.user.username; }; };
     affinity = let path = "${settings.user.home}/affinity";
     in {
       prefix = "${path}/prefix";

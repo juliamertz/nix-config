@@ -1,4 +1,4 @@
-{ pkgs, settings, ... }: {
+{ pkgs, settings, config, ... }: {
   imports = [
     ../../modules/containers/home-assistant.nix
     ../../modules/containers/jellyfin.nix
@@ -12,7 +12,7 @@
     ../../modules/apps/lazygit.nix
     ../../modules/lang/lua.nix
     ../../modules/networking/openvpn # Protonvpn configurations
-    ../../modules/apps/qbittorrent.nix
+    ../../modules/apps/qbittorrent
     ../../modules/networking/samba/server.nix
   ];
 
@@ -36,27 +36,26 @@
     port = 8280;
     user = settings.user.username;
     group = "users";
-
     settings = {
       Meta = { MigrationVersion = 6; };
 
       BitTorrent = {
-        "Session\\Port" = 54406;
-        "Session\\QueueingSystemEnabled" = false;
-        "Session\\Interface" = "tun0";
-        "Session\\InterfaceName" = "tun0";
+        Session-Port = 54406;
+        Session-QueueingSystemEnabled = false;
+        Session-Interface = "tun0";
+        Session-InterfaceName = "tun0";
       };
 
       Preferences = {
-        "General\\Locale" = "en";
-        "MailNotification\\req_auth" = true;
-        "WebUI\\AuthSubnetWhitelist" = "@Invalid()";
-        "WebUI\\LocalHostAuth" = false;
-        "WebUI\\AlternativeUIEnabled" = false;
-        "Session\\DefaultSavePath" = "${settings.user.home}/downloads";
-        "WebUI\\Password_PBKDF2" =
+        General-Locale = "en";
+        MailNotification-req_auth = true;
+        WebUI-AuthSubnetWhitelist = "@Invalid()";
+        WebUI-LocalHostAuth = false;
+        WebUI-AlternativeUIEnabled = true;
+        Session-DefaultSavePath = "${settings.user.home}/downloads";
+        WebUI-Password_PBKDF2 =
           "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
-        # "WebUI\\RootFolder" = alternativeWebUI;
+        WebUI-RootFolder = config.services.qbittorrent.userInterfaces.iQbit;
       };
     };
   };
