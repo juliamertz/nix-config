@@ -7,7 +7,6 @@
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     affinity = { url = "github:juliamertz/affinity-nixos/main"; };
-    wezterm = { url = "github:wez/wezterm?dir=nix"; };
     sops-nix = { url = "github:Mic92/sops-nix"; };
     stylix = { url = "github:danth/stylix"; };
     home-manager = {
@@ -56,7 +55,7 @@
 
       dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "09f6b366185f4eb917d39d4072ab60a6d90b440f";
+        rev = "7d99164bd08f62e8ab9912ab3e5252cf91956737";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;
