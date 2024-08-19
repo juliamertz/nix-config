@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, helpers, inputs, ... }:
 with lib;
 let
   cfg = config.services.qbittorrent;
+  pkgs = (helpers.getPkgs inputs.nixpkgs-unstable);
   qbittorrentConf = import ./config.nix { inherit config pkgs lib; };
 in {
+  imports = [ ./flood.nix ];
+
   options.services.qbittorrent = {
     enable = mkEnableOption (lib.mdDoc "qBittorrent headless");
 
@@ -14,6 +17,8 @@ in {
         The directory where qBittorrent stores its data files.
       '';
     };
+
+    openFirewall = mkEnableOption (lib.mdDoc "Open firewall ports");
 
     port = mkOption {
       type = types.port;
@@ -58,8 +63,10 @@ in {
       userInterfaces = mkForce (pkgs.callPackage ./webui.nix { });
     };
 
-    networking.firewall.allowedTCPPorts = [ cfg.port ];
-    networking.firewall.allowedUDPPorts = [ cfg.port ];
+    networking.firewall = mkIf cfg.openFirewall {
+      allowedTCPPorts = [ cfg.port ];
+      allowedUDPPorts = [ cfg.port ];
+    };
 
     systemd.services.qbittorrent = {
       description = "qBittorrent-nox service";

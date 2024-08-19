@@ -34,30 +34,34 @@
   services.qbittorrent = {
     enable = true;
     port = 8280;
+    openFirewall = true;
+
     user = settings.user.username;
     group = "users";
+
     settings = {
       Meta = { MigrationVersion = 6; };
+      Core = { AutoDeleteAddedTorrentFile = "Never"; };
 
       BitTorrent = {
-        Session-Port = 54406;
-        Session-QueueingSystemEnabled = false;
         Session-Interface = "tun0";
         Session-InterfaceName = "tun0";
+        Session-DefaultSavePath = /home/media/downloads;
+        Session-DisableAutoTMMByDefault = false;
+        Session-DisableAutoTMMTriggers-CategorySavePathChanged = false;
       };
 
       Preferences = {
         General-Locale = "en";
-        MailNotification-req_auth = true;
-        WebUI-AuthSubnetWhitelist = "@Invalid()";
         WebUI-LocalHostAuth = false;
-        WebUI-AlternativeUIEnabled = true;
-        Session-DefaultSavePath = "${settings.user.home}/downloads";
         WebUI-Password_PBKDF2 =
           "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
-        WebUI-RootFolder = config.services.qbittorrent.userInterfaces.iQbit;
+        # WebUI-AlternativeUIEnabled = true;
+        # WebUI-RootFolder = config.services.qbittorrent.userInterfaces.darklight;
       };
     };
+
+    flood = { enable = true; };
   };
 
   programs.zsh.enable = true;
@@ -65,5 +69,5 @@
   nixpkgs.config.allowUnfree = true;
   secrets.profile = "personal";
 
-  environment.systemPackages = with pkgs; [ btop fastfetch ];
+  environment.systemPackages = with pkgs; [ btop fastfetch diskonaut busybox ];
 }
