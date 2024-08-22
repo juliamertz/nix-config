@@ -1,7 +1,8 @@
 { inputs, settings, ... }:
 let
   platform = settings.system.platform;
-  pkgs = import inputs.nixpkgs-24_05 {
+
+  pkgs = import inputs.nixpkgs-unstable {
     system = platform;
     config.allowUnfree = true;
   };

@@ -5,14 +5,16 @@ in {
   fileSystems."/mnt/media" = {
     device = "//192.168.0.100/media";
     fsType = "cifs";
-    options = [
-      "credentials=${config.sops.templates."smb-secrets".path}"
-      "x-systemd.automount" 
-      "x-systemd.mount-timeout=5"
-      "x-systemd.idle-timeout=3600"
+    options = let
+      automount_opts =
+        "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in [
+      "${automount_opts},credentials=${
+        config.sops.templates."smb-secrets".path
+      }"
     ];
   };
-  
+
   sops.secrets =
     helpers.ownedSecrets user [ "samba_username" "samba_password" ];
 

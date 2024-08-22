@@ -13,6 +13,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
+    protonvpn-rs = {
+      url = "/home/julia/projects/2024/protonvpn-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     suyu = {
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -23,6 +27,10 @@
     };
     vpnconfinement = {
       url = "github:Maroka-chan/VPN-Confinement";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
@@ -55,7 +63,7 @@
 
       dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "7d99164bd08f62e8ab9912ab3e5252cf91956737";
+        rev = "32dc8170ccafd08c1eddc2d60008895fe51af896";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;

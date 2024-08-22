@@ -25,6 +25,8 @@ in {
     environment.systemPackages = with pkgs; [
       rose-pine-gtk-theme
       rose-pine-icon-theme
+      libsForQt5.qtstyleplugin-kvantum
+      libsForQt5.qt5ct
     ];
 
     home.config.stylix.targets.gtk.enable = false;
@@ -39,5 +41,15 @@ in {
       platformTheme = "gtk2";
       style = "adwaita";
     };
+
+    nixpkgs.config.qt5 = {
+      enable = true;
+      platformTheme = "qt5ct";
+      style = {
+        package = pkgs.utterly-nord-plasma;
+        name = "Utterly Nord Plasma";
+      };
+    };
+
   };
 }

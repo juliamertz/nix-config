@@ -16,8 +16,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "juliamertz";
         repo = "spotify-player";
-        rev = "50dcde62f933ef3da251db914eb71ad89a3566b0";
-        sha256 = "sha256-I03hQWgCUiXL9v46mlkW9T2hjARoxIMZEgz7V0HHcts=";
+        rev = "94e243300a10723d86c01a6798c946306debb3c3";
+        sha256 = "sha256-BgoIdGuyAJSnhm/HwcvKXG9J65lrmtlt0kVsdM1z//4=";
       };
       hash = "";
       cargoDeps = old.cargoDeps.overrideAttrs (lib.const {

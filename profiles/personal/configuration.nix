@@ -1,7 +1,9 @@
 { pkgs, inputs, settings, helpers, config, ... }: {
   imports = [
+    ../gaming/configuration.nix # Games & related apps
+
     ../../modules/networking/zerotier # Vpn tunnel
-    ../../modules/networking/openvpn # Protonvpn configurations
+    # ../../modules/networking/openvpn # Protonvpn configurations
     ../../modules/lang/rust.nix
     ../../modules/lang/sql.nix
     ../../modules/lang/go.nix
@@ -13,7 +15,6 @@
     ../../modules/themes/rose-pine
     ../../modules/wm/awesome
     ../../modules/wm/hyprland
-    ../gaming/configuration.nix # Games & related apps
     ../../modules/display-manager/sddm
     ../../modules/scripts/home-assistant.nix
     ../../modules/scripts/remote.nix
@@ -30,23 +31,15 @@
     ../../modules/apps/neovim.nix
     ../../modules/networking/samba/client.nix
     ../../modules/apps/browser/librewolf.nix
+    # ../../modules/wm/cosmic
+    inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
-    # inputs.affinity.nixosModules.affinity
   ];
 
   config = {
-    # affinity = let path = "${settings.user.home}/affinity";
-    # in {
-    #   prefix = "${path}/prefix";
-    #   licenseViolations = "${path}/license_violations";
-    #   user = settings.user.username;
-    #
-    #   photo.enable = true;
-    #   designer.enable = true;
-    # };
-
     programs.direnv = {
       enable = true;
+      silent = true;
       nix-direnv.enable = true;
     };
 
@@ -55,10 +48,12 @@
     users.defaultUserShell = pkgs.zsh;
     secrets.profile = "personal";
 
-    openvpn.proton = {
-      enable = true;
-      profile = "nl-393";
-    };
+    # openvpn.proton = {
+    #   enable = true;
+    #   profile = "nl-367";
+    # };
+    sops.secrets =
+      helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
 
     fonts.packages = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
