@@ -3,6 +3,8 @@ let user = settings.user.username;
 in {
   imports = [ ../modules/io/ssh.nix ];
 
+  environment.systemPackages = with pkgs; [ openssl curl tldr xclip zip unzip ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = settings.system.hostname;
@@ -38,8 +40,6 @@ in {
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/home/${user}/nix";
   };
-
-  environment.systemPackages = with pkgs; [ openssl curl tldr xclip ];
 
   system.stateVersion = "24.05";
 }

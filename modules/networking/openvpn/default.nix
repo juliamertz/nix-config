@@ -29,10 +29,10 @@ in {
       #   ip = "217.138.216.130";
       #   name = "de-200";
       # });
-      nl-367-protonvpn = (proton.mkConfig {
+      nl-367-protonvpn = proton.mkConfig {
         ip = "190.2.132.139";
         name = "nl-367";
-      });
+      };
     };
 
     environment.etc."openvpn/update-resolv-conf".source =

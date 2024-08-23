@@ -15,7 +15,7 @@ let
   join = value:
     if builtins.isList value then lib.concatStringsSep " " value else value;
 in symlinkJoin {
-  name = cfg.name;
+  inherit (cfg) name;
   paths = [ cfg.package ] ++ cfg.dependencies;
   buildInputs = [ makeWrapper ];
   postBuild = ''

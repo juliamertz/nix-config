@@ -1,6 +1,6 @@
 { inputs, helpers, ... }:
 let
-  branch = inputs.nixpkgs-unstable;
+  branch = inputs.nixpkgs-24_05;
   settings = {
     "identity.fxaccounts.enabled" = false; # Set up local sync server first
     "privacy.resistFingerprinting" = true;

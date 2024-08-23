@@ -4,7 +4,7 @@
     config = {
       user = {
         name = settings.user.fullName;
-        email = settings.user.email;
+        inherit (settings.user) email;
       };
       init.defaultBranch = "main";
       core.editor = settings.user.editor;

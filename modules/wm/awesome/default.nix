@@ -21,8 +21,7 @@
         run ${pkgs.spotify-player}/bin/spotify_player --daemon
         run ${pkgs.firefox}/bin/firefox
         run ${pkgs.picom}/bin/picom -b
-        
-        # run "${pkgs.wezterm}/bin/wezterm start -- ${pkgs.tmux}/bin/tmux a || ${pkgs.tmux}/bin/tmux new"
+        run ${pkgs.blueman}/bin/blueman-applet
       '';
 
     environment.systemPackages = with pkgs; [ rofi pamixer playerctl ];

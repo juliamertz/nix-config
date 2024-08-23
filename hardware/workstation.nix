@@ -1,8 +1,20 @@
-{ config, ... }: {
-  networking.interfaces.enp4s0 = { wakeOnLan.enable = true; };
+{ config, inputs, settings, ... }:
+let
+  pkgs = import inputs.nixpkgs-unstable {
+    system = settings.system.platform;
+    config.allowUnfree = true;
+  };
+
+in {
+  # Graphics
+  nixpkgs.config.packageOverrides = pkgs: {
+    inherit (pkgs) linuxPackages_latest nvidia_x11;
+  };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  environment.systemPackages = with pkgs; [ cudatoolkit ];
 
   hardware.opengl = { enable = true; };
-
   boot.supportedFilesystems = [ "ntfs" ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -20,4 +32,7 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
+
+  # Networking
+  networking.interfaces.enp4s0 = { wakeOnLan.enable = true; };
 }

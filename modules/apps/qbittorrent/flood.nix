@@ -1,7 +1,7 @@
 { lib, config, inputs, helpers, ... }:
 let
   cfg = config.services.qbittorrent;
-  pkgs = (helpers.getPkgs inputs.nixpkgs-unstable);
+  pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
 in with lib; {
   options = {
     services.qbittorrent.flood = {
@@ -26,8 +26,7 @@ in with lib; {
   };
 
   config = let
-    port = cfg.flood.port;
-    host = cfg.flood.host;
+    inherit (cfg.flood) host port;
     toStr = builtins.toString;
   in mkIf cfg.flood.enable {
     environment.systemPackages = with pkgs; [ flood ];

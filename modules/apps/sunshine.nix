@@ -1,6 +1,6 @@
 { inputs, settings, ... }:
 let
-  platform = settings.system.platform;
+  inherit (settings.system) platform;
 
   pkgs = import inputs.nixpkgs-unstable {
     system = platform;

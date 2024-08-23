@@ -28,7 +28,7 @@ in {
     virtualisation.oci-containers.backend = "podman";
     virtualisation.oci-containers.containers = {
       sponsorblock-atv = {
-        image = cfg.image;
+        inherit (cfg) image;
         autoStart = true;
         volumes = [ "${cfg.configPath}:/app/data" ];
         extraOptions = [ "--network=host" ];

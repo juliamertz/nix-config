@@ -3,7 +3,7 @@ let
   nvim = helpers.wrapPackage {
     name = "nvim";
     package = (helpers.getPkgs inputs.nixpkgs-unstable).neovim;
-    dependencies = with pkgs; [ ripgrep stdenv.cc nixfmt ];
+    dependencies = with pkgs; [ ripgrep stdenv.cc nixfmt nil ];
      extraFlags = "-u ${dotfiles.path}/nvim/init.lua";
     extraArgs = [ "--set XDG_CONFIG_HOME '${dotfiles.path}'" "--argv0 'nvim'" ];
     postWrap = # sh

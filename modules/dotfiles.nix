@@ -9,7 +9,7 @@ let
     dontBuild = true;
     src = builtins.fetchGit {
       url = repo;
-      rev = rev;
+      inherit rev;
     };
   };
 in { path = if local.enable then local.path else builtins.toString pkg; }

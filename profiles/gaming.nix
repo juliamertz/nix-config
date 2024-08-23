@@ -33,6 +33,6 @@ in {
     discord
     wine
     winetricks
-    inputs.suyu.packages.x86_64-linux.suyu
+    # inputs.suyu.packages.x86_64-linux.suyu
   ];
 }

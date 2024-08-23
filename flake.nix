@@ -15,7 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
     protonvpn-rs = {
-      url = "/home/julia/projects/2024/protonvpn-rs";
+      url = "/home/julia/projects/2024/protonvpn-rs/nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     suyu = {
@@ -64,7 +64,7 @@
 
       dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "a6d9c0c1e1f1089a8d7a7e28cb1ebb48f6a6d2cd";
+        rev = "d313ccf3093b9e50949d2051025007b62e774a20";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;
@@ -92,8 +92,7 @@
           system = systemSettings.platform;
           inherit specialArgs;
           modules = let
-            profile = systemSettings.profile;
-            hardware = systemSettings.hardware;
+            inherit (systemSettings) profile hardware;
           in [
             ./hardware-configuration.nix
             ./profiles/base.nix

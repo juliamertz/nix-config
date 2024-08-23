@@ -12,7 +12,7 @@ let
   base = pkgs.spotify-player.override featureFlags;
   overlay = base.overrideAttrs (old:
     {
-      name = base.name;
+      inherit (base) name;
       src = pkgs.fetchFromGitHub {
         owner = "juliamertz";
         repo = "spotify-player";
@@ -22,7 +22,7 @@ let
       hash = "";
       cargoDeps = old.cargoDeps.overrideAttrs (lib.const {
         name = "${base.name}-vendor.tar.gz";
-        src = base.src;
+        inherit (base) src;
       });
     } // featureFlags);
 

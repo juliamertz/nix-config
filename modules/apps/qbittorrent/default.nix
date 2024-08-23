@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.services.qbittorrent;
-  pkgs = (helpers.getPkgs inputs.nixpkgs-unstable);
+  pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
   qbittorrentConf = import ./config.nix { inherit config pkgs lib; };
 in {
   imports = [ ./flood.nix ];
@@ -108,7 +108,7 @@ in {
 
     users.users = mkIf (cfg.user == "qbittorrent") {
       qbittorrent = {
-        group = cfg.group;
+        inherit (cfg) group;
         uid = 888;
       };
     };

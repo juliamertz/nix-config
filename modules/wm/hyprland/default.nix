@@ -1,5 +1,6 @@
-{ dotfiles, pkgs, helpers, ... }:
+{ dotfiles, inputs, helpers, ... }:
 let
+  pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
   hyprland = helpers.wrapPackage {
     name = "Hyprland";
     package = pkgs.hyprland;
