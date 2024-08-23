@@ -1,37 +1,37 @@
 { pkgs, inputs, settings, helpers, config, ... }: {
   imports = [
-    ../gaming/configuration.nix # Games & related apps
+    ./gaming.nix # Games & related apps
 
-    ../../modules/networking/zerotier # Vpn tunnel
-    # ../../modules/networking/openvpn # Protonvpn configurations
-    ../../modules/lang/rust.nix
-    ../../modules/lang/sql.nix
-    ../../modules/lang/go.nix
-    ../../modules/io/bluetooth.nix # Bluetooth setup
-    ../../modules/io/pipewire.nix # Audio server
-    ../../modules/io/keyd.nix # Key remapping daemon
-    ../../modules/apps/virtmanager.nix # Virtual machines
-    ../../modules/sops.nix # Secrets management
-    ../../modules/themes/rose-pine
-    ../../modules/wm/awesome
-    ../../modules/wm/hyprland
-    ../../modules/display-manager/sddm
-    ../../modules/scripts/home-assistant.nix
-    ../../modules/scripts/remote.nix
-    ../../modules/scripts/deref.nix
-    ../../modules/apps/git.nix
-    ../../modules/apps/media/spotify
-    ../../modules/apps/ollama.nix
-    ../../modules/apps/lazygit.nix
-    ../../modules/apps/terminal/kitty.nix
-    ../../modules/apps/terminal/wezterm.nix
-    ../../modules/apps/terminal/tmux.nix
-    ../../modules/apps/shell/fish.nix
-    ../../modules/apps/shell/zsh.nix
-    ../../modules/apps/neovim.nix
-    ../../modules/networking/samba/client.nix
-    ../../modules/apps/browser/librewolf.nix
-    # ../../modules/wm/cosmic
+    ../modules/networking/zerotier # Vpn tunnel
+    # ../modules/networking/openvpn # Protonvpn configurations
+    ../modules/lang/rust.nix
+    ../modules/lang/sql.nix
+    ../modules/lang/go.nix
+    ../modules/io/bluetooth.nix # Bluetooth setup
+    ../modules/io/pipewire.nix # Audio server
+    ../modules/io/keyd.nix # Key remapping daemon
+    ../modules/apps/virtmanager.nix # Virtual machines
+    ../modules/sops.nix # Secrets management
+    ../modules/themes/rose-pine
+    ../modules/wm/awesome
+    ../modules/wm/hyprland
+    ../modules/display-manager/sddm
+    ../modules/scripts/home-assistant.nix
+    ../modules/scripts/remote.nix
+    ../modules/scripts/deref.nix
+    ../modules/apps/git.nix
+    ../modules/apps/media/spotify
+    ../modules/apps/ollama.nix
+    ../modules/apps/lazygit.nix
+    ../modules/apps/terminal/kitty.nix
+    ../modules/apps/terminal/wezterm.nix
+    ../modules/apps/terminal/tmux.nix
+    ../modules/apps/shell/fish.nix
+    ../modules/apps/shell/zsh.nix
+    ../modules/apps/neovim.nix
+    ../modules/networking/samba/client.nix
+    ../modules/apps/browser/librewolf.nix
+    # ../modules/wm/cosmic
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
   ];
@@ -63,6 +63,7 @@
     # };
 
     environment.systemPackages = with pkgs; [
+      inputs.zen-browser.packages."${settings.system.platform}".generic
       qdirstat
       # blender
       activate-linux
@@ -82,7 +83,7 @@
       usbutils
       firefox
       ethtool
-      (pkgs.callPackage ../../modules/bluegone.nix { })
+      (pkgs.callPackage ../modules/bluegone.nix { })
       (helpers.wrapPackage {
         name = "ffmpeg";
         package = pkgs.ffmpeg-full;

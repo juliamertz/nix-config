@@ -9,6 +9,7 @@
     affinity = { url = "github:juliamertz/affinity-nixos/main"; };
     sops-nix = { url = "github:Mic92/sops-nix"; };
     stylix = { url = "github:danth/stylix"; };
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -63,7 +64,7 @@
 
       dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "32dc8170ccafd08c1eddc2d60008895fe51af896";
+        rev = "a6d9c0c1e1f1089a8d7a7e28cb1ebb48f6a6d2cd";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;
@@ -97,7 +98,7 @@
             ./hardware-configuration.nix
             ./profiles/base.nix
             ./modules/home-manager.nix
-            (./. + "/profiles" + ("/" + profile) + "/configuration.nix")
+            (./. + "/profiles" + ("/" + profile + ".nix"))
             (./. + "/hardware" + ("/" + hardware) + ".nix")
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite
           ];

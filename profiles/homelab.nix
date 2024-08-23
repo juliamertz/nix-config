@@ -1,19 +1,19 @@
 { pkgs, settings, config, ... }: {
   imports = [
-    ../../modules/containers/home-assistant.nix
-    ../../modules/containers/jellyfin.nix
-    ../../modules/containers/sponsorblock-atv.nix
-    ../../modules/networking/zerotier # Vpn tunnel
-    ../../modules/sops.nix # Secrets management
-    ../../modules/apps/git.nix
-    ../../modules/apps/terminal/tmux.nix
-    ../../modules/apps/shell/zsh.nix
-    ../../modules/apps/neovim.nix
-    ../../modules/apps/lazygit.nix
-    ../../modules/lang/lua.nix
-    ../../modules/networking/openvpn # Protonvpn configurations
-    ../../modules/apps/qbittorrent
-    ../../modules/networking/samba/server.nix
+    ../modules/containers/home-assistant.nix
+    ../modules/containers/jellyfin.nix
+    ../modules/containers/sponsorblock-atv.nix
+    ../modules/networking/zerotier # Vpn tunnel
+    ../modules/sops.nix # Secrets management
+    ../modules/apps/git.nix
+    ../modules/apps/terminal/tmux.nix
+    ../modules/apps/shell/zsh.nix
+    ../modules/apps/neovim.nix
+    ../modules/apps/lazygit.nix
+    ../modules/lang/lua.nix
+    ../modules/networking/openvpn # Protonvpn configurations
+    ../modules/apps/qbittorrent
+    ../modules/networking/samba/server.nix
   ];
 
   jellyfin = let user = settings.user.home;
