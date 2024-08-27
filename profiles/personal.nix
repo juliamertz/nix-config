@@ -24,13 +24,34 @@ in {
       settings = {
         credentials_path = "/run/secrets/openvpn_auth";
         autostart_default = true;
+
         default_select = "Fastest";
         default_protocol = "Udp";
         default_criteria = {
           country = "NL";
           features = [ "Streaming" ];
         };
+        killswitch = {
+          enable = false;
+          custom_rules = [
+            "iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT"
+            "iptables -A OUTPUT -d 192.168.0.0/16 -j ACCEPT"
+            # "-A INPUT -s 192.168.0.100 -j ACCEPT"
+            # "-A OUTPUT -d 192.168.0.100 -j ACCEPT"
+            # "-A INPUT -s 192.168.0.101 -j ACCEPT"
+            # "-A OUTPUT -d 192.168.0.101 -j ACCEPT"
+            # "-A INPUT -s 192.168.0.101 -j ACCEPT"
+            # "-A OUTPUT -d 192.168.0.101 -j ACCEPT"
+            "-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT"
+          ];
+        };
       };
+    };
+
+    nix.settings = {
+      substituters = [ "https://cosmic.cachix.org/" ];
+      trusted-public-keys =
+        [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
     };
 
     nixpkgs.config.allowUnfree = true;
@@ -91,7 +112,7 @@ in {
     ../modules/networking/samba/client.nix
     ../modules/apps/browser/librewolf.nix
     ../modules/nerdfonts.nix
-    # ../modules/wm/cosmic
+    ../modules/de/cosmic
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
   ];

@@ -26,10 +26,6 @@
       url = "github:wamserma/flake-programs-sqlite";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
-    vpnconfinement = {
-      url = "github:Maroka-chan/VPN-Confinement";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -64,7 +60,7 @@
 
       dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
         repo = "https://github.com/juliamertz/dotfiles";
-        rev = "d313ccf3093b9e50949d2051025007b62e774a20";
+        rev = "3f8beb143147b3a2868f8a04948957487f39eafe";
         local = {
           # When set to true the configuration has to be built with --impure
           enable = false;

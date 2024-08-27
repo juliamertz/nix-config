@@ -187,27 +187,6 @@
         "type": "github"
       }
     },
-    "flake-parts_2": {
-      "inputs": {
-        "nixpkgs-lib": [
-          "vpnconfinement",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1717285511,
-        "narHash": "sha256-iKzJcpdXih14qYVcZ9QC9XuZYnPc6T8YImb6dX166kw=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "2a55567fcf15b1b1c7ed712a2c6fadaec7412ea8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "flake-programs-sqlite": {
       "inputs": {
         "nixpkgs": [
@@ -525,10 +504,11 @@
       },
       "locked": {
         "dir": "nix",
-        "dirtyRev": "6a43764052e622d32d25e335cd726844beeef482-dirty",
-        "dirtyShortRev": "6a43764-dirty",
-        "lastModified": 1724664086,
-        "narHash": "sha256-P8k/+MEO+5JXmqWy7qaZrRmCelcaKGkgsJ5SWbpg75I=",
+        "lastModified": 1724793702,
+        "narHash": "sha256-9lrgCiYIY7lhO8tdm34wmbHMkUvR7hyp5dHlYgU+qNk=",
+        "ref": "refs/heads/feat-killswitch",
+        "rev": "a35571b064f1fa83ebeb1e3d44444433ad64e8fa",
+        "revCount": 143,
         "type": "git",
         "url": "file:///home/julia/projects/2024/protonvpn-rs?dir=nix"
       },
@@ -551,7 +531,6 @@
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "suyu": "suyu",
-        "vpnconfinement": "vpnconfinement",
         "zen-browser": "zen-browser"
       }
     },
@@ -731,27 +710,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "vpnconfinement": {
-      "inputs": {
-        "flake-parts": "flake-parts_2",
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1718924235,
-        "narHash": "sha256-lu78iQzZGBE9bIvlYgbBYiJ85wR5zSBUPjIQkg6cRQc=",
-        "owner": "Maroka-chan",
-        "repo": "VPN-Confinement",
-        "rev": "790f70888c69d55c92442e702647dc619dd7bc61",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Maroka-chan",
-        "repo": "VPN-Confinement",
         "type": "github"
       }
     },
