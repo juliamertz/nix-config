@@ -8,7 +8,7 @@ in {
   options.secrets = {
     profile = lib.mkOption {
       type = lib.types.str;
-      default = settings.system.profile;
+      default = "personal";
     };
     format = lib.mkOption {
       type = lib.types.str;
