@@ -1,12 +1,11 @@
-{ settings, ... }:
-let inherit (settings) user;
-in {
-  home.programs.git = {
-    enable = true;
-    userName = user.fullName;
-    userEmail = user.email;
+{ pkgs, settings, helpers, ... }:
+let
+  config = {
+    init.defaultBranch = "main";
+    core.editor = "nvim";
+    pull.rebase = true;
 
-    aliases = {
+    alias = {
       s = "status";
       a = "add";
       c = "commit -m";
@@ -16,24 +15,25 @@ in {
       wl = "worktree list";
     };
 
-    extraConfig =
-      # ini
-      ''
-        [core]
-        editor = "nvim"
+    url = {
+      "https://github.com/" = { insteadOf = [ "gh:" "github:" ]; };
+      "git@github.com:juliamertz/" = { insteadOf = [ "julia:" ]; };
+    };
 
-        [init]
-        defaultBranch = "main"
-
-        [pull]
-        rebase = true
-
-        [url "git@github.com:juliamertz/"]
-        insteadOf = "julia:"
-
-        [url "https://github.com/"]
-        insteadOf = "gh:"
-        insteadOf = "github:"
-      '';
+    user = with settings.user; {
+      inherit email;
+      name = fullName;
+    };
   };
-}
+
+in (if helpers.isLinux then {
+  programs.git = {
+    enable = true;
+    inherit config;
+  };
+} else {
+  home.programs.git = {
+    enable = true;
+    extraConfig = config;
+  };
+})
