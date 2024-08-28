@@ -33,10 +33,11 @@
     sops-nix = { url = "github:Mic92/sops-nix"; };
     stylix = { url = "github:danth/stylix"; };
     zen-browser.url = "github:MarceColl/zen-browser-flake";
-    # protonvpn-rs = {
-    #   url = "/home/julia/projects/2024/protonvpn-rs/nix";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
+    protonvpn-rs = {
+      # url = "/home/julia/projects/2024/protonvpn-rs/nix";
+      url = "github:juliamertz/protonvpn-rs/feat-killswitch?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     suyu = {
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -58,11 +59,6 @@
         username = "julia";
         fullName = "Julia Mertz";
         email = "info@juliamertz.dev";
-        shell = "zsh";
-        browser = "firefox";
-        terminal = "wezterm";
-        editor = "nvim";
-        windowManager = "awesome";
         home = "/home/${userSettings.username}";
         dotfiles = "${userSettings.home}/dotfiles";
       };

@@ -652,6 +652,30 @@
         "type": "github"
       }
     },
+    "protonvpn-rs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "dir": "nix",
+        "lastModified": 1724882785,
+        "narHash": "sha256-OljgQErBE0rt5UT2a6vlVoOacMcrmz8PMgFICq4Bnps=",
+        "owner": "juliamertz",
+        "repo": "protonvpn-rs",
+        "rev": "7e744a99300a073fcf529458bc2bb426c225cbd6",
+        "type": "github"
+      },
+      "original": {
+        "dir": "nix",
+        "owner": "juliamertz",
+        "ref": "feat-killswitch",
+        "repo": "protonvpn-rs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "affinity": "affinity",
@@ -666,6 +690,7 @@
         "nixpkgs-23_11": "nixpkgs-23_11",
         "nixpkgs-24_05": "nixpkgs-24_05",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "protonvpn-rs": "protonvpn-rs",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "suyu": "suyu",
@@ -685,6 +710,27 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "19fda552b69513df7b6aa5fcfd1412c0221467b1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
+          "protonvpn-rs",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1724379657,
+        "narHash": "sha256-+CFDh1FUgyY7q0FiWhKJpHS7LlD3KbiqN5Z4Z+4bGmc=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "a18034322c7703fcfe5d7352a77981ba4a936a61",
         "type": "github"
       },
       "original": {
