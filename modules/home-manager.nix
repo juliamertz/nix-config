@@ -1,10 +1,9 @@
 { lib, settings, config, inputs, helpers, ... }:
-let cfg = config.home;
+let
+  cfg = config.home;
+  module = if helpers.isLinux then "nixosModules" else "darwinModules";
 in {
-  imports = [ ] ++ lib.optionals helpers.isLinux
-    [ inputs.home-manager.nixosModules.home-manager ]
-    ++ lib.optionals helpers.isDarwin
-    [ inputs.home-manager.darwinModules.home-manager ];
+  imports = [ inputs.home-manager.${module}.home-manager ];
 
   options = {
     home.file = lib.mkOption {

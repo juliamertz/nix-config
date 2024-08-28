@@ -11,9 +11,12 @@
     ../modules/apps/git.nix
 
     ../modules/apps/browser/firefox.nix
+
+    # ../modules/sops.nix
+    # ../modules/apps/media/spotify
   ];
 
-  environment.systemPackages = [ ];
+  environment.systemPackages = with pkgs; [ sops tldr ];
 
   services.nix-daemon.enable = true;
   nix.settings.experimental-features = "nix-command flakes";
