@@ -6,18 +6,37 @@
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    affinity = { url = "github:juliamertz/affinity-nixos/main"; };
-    sops-nix = { url = "github:Mic92/sops-nix"; };
-    stylix = { url = "github:danth/stylix"; };
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-24_05";
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.nixpkgs.follows = "nixpkgs-24_05";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
-    protonvpn-rs = {
-      url = "/home/julia/projects/2024/protonvpn-rs/nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
     };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+
+    affinity = { url = "github:juliamertz/affinity-nixos/main"; };
+    sops-nix = { url = "github:Mic92/sops-nix"; };
+    stylix = { url = "github:danth/stylix"; };
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    # protonvpn-rs = {
+    #   url = "/home/julia/projects/2024/protonvpn-rs/nix";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
     suyu = {
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -32,8 +51,9 @@
     };
   };
 
-  outputs = { self, home-manager, ... }@inputs:
+  outputs = { self, home-manager, nix-darwin, ... }@inputs:
     let
+      # TODO: Remove system specific config from main flake
       userSettings = {
         username = "julia";
         fullName = "Julia Mertz";
@@ -87,8 +107,7 @@
         ${settings.system.hostname} = nixpkgs.lib.nixosSystem {
           system = systemSettings.platform;
           inherit specialArgs;
-          modules = let
-            inherit (systemSettings) profile hardware;
+          modules = let inherit (systemSettings) profile hardware;
           in [
             ./hardware-configuration.nix
             ./profiles/base.nix
@@ -98,6 +117,11 @@
             inputs.flake-programs-sqlite.nixosModules.programs-sqlite
           ];
         };
+      };
+
+      darwinConfigurations.macbookpro = nix-darwin.lib.darwinSystem {
+        inherit specialArgs;
+        modules = [ ./profiles/laptop.nix ./modules/home-manager.nix ];
       };
     };
 }

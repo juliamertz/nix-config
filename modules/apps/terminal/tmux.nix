@@ -1,21 +1,11 @@
-{ pkgs, dotfiles, helpers, settings, ... }:
+{ pkgs, lib, config, dotfiles, helpers, settings, ... }:
 let
-  # installPhase = ''
-  #   mkdir -p $TMPDIR/tmux/plugins
-  #   cp -aR ${tpmSrc} $TMPDIR/tmux/plugins/tpm
-  #   echo "TMPDIR structure:"
-  #   ls -R $TMPDIR
-  #   cd $TMPDIR/tmux/plugins
-  #   ${pkgs.bash}/bin/bash ./tpm/bin/install_plugins
-  #   cp -aR $TMPDIR/tmux $out/tmux
-  # '';
-
-  tpm = pkgs.fetchFromGitHub {
-    owner = "tmux-plugins";
-    repo = "tpm";
-    rev = "7bdb7ca33c9cc6440a600202b50142f401b6fe21";
-    sha256 = "sha256-CeI9Wq6tHqV68woE11lIY4cLoNY8XWyXyMHTDmFKJKI=";
-  };
+  # tpm = pkgs.fetchFromGitHub {
+  #   owner = "tmux-plugins";
+  #   repo = "tpm";
+  #   rev = "7bdb7ca33c9cc6440a600202b50142f401b6fe21";
+  #   sha256 = "sha256-CeI9Wq6tHqV68woE11lIY4cLoNY8XWyXyMHTDmFKJKI=";
+  # };
   tmux = helpers.wrapPackage {
     name = "tmux";
     package = pkgs.tmux;
@@ -29,8 +19,17 @@ in {
     source = "${dotfiles.path}/tmux";
     recursive = true;
   };
-  home.file.".config/tmux/plugins/tpm" = {
-    source = tpm;
-    recursive = true;
-  };
+
+  home.activation.tmuxPluginManager =
+    # bash 
+    ''
+      TARGET_DIR=${settings.user.home}/tmux/plugins/tpm
+      REPO=https://github.com/tmux-plugins/tpm
+      if [ ! -e "$TARGET_DIR" ]; then
+        mkdir -p $TARGET_DIR;
+        ${pkgs.git}/bin/git clone --depth=1 --single-branch $REPO $TARGET_DIR;
+      fi
+      nix-shell -p tmux git --run "$TARGET_DIR/bin/install_plugins"
+    '';
+
 }

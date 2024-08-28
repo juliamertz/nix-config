@@ -15,5 +15,12 @@ in {
       default = { };
     };
   };
-  config = { environment.systemPackages = [ zsh ]; };
+  config = {
+    environment.systemPackages = [ zsh ];
+    programs.direnv = {
+      enable = true;
+      silent = true;
+      nix-direnv.enable = true;
+    };
+  };
 }

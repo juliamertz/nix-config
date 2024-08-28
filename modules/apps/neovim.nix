@@ -13,8 +13,9 @@ let
 in {
   environment.systemPackages = [ nvim pkgs.nvimpager ];
 
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [ stdenv.cc.cc ];
-  };
+  # TODO: Seperate into nixos specific
+  # programs.nix-ld = {
+  #   enable = true;
+  #   libraries = with pkgs; [ stdenv.cc.cc ];
+  # };
 }
