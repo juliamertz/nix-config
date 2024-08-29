@@ -102,7 +102,6 @@
 
           workstation = nixosSystem {
             specialArgs = getSpecialArgs "workstation" "x86_64-linux";
-
             modules = base
               ++ [ ./profiles/personal.nix ./hardware/workstation.nix ];
           };

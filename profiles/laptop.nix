@@ -1,20 +1,27 @@
 { pkgs, inputs, settings, ... }: {
-  imports = [
-    ../modules/homebrew.nix
+  system = {
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToEscape = true;
+      nonUS.remapTilde = true;
+    };
+    defaults = {
+      dock = {
+        autohide = true;
+        autohide-delay = 0.0;
+        expose-animation-duration = 0.0;
 
-    ../modules/apps/neovim.nix
-    ../modules/apps/lazygit.nix
+        orientation = "right";
+        minimize-to-application = true;
+      };
 
-    ../modules/apps/terminal/wezterm.nix
-    ../modules/apps/terminal/tmux.nix
-    ../modules/apps/shell/zsh.nix
-    ../modules/apps/git.nix
+      trackpad.Clicking = true;
 
-    ../modules/apps/browser/firefox.nix
-
-    # ../modules/sops.nix
-    # ../modules/apps/media/spotify
-  ];
+      NSGlobalDomain = {
+        "com.apple.swipescrolldirection" = false; # disable natural scrolling
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     sops
@@ -31,11 +38,28 @@
 
   users.users.${settings.user.username} = {
     description = settings.user.fullName;
-    home = "/Users/${settings.user.username}";
+    home = settings.user.home;
   };
 
   networking.hostName = settings.system.hostname;
+  nixpkgs.hostPlatform = settings.system.platform;
 
   system.stateVersion = 4;
-  nixpkgs.hostPlatform = "aarch64-darwin";
+
+  imports = [
+    ../modules/homebrew.nix
+
+    ../modules/apps/neovim.nix
+    ../modules/apps/lazygit.nix
+
+    ../modules/apps/terminal/wezterm.nix
+    ../modules/apps/terminal/tmux.nix
+    ../modules/apps/shell/zsh.nix
+    ../modules/apps/git.nix
+
+    ../modules/apps/browser/firefox.nix
+
+    # ../modules/sops.nix
+    # ../modules/apps/media/spotify
+  ];
 }
