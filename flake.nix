@@ -33,7 +33,7 @@
     };
     protonvpn-rs = {
       # url = "/home/julia/projects/2024/protonvpn-rs/nix";
-      url = "github:juliamertz/protonvpn-rs?dir=nix";
+      url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     suyu = {

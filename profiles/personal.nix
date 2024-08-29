@@ -31,20 +31,18 @@ in {
           country = "NL";
           features = [ "Streaming" ];
         };
-        # killswitch = {
-        #   enable = false;
-        #   custom_rules = [
-        #     "iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT"
-        #     "iptables -A OUTPUT -d 192.168.0.0/16 -j ACCEPT"
-        #     # "-A INPUT -s 192.168.0.100 -j ACCEPT"
-        #     # "-A OUTPUT -d 192.168.0.100 -j ACCEPT"
-        #     # "-A INPUT -s 192.168.0.101 -j ACCEPT"
-        #     # "-A OUTPUT -d 192.168.0.101 -j ACCEPT"
-        #     # "-A INPUT -s 192.168.0.101 -j ACCEPT"
-        #     # "-A OUTPUT -d 192.168.0.101 -j ACCEPT"
-        #     "-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT"
-        #   ];
-        # };
+        killswitch = {
+          enable = false;
+          custom_rules = [
+            # "-A INPUT -s 192.168.0.0/16 -j ACCEPT"
+            # "-A OUTPUT -d 192.168.0.0/16 -j ACCEPT"
+            "-A INPUT -s 192.168.0.100 -j ACCEPT"
+            "-A OUTPUT -d 192.168.0.100 -j ACCEPT"
+            "-A INPUT -s 192.168.0.101 -j ACCEPT"
+            "-A OUTPUT -d 192.168.0.101 -j ACCEPT"
+            "-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT"
+          ];
+        };
       };
     };
 
