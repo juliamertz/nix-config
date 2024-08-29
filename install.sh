@@ -9,6 +9,7 @@ else
   echo No ssh key found, skipping age key generation.
 fi
 
+
 KERNEL=$(uname -s)
 
 if [[ $KERNEL == "Linux" ]]; then

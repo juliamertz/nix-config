@@ -1,12 +1,6 @@
 { inputs, settings, ... }: {
   imports = [ inputs.nix-homebrew.darwinModules.nix-homebrew ];
-  homebrew = {
-    enable = true;
-    # onActivation.cleanup = "uninstall";
-
-    brews = [ ];
-    casks = [ ];
-  };
+  homebrew.enable = true;
 
   nix-homebrew = {
     enable = true;
