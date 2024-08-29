@@ -33,7 +33,7 @@
     };
     protonvpn-rs = {
       # url = "/home/julia/projects/2024/protonvpn-rs/nix";
-      url = "github:juliamertz/protonvpn-rs/feat-killswitch?dir=nix";
+      url = "github:juliamertz/protonvpn-rs?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     suyu = {
@@ -92,7 +92,6 @@
       nixosConfigurations = with nixpkgs.lib;
         let
           base = [
-            ./hardware-configuration.nix
             ./profiles/base.nix
             ./modules/home-manager.nix
           ];
@@ -107,7 +106,7 @@
           homelab = nixosSystem {
             specialArgs = getSpecialArgs "homelab" "x86_64-linux";
             modules = base
-              ++ [ ./profiles/personal.nix ./hardware/workstation.nix ];
+              ++ [ ./profiles/homelab.nix ./hardware/homelab.nix ];
           };
         };
 

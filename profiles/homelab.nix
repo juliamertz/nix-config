@@ -1,4 +1,4 @@
-{ pkgs, settings, config, ... }: {
+{ pkgs, settings, config, helpers, inputs, ... }: {
   config = {
     secrets.profile = "personal";
     nixpkgs.config.allowUnfree = true;
@@ -22,13 +22,28 @@
       ];
     };
 
-    openvpn.proton = {
+    sops.secrets =
+      helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
+
+    services.protonvpn = {
       enable = true;
-      profile = "nl-393";
+      requireSops = true;
+
+      settings = {
+        credentials_path = "/run/secrets/openvpn_auth";
+        autostart_default = true;
+
+        default_select = "Fastest";
+        default_protocol = "Udp";
+        default_criteria = {
+          country = "NL";
+          features = [ "P2P" ];
+        };
+      };
     };
 
     services.qbittorrent = {
-      enable = true;
+      enable = false;
       port = 8280;
       openFirewall = true;
       flood.enable = true;
@@ -60,6 +75,7 @@
   };
 
   imports = [
+    inputs.protonvpn-rs.nixosModules.protonvpn
     ../modules/containers/home-assistant.nix
     ../modules/containers/jellyfin.nix
     ../modules/containers/sponsorblock-atv.nix
@@ -71,7 +87,6 @@
     ../modules/apps/neovim.nix
     ../modules/apps/lazygit.nix
     ../modules/lang/lua.nix
-    ../modules/networking/openvpn
     ../modules/apps/qbittorrent
     ../modules/networking/samba/server.nix
   ];
