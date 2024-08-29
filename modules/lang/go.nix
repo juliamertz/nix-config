@@ -1,3 +1,4 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ libcap go gcc gopls ];
+{ pkgs, helpers, ... }: {
+  environment.systemPackages = with pkgs;
+    [ go gopls ] ++ lib.optionals helpers.isLinux [ libcap gcc ];
 }

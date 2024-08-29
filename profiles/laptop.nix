@@ -55,7 +55,10 @@
     ../modules/apps/terminal/wezterm.nix
     ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/zsh.nix
+
     ../modules/apps/git.nix
+    ../modules/lang/rust.nix
+    ../modules/lang/go.nix
 
     ../modules/apps/browser/firefox.nix
 
