@@ -16,7 +16,15 @@
     # ../modules/apps/media/spotify
   ];
 
-  environment.systemPackages = with pkgs; [ sops tldr ];
+  environment.systemPackages = with pkgs; [
+    sops
+    tldr
+    yq
+    (pkgs.writeShellScriptBin "dr" ''
+      #!${pkgs.bash}
+      darwin-rebuild ''${1:-"switch"} --flake ''${2:-"."}
+    '')
+  ];
 
   services.nix-daemon.enable = true;
   nix.settings.experimental-features = "nix-command flakes";

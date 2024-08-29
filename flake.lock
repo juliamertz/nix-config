@@ -661,16 +661,17 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1724882584,
-        "narHash": "sha256-jNS1RfHayW0fX3KnQLlgueSCtgTwBIwZLC94+SlqjA8=",
+        "lastModified": 1724882785,
+        "narHash": "sha256-OljgQErBE0rt5UT2a6vlVoOacMcrmz8PMgFICq4Bnps=",
         "owner": "juliamertz",
         "repo": "protonvpn-rs",
-        "rev": "9ad32e90293f0e5330648b51715e0aec7823fe6a",
+        "rev": "7e744a99300a073fcf529458bc2bb426c225cbd6",
         "type": "github"
       },
       "original": {
         "dir": "nix",
         "owner": "juliamertz",
+        "ref": "feat-killswitch",
         "repo": "protonvpn-rs",
         "type": "github"
       }

@@ -1,5 +1,5 @@
 {
-  description = "My nixos configuration";
+  description = "My nixos/nix-darwin configuration";
 
   inputs = {
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -61,30 +61,33 @@
         username = "julia";
         fullName = "Julia Mertz";
         email = "info@juliamertz.dev";
-        home = "/home/${userSettings.username}";
-        dotfiles = "${userSettings.home}/dotfiles";
       };
 
       nixpkgs = inputs.nixpkgs-24_05;
       getSpecialArgs = hostname: platform:
-        let pkgs = nixpkgs.legacyPackages.${platform};
-        in with pkgs; {
-          inherit inputs;
+        let
+          pkgs = nixpkgs.legacyPackages.${platform};
+          helpers = pkgs.callPackage ./helpers { inherit platform; };
+          dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
+            repo = "https://github.com/juliamertz/dotfiles";
+            rev = "3f8beb143147b3a2868f8a04948957487f39eafe";
+            local = {
+              enable = false;
+              path = userSettings.dotfiles;
+            };
+          };
+        in {
+          inherit inputs helpers dotfiles;
           settings = {
-            user = userSettings;
+            user = userSettings // {
+              home =
+                let homeDir = if helpers.isDarwin then "/Users" else "/home";
+                in "${homeDir}/${userSettings.username}";
+            };
             system = {
               inherit hostname platform;
               timeZone = "Europe/Amsterdam";
               defaultLocale = "en_US.UTF-8";
-            };
-          };
-          helpers = callPackage ./helpers { inherit platform; };
-          dotfiles = callPackage ./modules/dotfiles.nix {
-            repo = "https://github.com/juliamertz/dotfiles";
-            rev = "3f8beb143147b3a2868f8a04948957487f39eafe";
-            local = {
-              enable = false; # when set to true use --impure
-              path = userSettings.dotfiles;
             };
           };
         };
@@ -99,6 +102,7 @@
 
           workstation = nixosSystem {
             specialArgs = getSpecialArgs "workstation" "x86_64-linux";
+
             modules = base
               ++ [ ./profiles/personal.nix ./hardware/workstation.nix ];
           };
@@ -112,7 +116,7 @@
 
       darwinConfigurations = with nix-darwin.lib; {
         macbookpro = darwinSystem {
-          inherit specialArgs;
+          specialArgs = getSpecialArgs "macbookpro" "aarch64-darwin";
           modules = [ ./profiles/laptop.nix ./modules/home-manager.nix ];
         };
       };
