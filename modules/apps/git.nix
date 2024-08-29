@@ -36,4 +36,9 @@ in (if helpers.isLinux then {
     enable = true;
     extraConfig = config;
   };
+
+  home.file.".gitconfig".text = ''
+    [include]
+    path=${settings.user.home}/.config/git/config
+  '';
 })
