@@ -64,7 +64,7 @@
       };
 
       nixpkgs = inputs.nixpkgs-24_05;
-      getSpecialArgs = hostname: platform:
+      getSpecialArgs = { hostname, platform }:
         let
           pkgs = nixpkgs.legacyPackages.${platform};
           helpers = pkgs.callPackage ./helpers { inherit platform; };
@@ -76,14 +76,13 @@
               path = userSettings.dotfiles;
             };
           };
+
+          homeDir = if helpers.isDarwin then "/Users" else "/home";
+          home = "${homeDir}/${userSettings.username}";
         in {
           inherit inputs helpers dotfiles;
           settings = {
-            user = userSettings // {
-              home =
-                let homeDir = if helpers.isDarwin then "/Users" else "/home";
-                in "${homeDir}/${userSettings.username}";
-            };
+            user = userSettings // { inherit home; };
             system = {
               inherit hostname platform;
               timeZone = "Europe/Amsterdam";
@@ -93,29 +92,33 @@
         };
     in {
       nixosConfigurations = with nixpkgs.lib;
-        let
-          base = [
-            ./profiles/base.nix
-            ./modules/home-manager.nix
-          ];
+        let base = [ ./profiles/base.nix ./modules/home-manager.nix ];
         in {
 
           workstation = nixosSystem {
-            specialArgs = getSpecialArgs "workstation" "x86_64-linux";
+            specialArgs = getSpecialArgs {
+              hostname = "workstation";
+              platform = "x86_64-linux";
+            };
             modules = base
               ++ [ ./profiles/personal.nix ./hardware/workstation.nix ];
           };
 
           homelab = nixosSystem {
-            specialArgs = getSpecialArgs "homelab" "x86_64-linux";
-            modules = base
-              ++ [ ./profiles/homelab.nix ./hardware/homelab.nix ];
+            specialArgs = getSpecialArgs {
+              hostname = "homelab";
+              platform = "x86_64-linux";
+            };
+            modules = base ++ [ ./profiles/homelab.nix ./hardware/homelab.nix ];
           };
         };
 
       darwinConfigurations = with nix-darwin.lib; {
         macbookpro = darwinSystem {
-          specialArgs = getSpecialArgs "macbookpro" "aarch64-darwin";
+          specialArgs = getSpecialArgs {
+            hostname = "macbookpro";
+            platform = "aarch64-darwin";
+          };
           modules = [ ./profiles/laptop.nix ./modules/home-manager.nix ];
         };
       };
