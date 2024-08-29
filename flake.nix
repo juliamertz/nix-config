@@ -83,8 +83,7 @@
             repo = "https://github.com/juliamertz/dotfiles";
             rev = "3f8beb143147b3a2868f8a04948957487f39eafe";
             local = {
-              # When set to true the configuration has to be built with --impure
-              enable = false;
+              enable = false; # when set to true use --impure
               path = userSettings.dotfiles;
             };
           };
@@ -96,13 +95,11 @@
             ./hardware-configuration.nix
             ./profiles/base.nix
             ./modules/home-manager.nix
-            inputs.flake-programs-sqlite.nixosModules.programs-sqlite
           ];
         in {
 
           workstation = nixosSystem {
             specialArgs = getSpecialArgs "workstation" "x86_64-linux";
-
             modules = base
               ++ [ ./profiles/personal.nix ./hardware/workstation.nix ];
           };
@@ -114,11 +111,11 @@
           };
         };
 
-        darwinConfigurations = with nix-darwin.lib; {
-          macbookpro = darwinSystem {
-            inherit specialArgs;
-            modules = [ ./profiles/laptop.nix ./modules/home-manager.nix ];
-          };
+      darwinConfigurations = with nix-darwin.lib; {
+        macbookpro = darwinSystem {
+          inherit specialArgs;
+          modules = [ ./profiles/laptop.nix ./modules/home-manager.nix ];
         };
+      };
     };
 }

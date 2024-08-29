@@ -1,7 +1,10 @@
-{ pkgs, settings, ... }:
+{ pkgs, settings, inputs, ... }:
 let user = settings.user.username;
 in {
-  imports = [ ../modules/io/ssh.nix ];
+  imports = [
+    ../modules/io/ssh.nix
+    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
+  ];
 
   environment.systemPackages = with pkgs; [ openssl curl tldr xclip zip unzip ];
 
