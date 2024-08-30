@@ -5,18 +5,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1721598297,
-        "narHash": "sha256-Xadl+47f4GcnqNPX0zcbj2Q0CrhGOzuh+Gm6CKvX9Zw=",
-        "owner": "juliamertz",
-        "repo": "affinity-nixos",
-        "rev": "ed476fa82406a36cda257652ed7dca0d62857c4a",
-        "type": "github"
+        "dirtyRev": "c64cfe1c4acac1cdb2cd16fa5781c1c844d2eb11-dirty",
+        "dirtyShortRev": "c64cfe1-dirty",
+        "lastModified": 1725034336,
+        "narHash": "sha256-PK9sIUZfrxXNICnAmHjqS5ulwL5qdHl6hPcdfF9ZoAI=",
+        "type": "git",
+        "url": "file:///home/julia/projects/2024/affinityCrimes"
       },
       "original": {
-        "owner": "juliamertz",
-        "ref": "main",
-        "repo": "affinity-nixos",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/julia/projects/2024/affinityCrimes"
       }
     },
     "base16": {

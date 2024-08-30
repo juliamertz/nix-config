@@ -100,6 +100,7 @@ in {
     ../modules/apps/git.nix
     ../modules/apps/media/spotify
     ../modules/apps/ollama.nix
+    ../modules/apps/affinity.nix
     ../modules/apps/lazygit.nix
     ../modules/apps/terminal/kitty.nix
     ../modules/apps/terminal/wezterm.nix

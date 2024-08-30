@@ -49,7 +49,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    affinity = { url = "github:juliamertz/affinity-nixos/main"; };
+    # affinity.url = "github:juliamertz/affinity-nixos";
+    affinity.url = "/home/julia/projects/2024/affinityCrimes";
+
     sops-nix = { url = "github:Mic92/sops-nix"; };
     stylix = { url = "github:danth/stylix"; };
     zen-browser.url = "github:MarceColl/zen-browser-flake";
