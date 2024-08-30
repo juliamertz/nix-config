@@ -1,4 +1,6 @@
-{ pkgs, inputs, settings, ... }: {
+{ pkgs, inputs, settings, ... }:
+let
+in {
   system = {
     keyboard = {
       enableKeyMapping = true;
@@ -27,11 +29,17 @@
     sops
     tldr
     yq
+
     (pkgs.writeShellScriptBin "dr" ''
       #!${pkgs.bash}
       darwin-rebuild ''${1:-"switch"} --flake ''${2:-"."}
     '')
+
+    openvpn
+    inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
   ];
+
+  environment.shells = [ pkgs.zsh ];
 
   services.nix-daemon.enable = true;
   nix.settings.experimental-features = "nix-command flakes";

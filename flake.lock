@@ -661,11 +661,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1724957463,
-        "narHash": "sha256-3CbcXEV0SY63BUJyZR1d0adwm3X5Xc14ASS9eBFUAJs=",
+        "lastModified": 1725042014,
+        "narHash": "sha256-eciPfST4WfCZl74WWzRL1MaDBgnSDDRcCg/OTY5tuXU=",
         "owner": "juliamertz",
         "repo": "protonvpn-rs",
-        "rev": "28ed7c8921d38e722814ed1641a8e662de36010d",
+        "rev": "28fc1a1ae6e9637b94c84bf32bbb462537e1a25f",
         "type": "github"
       },
       "original": {
