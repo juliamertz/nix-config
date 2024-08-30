@@ -42,15 +42,12 @@ in {
   environment.shells = [ pkgs.zsh ];
 
   services.nix-daemon.enable = true;
-  nix.settings.experimental-features = "nix-command flakes";
 
   users.users.${settings.user.username} = {
     description = settings.user.fullName;
     home = settings.user.home;
   };
 
-  networking.hostName = settings.system.hostname;
-  nixpkgs.hostPlatform = settings.system.platform;
 
   system.stateVersion = 4;
 
@@ -70,6 +67,8 @@ in {
     ../modules/lang/go.nix
 
     ../modules/apps/browser/firefox.nix
+
+    ./base.nix
 
     # ../modules/sops.nix
     # ../modules/apps/media/spotify

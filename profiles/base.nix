@@ -1,41 +1,55 @@
-{ pkgs, settings, inputs, helpers, ... }:
-let user = settings.user.username;
+{ pkgs, lib, settings, inputs, helpers, ... }:
+let
+  inherit (settings.user) username fullName;
+  inherit (settings.system) platform hostname timeZone defaultLocale;
 in {
-  imports = [
+  imports = lib.optionals helpers.isLinux [
     ../modules/io/ssh.nix
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
-  config = mkMerge [
+  config = lib.mkMerge [
+    # Shared
+    {
+      environment.systemPackages = with pkgs; [ openssl curl tldr zip unzip ];
+      nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+      nixpkgs.hostPlatform = platform;
+      networking.hostName = hostname;
+
+      users.users.${username} = {
+        description = fullName;
+        home = settings.user.home;
+      };
+    }
     (if helpers.isDarwin then
-      {
-        # Darwin defaults
-      }
+    # Darwin
+      { }
     else {
-      # Nixos defaults stuff
+      # Nixos
       environment.systemPackages = with pkgs; [ xclip ];
 
       networking.firewall.enable = true;
       networking.networkmanager.enable = true;
 
-      users.users.${user} = {
+      users.users.${username} = {
         isNormalUser = true;
-        description = settings.user.fullName;
         extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
       };
 
-      time.timeZone = settings.system.timeZone;
-      i18n.defaultLocale = settings.system.defaultLocale;
-      i18n.extraLocaleSettings = {
-        LC_ADDRESS = "nl_NL.UTF-8";
-        LC_IDENTIFICATION = "nl_NL.UTF-8";
-        LC_MEASUREMENT = "nl_NL.UTF-8";
-        LC_MONETARY = "nl_NL.UTF-8";
-        LC_NAME = "nl_NL.UTF-8";
-        LC_NUMERIC = "nl_NL.UTF-8";
-        LC_PAPER = "nl_NL.UTF-8";
-        LC_TELEPHONE = "nl_NL.UTF-8";
-        LC_TIME = "nl_NL.UTF-8";
+      time.timeZone = timeZone;
+      i18n.defaultLocale = defaultLocale;
+      i18n.extraLocaleSettings = let locale = defaultLocale;
+      in {
+        LC_ADDRESS = locale;
+        LC_IDENTIFICATION = locale;
+        LC_MEASUREMENT = locale;
+        LC_MONETARY = locale;
+        LC_NAME = locale;
+        LC_NUMERIC = locale;
+        LC_PAPER = locale;
+        LC_TELEPHONE = locale;
+        LC_TIME = locale;
       };
 
       boot.loader.systemd-boot.enable = true;
@@ -45,17 +59,10 @@ in {
         enable = true;
         clean.enable = true;
         clean.extraArgs = "--keep-since 4d --keep 3";
-        flake = "/home/${user}/nix";
+        flake = "/home/${username}/nix";
       };
 
       system.stateVersion = "24.05";
     })
-    # Shared defaults
-    {
-      environment.systemPackages = with pkgs; [ openssl curl tldr zip unzip ];
-      nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-      networking.hostName = settings.system.hostname;
-    }
   ];
 }
