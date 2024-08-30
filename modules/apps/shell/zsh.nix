@@ -8,6 +8,7 @@ let
     package = pkgs.zsh;
     extraArgs = "--set ZDOTDIR '${dotfiles.path}/zsh' " + environmentVariables;
   };
+
   inherit (helpers) isLinux isDarwin;
   inherit (lib) optionals mkIf;
 in {
@@ -17,20 +18,26 @@ in {
       default = { };
     };
   };
-  config = {
-    programs.zsh.enable = isDarwin;
-    home.file.".zshrc".source = mkIf isDarwin "${dotfiles.path}/zsh";
-    home.file.".config/zsh" = mkIf isDarwin {
-      source = "${dotfiles.path}/zsh";
-      recursive = true;
-    };
 
-    environment.systemPackages = dependencies ++ optionals isLinux [ zsh ];
+  config = lib.mkMerge [
+    (if helpers.isDarwin then {
+      programs.zsh.enable = true;
+      home.file.".zshrc".source = "${dotfiles.path}/zsh/.zshrc";
+      home.file.".config/zsh" = {
+        source = "${dotfiles.path}/zsh";
+        recursive = true;
+      };
+    } else {
+      environment.systemPackages = [ zsh ];
+    })
+    {
+      environment.systemPackages = dependencies;
+      programs.direnv = {
+        enable = true;
+        silent = true;
+        nix-direnv.enable = true;
+      };
+    }
+  ];
 
-    programs.direnv = {
-      enable = true;
-      silent = true;
-      nix-direnv.enable = true;
-    };
-  };
 }
