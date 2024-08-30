@@ -53,6 +53,7 @@
     ../modules/apps/lazygit.nix
 
     ../modules/apps/terminal/wezterm.nix
+    ../modules/apps/terminal/kitty.nix
     ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/zsh.nix
 

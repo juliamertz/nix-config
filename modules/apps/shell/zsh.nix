@@ -2,11 +2,12 @@
 let
   cfg = config.zsh;
   environmentVariables = helpers.formattedEnvVars { EDITOR = "nvim"; };
+  dependencies = with pkgs; [ bat jq zoxide ];
   zsh = helpers.wrapPackage {
+    inherit dependencies;
     name = "zsh";
     package = pkgs.zsh;
     extraArgs = "--set ZDOTDIR '${dotfiles.path}/zsh' " + environmentVariables;
-    dependencies = with pkgs; [ bat jq zoxide ];
   };
 in {
   options = with lib; {
@@ -16,7 +17,14 @@ in {
     };
   };
   config = {
-    environment.systemPackages = [ zsh ];
+    home.file.".config/zsh" = lib.mkIf helpers.isDarwin {
+      source = "${dotfiles.path}/zsh";
+      recursive = true;
+    };
+
+    environment.systemPackages = [ ] ++ lib.optionals helpers.isLinux [ zsh ]
+      ++ lib.optionals helpers.isDarwin dependencies;
+
     programs.direnv = {
       enable = true;
       silent = true;
