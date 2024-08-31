@@ -33,14 +33,10 @@ in {
         };
         killswitch = {
           enable = false;
+          applyFirewallRules = true;
           custom_rules = [
-            # "-A INPUT -s 192.168.0.0/16 -j ACCEPT"
-            # "-A OUTPUT -d 192.168.0.0/16 -j ACCEPT"
-            "-A INPUT -s 192.168.0.100 -j ACCEPT"
-            "-A OUTPUT -d 192.168.0.100 -j ACCEPT"
-            "-A INPUT -s 192.168.0.101 -j ACCEPT"
-            "-A OUTPUT -d 192.168.0.101 -j ACCEPT"
-            "-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT"
+            "-A INPUT -s 192.168.0.0/24 -j ACCEPT"
+            "-A OUTPUT -d 192.168.0.0/24 -j ACCEPT"
           ];
         };
       };
@@ -82,9 +78,6 @@ in {
   imports = [
     ./gaming.nix
     ../modules/networking/zerotier
-    ../modules/lang/rust.nix
-    ../modules/lang/sql.nix
-    ../modules/lang/go.nix
     ../modules/io/bluetooth.nix
     ../modules/io/pipewire.nix
     ../modules/io/keyd.nix

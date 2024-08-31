@@ -2,11 +2,18 @@
 let
   inherit (settings.user) username fullName;
   inherit (settings.system) platform hostname timeZone defaultLocale;
+  inherit (helpers) isDarwin isLinux;
+
+  inherit (inputs.flake-programs-sqlite.nixosModules) programs-sqlite;
 in {
-  imports = lib.optionals helpers.isLinux [
-    ../modules/io/ssh.nix
-    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
-  ];
+  imports = [
+    ../modules/lang/rust.nix
+    ../modules/lang/sql.nix
+    ../modules/lang/go.nix
+    ../modules/lang/nix.nix
+    ../modules/lang/lua.nix
+  ] ++ lib.optionals isLinux [ ../modules/io/ssh.nix programs-sqlite ]
+    ++ lib.optionals isDarwin [ ../modules/homebrew.nix ];
 
   config = lib.mkMerge [
     # Shared
@@ -24,8 +31,14 @@ in {
     }
     (if helpers.isDarwin then
     # Darwin
-      { }
-    else {
+    {
+      environment.systemPackages = [
+        (pkgs.writeShellScriptBin "dr" ''
+          #!${pkgs.bash}
+          darwin-rebuild ''${1:-"switch"} --flake ''${2:-"."}
+        '')
+      ];
+    } else {
       # Nixos
       environment.systemPackages = with pkgs; [ xclip ];
 
@@ -39,18 +52,6 @@ in {
 
       time.timeZone = timeZone;
       i18n.defaultLocale = defaultLocale;
-      i18n.extraLocaleSettings = let locale = defaultLocale;
-      in {
-        LC_ADDRESS = locale;
-        LC_IDENTIFICATION = locale;
-        LC_MEASUREMENT = locale;
-        LC_MONETARY = locale;
-        LC_NAME = locale;
-        LC_NUMERIC = locale;
-        LC_PAPER = locale;
-        LC_TELEPHONE = locale;
-        LC_TIME = locale;
-      };
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;

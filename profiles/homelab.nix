@@ -86,7 +86,6 @@
     ../modules/apps/shell/zsh.nix
     ../modules/apps/neovim.nix
     ../modules/apps/lazygit.nix
-    ../modules/lang/lua.nix
     ../modules/apps/qbittorrent
     ../modules/networking/samba/server.nix
   ];

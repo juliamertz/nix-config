@@ -5,16 +5,17 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "dirtyRev": "c64cfe1c4acac1cdb2cd16fa5781c1c844d2eb11-dirty",
-        "dirtyShortRev": "c64cfe1-dirty",
-        "lastModified": 1725034336,
-        "narHash": "sha256-PK9sIUZfrxXNICnAmHjqS5ulwL5qdHl6hPcdfF9ZoAI=",
-        "type": "git",
-        "url": "file:///home/julia/projects/2024/affinityCrimes"
+        "lastModified": 1725034817,
+        "narHash": "sha256-9Aiql5Q3uGOAWLmPcdS8GicFApgr0WCXQ29VBlBRzHc=",
+        "owner": "juliamertz",
+        "repo": "affinity-nixos",
+        "rev": "7db0f912513fd7ecc861fb1bdc0d58d270247128",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/julia/projects/2024/affinityCrimes"
+        "owner": "juliamertz",
+        "repo": "affinity-nixos",
+        "type": "github"
       }
     },
     "base16": {
@@ -659,11 +660,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1725042014,
-        "narHash": "sha256-eciPfST4WfCZl74WWzRL1MaDBgnSDDRcCg/OTY5tuXU=",
+        "lastModified": 1725130853,
+        "narHash": "sha256-zCebGtwF0uHALx08tttqdxWJN3/xcQQJ0YMyZbGelJs=",
         "owner": "juliamertz",
         "repo": "protonvpn-rs",
-        "rev": "28fc1a1ae6e9637b94c84bf32bbb462537e1a25f",
+        "rev": "639709e7cdc829c1a976cd12b820fb8a77118cbb",
         "type": "github"
       },
       "original": {

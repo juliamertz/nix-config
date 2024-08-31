@@ -29,12 +29,6 @@ in {
     sops
     tldr
     yq
-
-    (pkgs.writeShellScriptBin "dr" ''
-      #!${pkgs.bash}
-      darwin-rebuild ''${1:-"switch"} --flake ''${2:-"."}
-    '')
-
     openvpn
     inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
   ];
@@ -48,11 +42,10 @@ in {
     home = settings.user.home;
   };
 
-
   system.stateVersion = 4;
 
   imports = [
-    ../modules/homebrew.nix
+    ./base.nix
 
     ../modules/apps/neovim.nix
     ../modules/apps/lazygit.nix
@@ -61,14 +54,9 @@ in {
     ../modules/apps/terminal/kitty.nix
     ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/zsh.nix
-
     ../modules/apps/git.nix
-    ../modules/lang/rust.nix
-    ../modules/lang/go.nix
 
     ../modules/apps/browser/firefox.nix
-
-    ./base.nix
 
     # ../modules/sops.nix
     # ../modules/apps/media/spotify

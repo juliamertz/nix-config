@@ -49,8 +49,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # affinity.url = "github:juliamertz/affinity-nixos";
-    affinity.url = "/home/julia/projects/2024/affinityCrimes";
+    affinity.url = "github:juliamertz/affinity-nixos";
 
     sops-nix = { url = "github:Mic92/sops-nix"; };
     stylix = { url = "github:danth/stylix"; };
@@ -72,7 +71,7 @@
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
             repo = "https://github.com/juliamertz/dotfiles";
-            rev = "3f8beb143147b3a2868f8a04948957487f39eafe";
+            rev = "dd3331546338a3148c1ace7a68333d6d49b5f4a3";
             local = {
               enable = false;
               path = userSettings.dotfiles;
@@ -96,7 +95,6 @@
       nixosConfigurations = with nixpkgs.lib;
         let base = [ ./profiles/base.nix ./modules/home-manager.nix ];
         in {
-
           workstation = nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "workstation";
