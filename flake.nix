@@ -31,11 +31,6 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
-    protonvpn-rs = {
-      # url = "/home/julia/projects/2024/protonvpn-rs/nix";
-      url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     suyu = {
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -50,6 +45,8 @@
     };
 
     affinity.url = "github:juliamertz/affinity-nixos";
+    spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
+    protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
 
     sops-nix = { url = "github:Mic92/sops-nix"; };
     stylix = { url = "github:danth/stylix"; };
@@ -71,10 +68,10 @@
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
             repo = "https://github.com/juliamertz/dotfiles";
-            rev = "dd3331546338a3148c1ace7a68333d6d49b5f4a3";
+            rev = "ab15dc8f03291dec2a367d2cf60398a6548340a6";
             local = {
               enable = false;
-              path = userSettings.dotfiles;
+              path = "${home}/dotfiles";
             };
           };
 

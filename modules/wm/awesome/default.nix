@@ -18,7 +18,6 @@
             fi
         }
 
-        run ${pkgs.spotify-player}/bin/spotify_player --daemon
         run ${pkgs.firefox}/bin/firefox
         run ${pkgs.picom}/bin/picom -b
         run ${pkgs.blueman}/bin/blueman-applet

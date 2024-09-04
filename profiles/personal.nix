@@ -42,11 +42,11 @@ in {
       };
     };
 
-    nix.settings = {
-      substituters = [ "https://cosmic.cachix.org/" ];
-      trusted-public-keys =
-        [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-    };
+    # nix.settings = {
+    #   substituters = [ "https://cosmic.cachix.org/" ];
+    #   trusted-public-keys =
+    #     [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    # };
 
     nixpkgs.config.allowUnfree = true;
 
@@ -107,6 +107,7 @@ in {
     ../modules/de/cosmic
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
+    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
 }

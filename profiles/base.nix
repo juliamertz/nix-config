@@ -4,7 +4,6 @@ let
   inherit (settings.system) platform hostname timeZone defaultLocale;
   inherit (helpers) isDarwin isLinux;
 
-  inherit (inputs.flake-programs-sqlite.nixosModules) programs-sqlite;
 in {
   imports = [
     ../modules/lang/rust.nix
@@ -12,7 +11,7 @@ in {
     ../modules/lang/go.nix
     ../modules/lang/nix.nix
     ../modules/lang/lua.nix
-  ] ++ lib.optionals isLinux [ ../modules/io/ssh.nix programs-sqlite ]
+  ] ++ lib.optionals isLinux [ ../modules/io/ssh.nix ]
     ++ lib.optionals isDarwin [ ../modules/homebrew.nix ];
 
   config = lib.mkMerge [
@@ -52,6 +51,17 @@ in {
 
       time.timeZone = timeZone;
       i18n.defaultLocale = defaultLocale;
+      i18n.extraLocaleSettings = {
+        LC_ADDRESS = "nl_NL.UTF-8";
+        LC_IDENTIFICATION = "nl_NL.UTF-8";
+        LC_MEASUREMENT = "nl_NL.UTF-8";
+        LC_MONETARY = "nl_NL.UTF-8";
+        LC_NAME = "nl_NL.UTF-8";
+        LC_NUMERIC = "nl_NL.UTF-8";
+        LC_PAPER = "nl_NL.UTF-8";
+        LC_TELEPHONE = "nl_NL.UTF-8";
+        LC_TIME = "nl_NL.UTF-8";
+      };
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
