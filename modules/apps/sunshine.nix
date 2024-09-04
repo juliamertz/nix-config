@@ -2,7 +2,7 @@
 let
   inherit (settings.system) platform;
 
-  pkgs = import inputs.nixpkgs-unstable {
+  pkgs = import inputs.nixpkgs-23_11 {
     system = platform;
     config.allowUnfree = true;
   };
@@ -20,6 +20,24 @@ in {
     capabilities = "cap_sys_admin+p";
     source = "${pkg}/bin/sunshine";
   };
+
+  # services.sunshine = let
+  #   pkgs = import inputs.nixpkgs-unstable {
+  #     system = settings.system.platform;
+  #     config.allowUnfree = true;
+  #   };
+  #   sunshine = pkgs.sunshine.override {
+  #     cudaSupport = true;
+  #     stdenv = pkgs.cudaPackages.backendStdenv;
+  #   };
+  # in {
+  #   enable = true;
+  #   package = sunshine;
+  #
+  #   openFirewall = true;
+  #   capSysAdmin = true;
+  #   autoStart = true;
+  # };
 
   networking.firewall = {
     allowedTCPPorts = [ 47984 47989 47990 48010 ];
