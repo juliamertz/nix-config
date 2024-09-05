@@ -134,6 +134,15 @@
               ./hardware/homelab.nix
             ];
           };
+
+          vps = nixosSystem {
+            specialArgs = getSpecialArgs {
+              hostname = "main";
+              platform = "x86_64-linux";
+            };
+            modules = [ ./profiles/vps.nix ./hardware/hetzner-cloud.nix ];
+          };
+
         };
 
       darwinConfigurations = with nix-darwin.lib; {
