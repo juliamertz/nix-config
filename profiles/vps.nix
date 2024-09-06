@@ -1,23 +1,21 @@
-{
-  pkgs,
-  settings,
-  config,
-  helpers,
-  inputs,
-  ...
-}:
+{ pkgs, settings, config, helpers, inputs, ... }:
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
-in
-{
-  config = {
-    nixpkgs.config.allowUnfree = true;
 
-    nix.settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+  lightspeed-dhl-adapter = import (builtins.fetchGit {
+    url = "git+ssh://git@github.com/juliamertz/lightspeed-dhl-adapter.git";
+    rev = "63f8a7dc6e8a3cf4d97eb7a80fac3f6832dfbfaf";
+  }) {
+    system = builtins.currentSystem;
+  }.default;
+
+in {
+  config = {
+    environment.systemPackages = [ lightspeed-dhl-adapter ];
+
+    nixpkgs.config.allowUnfree = true;
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     nixpkgs.hostPlatform = platform;
     networking.hostName = hostname;
@@ -61,6 +59,7 @@ in
       clean.extraArgs = "--keep-since 4d --keep 3";
       flake = "/home/${username}/nix";
     };
+
   };
   imports = [
     ../modules/apps/git.nix

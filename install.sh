@@ -13,7 +13,7 @@ fi
 KERNEL=$(uname -s)
 
 if [[ $KERNEL == "Linux" ]]; then
-  sudo nixos-generate-config --show-hardware-config > $FLAKE/hardware-configuration.nix
+  # sudo nixos-generate-config --show-hardware-config > $FLAKE/hardware-configuration.nix
   sudo nixos-rebuild switch --flake $FLAKE
 
 elif [[ $KERNEL == "Darwin" ]]; then
