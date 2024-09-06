@@ -1,7 +1,5 @@
 {
   stdenvNoCC,
-  fetchFromGitHub,
-  pkgs,
   rev,
   local,
   repo,

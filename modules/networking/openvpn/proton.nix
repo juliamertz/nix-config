@@ -1,4 +1,4 @@
-{ lib, cfg }:
+{ cfg }:
 let
   concat = builtins.concatStringsSep;
   serializeRemote = ip: port: "remote ${ip} ${toString port}";

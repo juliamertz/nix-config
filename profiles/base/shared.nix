@@ -1,9 +1,6 @@
 {
   pkgs,
-  lib,
   settings,
-  inputs,
-  helpers,
   ...
 }:
 let
@@ -11,8 +8,6 @@ let
   inherit (settings.system)
     platform
     hostname
-    timeZone
-    defaultLocale
     ;
 in
 {
@@ -24,6 +19,8 @@ in
       zip
       unzip
     ];
+
+    nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
@@ -34,7 +31,7 @@ in
 
     users.users.${username} = {
       description = fullName;
-      home = settings.user.home;
+      inherit (settings.user) home;
     };
   };
 }

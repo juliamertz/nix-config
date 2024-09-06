@@ -2,11 +2,8 @@
   pkgs,
   inputs,
   settings,
-  dotfiles,
   ...
 }:
-let
-in
 {
   system = {
     keyboard = {
@@ -40,20 +37,9 @@ in
     inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
   ];
 
-  environment.shells = [ pkgs.zsh ];
-
-  services.nix-daemon.enable = true;
-
-  users.users.${settings.user.username} = {
-    description = settings.user.fullName;
-    home = settings.user.home;
-  };
-
   system.stateVersion = 4;
 
   imports = [
-    ./base.nix
-
     ../modules/apps/neovim.nix
     ../modules/apps/lazygit.nix
 

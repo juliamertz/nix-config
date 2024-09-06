@@ -59,8 +59,6 @@
 
   outputs =
     {
-      self,
-      home-manager,
       nix-darwin,
       ...
     }@inputs:
@@ -77,7 +75,7 @@
         let
           pkgs = nixpkgs.legacyPackages.${platform};
           helpers = pkgs.callPackage ./helpers { inherit platform; };
-          dotfiles = pkgs.callPackage ./modules/dotfiles.nix {
+          dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
             repo = "https://github.com/juliamertz/dotfiles";
             rev = "ab15dc8f03291dec2a367d2cf60398a6548340a6";
             local = {
@@ -108,7 +106,7 @@
         with nixpkgs.lib;
         let
           base = [
-            ./profiles/base.nix
+            ./profiles/base/nixos.nix
             ./modules/home-manager.nix
           ];
         in
@@ -153,6 +151,7 @@
           };
           modules = [
             ./profiles/laptop.nix
+            ./profiles/base/darwin.nix
             ./modules/home-manager.nix
           ];
         };

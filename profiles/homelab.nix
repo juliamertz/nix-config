@@ -9,10 +9,8 @@
 {
   config = {
     secrets.profile = "personal";
-    nixpkgs.config.allowUnfree = true;
     users.defaultUserShell = pkgs.zsh;
 
-    programs.zsh.enable = true;
     environment.systemPackages = with pkgs; [
       btop
       fastfetch

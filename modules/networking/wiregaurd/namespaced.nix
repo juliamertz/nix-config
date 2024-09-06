@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 
@@ -14,9 +14,6 @@
   };
 
   systemd.services.wg =
-    let
-      ip = "10.75.130.74/32";
-    in
     {
       description = "wg network interface";
       bindsTo = [ "netns@wg.service" ];

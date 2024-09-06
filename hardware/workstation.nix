@@ -3,7 +3,6 @@
   inputs,
   settings,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:

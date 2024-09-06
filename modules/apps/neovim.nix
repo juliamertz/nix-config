@@ -2,7 +2,6 @@
   inputs,
   dotfiles,
   helpers,
-  settings,
   ...
 }:
 let

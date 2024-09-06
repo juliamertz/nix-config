@@ -19,10 +19,9 @@ in
       nix-direnv.enable = true;
     };
     programs.appimage.binfmt = true;
-    programs.zsh.enable = true;
+    users.defaultUserShell = pkgs.zsh;
     programs.thunar.enable = true;
 
-    users.defaultUserShell = pkgs.zsh;
 
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
@@ -57,7 +56,6 @@ in
     #     [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
     # };
 
-    nixpkgs.config.allowUnfree = true;
 
     environment.systemPackages = with pkgs; [
       inputs.zen-browser.packages."${settings.system.platform}".generic

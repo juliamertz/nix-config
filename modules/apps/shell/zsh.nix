@@ -8,7 +8,6 @@
   ...
 }:
 let
-  cfg = config.zsh;
   environmentVariables = helpers.formattedEnvVars { EDITOR = "nvim"; };
   dependencies = with pkgs; [
     bat
@@ -21,8 +20,7 @@ let
     extraArgs = "--set ZDOTDIR '${dotfiles.path}/zsh' " + environmentVariables;
   };
 
-  inherit (helpers) isLinux isDarwin;
-  inherit (lib) optionals mkIf;
+  inherit (helpers) isDarwin;
 in
 {
   options = with lib; {
@@ -36,7 +34,7 @@ in
     (
       if helpers.isDarwin then
         {
-          programs.zsh.enable = true;
+          environment.shells = [ pkgs.zsh ];
 
           home.file.".zshrc".source = "${dotfiles.path}/zsh/.zshrc";
           home.file.".config/zsh" = {
@@ -52,6 +50,7 @@ in
         { environment.systemPackages = [ zsh ]; }
     )
     {
+      programs.zsh.enable = true;
       environment.systemPackages = dependencies;
       programs.direnv = {
         enable = true;

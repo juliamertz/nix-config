@@ -1,6 +1,5 @@
 {
   dotfiles,
-  settings,
   pkgs,
   ...
 }:

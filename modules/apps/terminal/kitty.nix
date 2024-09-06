@@ -11,8 +11,7 @@ let
     extraFlags = "--config ${dotfiles.path}/kitty/kitty.conf";
   };
 in
-(
-  if helpers.isDarwin then
+if helpers.isDarwin then
     {
       homebrew.casks = [ "kitty" ];
       home.file.".config/kitty" = {
@@ -22,4 +21,3 @@ in
     }
   else
     { environment.systemPackages = [ kitty ]; }
-)

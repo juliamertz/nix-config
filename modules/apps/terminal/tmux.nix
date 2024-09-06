@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
   dotfiles,
   helpers,
   settings,

@@ -1,5 +1,6 @@
-{ inputs, helpers, ... }:
+{ inputs, helpers, settings, ... }:
 let
+  inherit (settings.user) username;
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
 in
 {
@@ -10,6 +11,10 @@ in
   programs.virt-manager = {
     enable = true;
     package = pkgs.virt-manager;
+  };
+
+  users.users.${username} = {
+    extraGroups = [ "libvirtd" ];
   };
 
   # dconf.settings = {

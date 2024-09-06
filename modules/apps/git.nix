@@ -1,5 +1,4 @@
 {
-  pkgs,
   settings,
   helpers,
   ...
@@ -39,8 +38,7 @@ let
   };
 
 in
-(
-  if helpers.isLinux then
+if helpers.isLinux then
     {
       programs.git = {
         enable = true;
@@ -59,4 +57,3 @@ in
         path=${settings.user.home}/.config/git/config
       '';
     }
-)

@@ -1,6 +1,5 @@
 {
   lib,
-  settings,
   config,
   helpers,
   inputs,

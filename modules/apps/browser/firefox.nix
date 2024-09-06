@@ -1,13 +1,8 @@
 {
   pkgs,
-  lib,
   helpers,
-  config,
   ...
 }:
-let
-  arkenfoxUserJS = builtins.fetchTarball "https://github.com/arkenfox/user.js/archive/refs/tags/126.1.tar.gz";
-in
 (
   if helpers.isDarwin then
     { homebrew.casks = [ "firefox" ]; }
