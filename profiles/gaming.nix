@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   g920 = {
     vendorId = "046d";
@@ -37,6 +37,6 @@ in
     discord
     wine
     winetricks
-    # inputs.suyu.packages.x86_64-linux.suyu
+    inputs.suyu.packages.x86_64-linux.suyu
   ];
 }

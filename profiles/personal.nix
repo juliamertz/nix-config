@@ -69,6 +69,7 @@ in
       networkmanagerapplet
       usbutils
       firefox
+      gh
       ethtool
       (pkgs.callPackage ../modules/bluegone.nix { })
     ];
