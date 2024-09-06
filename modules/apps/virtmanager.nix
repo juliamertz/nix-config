@@ -1,6 +1,8 @@
 { inputs, helpers, ... }:
-let pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
-in {
+let
+  pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
+in
+{
   virtualisation.libvirtd = {
     enable = true;
     package = pkgs.libvirt;

@@ -1,4 +1,11 @@
-{ stdenvNoCC, fetchFromGitHub, pkgs, rev, local, repo }:
+{
+  stdenvNoCC,
+  fetchFromGitHub,
+  pkgs,
+  rev,
+  local,
+  repo,
+}:
 let
   pkg = stdenvNoCC.mkDerivation {
     installPhase = ''
@@ -12,4 +19,7 @@ let
       inherit rev;
     };
   };
-in { path = if local.enable then local.path else builtins.toString pkg; }
+in
+{
+  path = if local.enable then local.path else builtins.toString pkg;
+}

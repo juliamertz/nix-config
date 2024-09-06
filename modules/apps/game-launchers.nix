@@ -1,4 +1,10 @@
-{ pkgs, inputs, settings, ... }: {
+{
+  pkgs,
+  inputs,
+  settings,
+  ...
+}:
+{
   environment.systemPackages = with pkgs; [
     lutris
     inputs.nixpkgs-23_11.legacyPackages.${settings.system.platform}.gamescope
@@ -9,8 +15,8 @@
   programs.gamescope.enable = true;
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
+      extraPkgs =
+        pkgs: with pkgs; [
           xorg.libXcursor
           xorg.libXi
           xorg.libXinerama

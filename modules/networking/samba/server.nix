@@ -1,6 +1,14 @@
-{ pkgs, lib, settings, ... }: {
+{
+  pkgs,
+  lib,
+  settings,
+  ...
+}:
+{
   config = {
-    networking = { firewall.enable = true; };
+    networking = {
+      firewall.enable = true;
+    };
     services = {
       # Network shares
       samba = {

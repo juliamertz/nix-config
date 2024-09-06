@@ -1,5 +1,12 @@
-{ qtbase, qtsvg, qtgraphicaleffects, qtquickcontrols2, wrapQtAppsHook
-, stdenvNoCC, fetchFromGitHub }:
+{
+  qtbase,
+  qtsvg,
+  qtgraphicaleffects,
+  qtquickcontrols2,
+  wrapQtAppsHook,
+  stdenvNoCC,
+  fetchFromGitHub,
+}:
 stdenvNoCC.mkDerivation {
   pname = "sddm-rose-pine";
   version = "1..0";
@@ -12,7 +19,12 @@ stdenvNoCC.mkDerivation {
   };
 
   nativeBuildInputs = [ wrapQtAppsHook ];
-  propagatedUserEnvPkgs = [ qtbase qtsvg qtgraphicaleffects qtquickcontrols2 ];
+  propagatedUserEnvPkgs = [
+    qtbase
+    qtsvg
+    qtgraphicaleffects
+    qtquickcontrols2
+  ];
 
   installPhase = ''
     mkdir -p $out/share/sddm/themes

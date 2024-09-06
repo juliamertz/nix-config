@@ -5,8 +5,12 @@ let
     productId = "c261";
     id = g920.vendorId + ":" + g920.productId;
   };
-in {
-  imports = [ ../modules/apps/sunshine.nix ../modules/apps/game-launchers.nix ];
+in
+{
+  imports = [
+    ../modules/apps/sunshine.nix
+    ../modules/apps/game-launchers.nix
+  ];
 
   hardware.new-lg4ff.enable = true;
   services.udev.packages = with pkgs; [ oversteer ];

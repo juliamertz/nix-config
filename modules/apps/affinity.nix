@@ -1,6 +1,8 @@
 { inputs, settings, ... }:
-let path = "${settings.user.home}/affinity";
-in {
+let
+  path = "${settings.user.home}/affinity";
+in
+{
   imports = [ inputs.affinity.nixosModules.affinity ];
 
   affinity = {

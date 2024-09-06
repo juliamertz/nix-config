@@ -10,7 +10,8 @@ let
     "middlemouse.paste" = false;
     "general.autoScroll" = false;
   };
-in {
+in
+{
   home.config = {
     programs.librewolf = {
       enable = true;

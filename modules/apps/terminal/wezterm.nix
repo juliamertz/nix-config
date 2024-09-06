@@ -1,4 +1,10 @@
-{ dotfiles, helpers, inputs, settings, ... }:
+{
+  dotfiles,
+  helpers,
+  inputs,
+  settings,
+  ...
+}:
 let
   wezterm = helpers.wrapPackage {
     name = "wezterm";
@@ -8,5 +14,7 @@ let
     extraFlags = "--config-file ${dotfiles.path}/wezterm/wezterm.lua";
     extraArgs = "--set XDG_CONFIG_HOME '${dotfiles.path}'";
   };
-in { environment.systemPackages = [ wezterm ]; }
-
+in
+{
+  environment.systemPackages = [ wezterm ];
+}

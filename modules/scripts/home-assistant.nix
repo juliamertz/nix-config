@@ -56,10 +56,15 @@ let
           -d "{\"entity_id\": \"light.all\", \"brightness_step_pct\": $step }" \
           ${base_url}/api/services/light/turn_on  > /dev/null &
     '';
-in {
+in
+{
   sops.secrets = {
-    home_assistant_ip = { owner = settings.user.username; };
-    home_assistant_token = { owner = settings.user.username; };
+    home_assistant_ip = {
+      owner = settings.user.username;
+    };
+    home_assistant_token = {
+      owner = settings.user.username;
+    };
   };
 
   environment.systemPackages = [

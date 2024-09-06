@@ -1,12 +1,25 @@
-{ lib, settings, config, helpers, inputs, ... }:
+{
+  lib,
+  settings,
+  config,
+  helpers,
+  inputs,
+  ...
+}:
 let
   cfg = config.jellyfin;
   unstable = helpers.getPkgs inputs.nixpkgs-unstable;
-in {
+in
+{
   config = {
     nixpkgs.config = lib.mkIf cfg.enableTorrent {
       packageOverrides = _: {
-        inherit (unstable) jellyseerr radarr sonarr jackett;
+        inherit (unstable)
+          jellyseerr
+          radarr
+          sonarr
+          jackett
+          ;
       };
     };
 

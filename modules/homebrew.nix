@@ -1,4 +1,5 @@
-{ inputs, settings, ... }: {
+{ inputs, settings, ... }:
+{
   imports = [ inputs.nix-homebrew.darwinModules.nix-homebrew ];
   homebrew.enable = true;
 

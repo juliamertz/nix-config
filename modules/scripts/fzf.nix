@@ -8,7 +8,10 @@ let
     ''
       find ''${@:-.} -type f | fzf
     '';
-in {
-  environment.systemPackages =
-    [ (pkgs.writeShellScriptBin "fd" fd) (pkgs.writeShellScriptBin "ff" ff) ];
+in
+{
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "fd" fd)
+    (pkgs.writeShellScriptBin "ff" ff)
+  ];
 }

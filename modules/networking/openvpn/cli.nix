@@ -94,7 +94,8 @@ let
 
         echo $subcommand
     '';
-in {
+in
+{
   config = {
     environment.systemPackages = [ (pkgs.writeShellScriptBin "vpn" script) ];
   };

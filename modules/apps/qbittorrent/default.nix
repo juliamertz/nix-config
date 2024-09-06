@@ -1,10 +1,17 @@
-{ config, lib, helpers, inputs, ... }:
+{
+  config,
+  lib,
+  helpers,
+  inputs,
+  ...
+}:
 with lib;
 let
   cfg = config.services.qbittorrent;
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
   qbittorrentConf = import ./config.nix { inherit config pkgs lib; };
-in {
+in
+{
   imports = [ ./flood.nix ];
 
   options.services.qbittorrent = {
@@ -47,14 +54,12 @@ in {
     settings = mkOption {
       type = types.attrsOf types.attrs;
       default = { };
-      description = lib.mkDoc
-        "An attribute set with generic key names, each containing another attribute set.";
+      description = lib.mkDoc "An attribute set with generic key names, each containing another attribute set.";
     };
 
     userInterfaces = mkOption {
       type = types.attrsOf types.package;
-      description = lib.mkDoc
-        "List of alternative webui packages, not meant to be set by user";
+      description = lib.mkDoc "List of alternative webui packages, not meant to be set by user";
     };
   };
 
@@ -81,23 +86,26 @@ in {
         Group = cfg.group;
 
         ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
-        ExecStartPre = let
+        ExecStartPre =
+          let
 
-          preStartScript = pkgs.writeScript "qbittorrent-run-prestart" # sh
-            ''
-              #!${pkgs.bash}/bin/bash
-              if ! test -d "$QBT_PROFILE"; then
-                echo "Creating initial qBittorrent data directory in: $QBT_PROFILE"
-                install -d -m 0755 -o "${cfg.user}" -g "${cfg.group}" "$QBT_PROFILE"
-              fi
+            preStartScript =
+              pkgs.writeScript "qbittorrent-run-prestart" # sh
+                ''
+                  #!${pkgs.bash}/bin/bash
+                  if ! test -d "$QBT_PROFILE"; then
+                    echo "Creating initial qBittorrent data directory in: $QBT_PROFILE"
+                    install -d -m 0755 -o "${cfg.user}" -g "${cfg.group}" "$QBT_PROFILE"
+                  fi
 
-              CONFIG=$QBT_PROFILE/qBittorrent/config
-              mkdir -p $CONFIG
-              rm -vf $CONFIG/qBittorrent.conf
-              install -m 0555 -o "${cfg.user}" -g "${cfg.group}" \
-                ${qbittorrentConf} $CONFIG/qBittorrent.conf
-            '';
-        in "!${preStartScript}";
+                  CONFIG=$QBT_PROFILE/qBittorrent/config
+                  mkdir -p $CONFIG
+                  rm -vf $CONFIG/qBittorrent.conf
+                  install -m 0555 -o "${cfg.user}" -g "${cfg.group}" \
+                    ${qbittorrentConf} $CONFIG/qBittorrent.conf
+                '';
+          in
+          "!${preStartScript}";
       };
 
       environment = {
@@ -113,7 +121,10 @@ in {
       };
     };
 
-    users.groups =
-      mkIf (cfg.group == "qbittorrent") { qbittorrent = { gid = 888; }; };
+    users.groups = mkIf (cfg.group == "qbittorrent") {
+      qbittorrent = {
+        gid = 888;
+      };
+    };
   };
 }

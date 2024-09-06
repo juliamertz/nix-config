@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
-let rose-pine-sddm = pkgs.libsForQt5.callPackage ./sddm-rose-pine.nix { };
-in {
+let
+  rose-pine-sddm = pkgs.libsForQt5.callPackage ./sddm-rose-pine.nix { };
+in
+{
   environment.systemPackages = [ rose-pine-sddm ];
 
   services.xserver.displayManager.sddm.theme = "rose-pine";

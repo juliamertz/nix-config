@@ -1,6 +1,13 @@
-{ lib, config, settings, ... }:
-let cfg = config.pi-hole;
-in {
+{
+  lib,
+  config,
+  settings,
+  ...
+}:
+let
+  cfg = config.pi-hole;
+in
+{
   imports = [ ./default.nix ];
 
   options = {
@@ -20,30 +27,45 @@ in {
     systemd.tmpfiles.rules = [ "d ${cfg.configPath} 0755 pihole pihole" ];
 
     virtualisation.oci-containers.backend = "podman";
-    virtualisation.oci-containers.containers = let ip = "192.168.0.100";
-    in {
-      pi-hole = {
-        inherit (cfg) image;
+    virtualisation.oci-containers.containers =
+      let
+        ip = "192.168.0.100";
+      in
+      {
+        pi-hole = {
+          inherit (cfg) image;
 
-        ports = [ "${ip}:53:53/tcp" "${ip}:53:53/udp" "3080:80" "30443:443" ];
-        volumes = [
-          "${cfg.configPath}/:/etc/pihole/"
-          "/var/lib/dnsmasq.d:/etc/dnsmasq.d/"
-        ];
-        environment = { ServerIP = ip; };
-        extraOptions =
-          [ "--cap-add=NET_ADMIN" "--dns=127.0.0.1" "--dns=1.1.1.1" ];
+          ports = [
+            "${ip}:53:53/tcp"
+            "${ip}:53:53/udp"
+            "3080:80"
+            "30443:443"
+          ];
+          volumes = [
+            "${cfg.configPath}/:/etc/pihole/"
+            "/var/lib/dnsmasq.d:/etc/dnsmasq.d/"
+          ];
+          environment = {
+            ServerIP = ip;
+          };
+          extraOptions = [
+            "--cap-add=NET_ADMIN"
+            "--dns=127.0.0.1"
+            "--dns=1.1.1.1"
+          ];
 
-        workdir = cfg.configPath;
+          workdir = cfg.configPath;
+        };
       };
-    };
 
     users.users.pihole = {
       group = "pihole";
       uid = 898;
     };
 
-    users.groups.pihole = { gid = 898; };
+    users.groups.pihole = {
+      gid = 898;
+    };
   };
 
 }

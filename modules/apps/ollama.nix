@@ -1,10 +1,16 @@
-{ inputs, lib, settings, ... }:
+{
+  inputs,
+  lib,
+  settings,
+  ...
+}:
 let
   pkgs = import inputs.nixpkgs-unstable {
     system = settings.system.platform;
     config.allowUnfree = true;
   };
-in {
+in
+{
   services.ollama = {
     package = pkgs.ollama;
     enable = true;

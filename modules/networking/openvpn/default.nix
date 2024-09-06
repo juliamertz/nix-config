@@ -1,8 +1,16 @@
-{ settings, pkgs, lib, config, helpers, ... }:
+{
+  settings,
+  pkgs,
+  lib,
+  config,
+  helpers,
+  ...
+}:
 let
   proton = pkgs.callPackage ./proton.nix { cfg = config.openvpn.proton; };
   user = settings.user.username;
-in {
+in
+{
   imports = [ ./cli.nix ];
 
   options = {
@@ -35,8 +43,7 @@ in {
       };
     };
 
-    environment.etc."openvpn/update-resolv-conf".source =
-      "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
+    environment.etc."openvpn/update-resolv-conf".source = "${pkgs.update-resolv-conf}/libexec/openvpn/update-resolv-conf";
 
     sops.secrets = helpers.ownedSecrets user [
       "openvpn_auth"
@@ -44,7 +51,9 @@ in {
       "openvpn_tls_crypt"
     ];
 
-    environment.systemPackages = with pkgs; [ networkmanager-openvpn openvpn ];
+    environment.systemPackages = with pkgs; [
+      networkmanager-openvpn
+      openvpn
+    ];
   };
 }
-

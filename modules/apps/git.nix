@@ -1,4 +1,9 @@
-{ pkgs, settings, helpers, ... }:
+{
+  pkgs,
+  settings,
+  helpers,
+  ...
+}:
 let
   config = {
     init.defaultBranch = "main";
@@ -16,8 +21,15 @@ let
     };
 
     url = {
-      "https://github.com/" = { insteadOf = [ "gh:" "github:" ]; };
-      "git@github.com:juliamertz/" = { insteadOf = [ "julia:" ]; };
+      "https://github.com/" = {
+        insteadOf = [
+          "gh:"
+          "github:"
+        ];
+      };
+      "git@github.com:juliamertz/" = {
+        insteadOf = [ "julia:" ];
+      };
     };
 
     user = with settings.user; {
@@ -26,19 +38,25 @@ let
     };
   };
 
-in (if helpers.isLinux then {
-  programs.git = {
-    enable = true;
-    inherit config;
-  };
-} else {
-  home.programs.git = {
-    enable = true;
-    extraConfig = config;
-  };
+in
+(
+  if helpers.isLinux then
+    {
+      programs.git = {
+        enable = true;
+        inherit config;
+      };
+    }
+  else
+    {
+      home.programs.git = {
+        enable = true;
+        extraConfig = config;
+      };
 
-  home.file.".gitconfig".text = ''
-    [include]
-    path=${settings.user.home}/.config/git/config
-  '';
-})
+      home.file.".gitconfig".text = ''
+        [include]
+        path=${settings.user.home}/.config/git/config
+      '';
+    }
+)

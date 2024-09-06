@@ -48,12 +48,22 @@
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
 
-    sops-nix = { url = "github:Mic92/sops-nix"; };
-    stylix = { url = "github:danth/stylix"; };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+    };
+    stylix = {
+      url = "github:danth/stylix";
+    };
     zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
-  outputs = { self, home-manager, nix-darwin, ... }@inputs:
+  outputs =
+    {
+      self,
+      home-manager,
+      nix-darwin,
+      ...
+    }@inputs:
     let
       userSettings = {
         username = "julia";
@@ -62,7 +72,8 @@
       };
 
       nixpkgs = inputs.nixpkgs-24_05;
-      getSpecialArgs = { hostname, platform }:
+      getSpecialArgs =
+        { hostname, platform }:
         let
           pkgs = nixpkgs.legacyPackages.${platform};
           helpers = pkgs.callPackage ./helpers { inherit platform; };
@@ -77,10 +88,13 @@
 
           homeDir = if helpers.isDarwin then "/Users" else "/home";
           home = "${homeDir}/${userSettings.username}";
-        in {
+        in
+        {
           inherit inputs helpers dotfiles;
           settings = {
-            user = userSettings // { inherit home; };
+            user = userSettings // {
+              inherit home;
+            };
             system = {
               inherit hostname platform;
               timeZone = "Europe/Amsterdam";
@@ -88,17 +102,26 @@
             };
           };
         };
-    in {
-      nixosConfigurations = with nixpkgs.lib;
-        let base = [ ./profiles/base.nix ./modules/home-manager.nix ];
-        in {
+    in
+    {
+      nixosConfigurations =
+        with nixpkgs.lib;
+        let
+          base = [
+            ./profiles/base.nix
+            ./modules/home-manager.nix
+          ];
+        in
+        {
           workstation = nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "workstation";
               platform = "x86_64-linux";
             };
-            modules = base
-              ++ [ ./profiles/personal.nix ./hardware/workstation.nix ];
+            modules = base ++ [
+              ./profiles/personal.nix
+              ./hardware/workstation.nix
+            ];
           };
 
           homelab = nixosSystem {
@@ -106,7 +129,10 @@
               hostname = "homelab";
               platform = "x86_64-linux";
             };
-            modules = base ++ [ ./profiles/homelab.nix ./hardware/homelab.nix ];
+            modules = base ++ [
+              ./profiles/homelab.nix
+              ./hardware/homelab.nix
+            ];
           };
         };
 
@@ -116,7 +142,10 @@
             hostname = "macbookpro";
             platform = "aarch64-darwin";
           };
-          modules = [ ./profiles/laptop.nix ./modules/home-manager.nix ];
+          modules = [
+            ./profiles/laptop.nix
+            ./modules/home-manager.nix
+          ];
         };
       };
     };

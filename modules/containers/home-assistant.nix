@@ -1,8 +1,15 @@
-{ lib, config, pkgs, settings, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  settings,
+  ...
+}:
 let
   cfg = config.home-assistant;
   toStr = builtins.toString;
-in {
+in
+{
   imports = [ ./default.nix ];
 
   options = {
@@ -31,9 +38,14 @@ in {
         image = "docker.io/homeassistant/home-assistant:${cfg.tag}";
         autoStart = true;
         ports = [ "${toStr cfg.port}:${toStr cfg.port}" ];
-        volumes =
-          [ "${cfg.configPath}:/config" "/etc/localtime:/etc/localtime:ro" ];
-        extraOptions = [ "--privileged" "--network=host" ];
+        volumes = [
+          "${cfg.configPath}:/config"
+          "/etc/localtime:/etc/localtime:ro"
+        ];
+        extraOptions = [
+          "--privileged"
+          "--network=host"
+        ];
       };
     };
 

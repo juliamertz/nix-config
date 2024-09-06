@@ -10,6 +10,7 @@ let
         cp "$target" "$1"
       fi
     '';
-in {
+in
+{
   environment.systemPackages = [ (pkgs.writeShellScriptBin "deref" deref) ];
 }

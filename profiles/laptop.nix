@@ -1,6 +1,13 @@
-{ pkgs, inputs, settings, ... }:
+{
+  pkgs,
+  inputs,
+  settings,
+  dotfiles,
+  ...
+}:
 let
-in {
+in
+{
   system = {
     keyboard = {
       enableKeyMapping = true;
@@ -55,6 +62,9 @@ in {
     ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/zsh.nix
     ../modules/apps/git.nix
+    ../modules/lang/rust.nix
+    ../modules/lang/nix.nix
+    ../modules/lang/go.nix
 
     ../modules/apps/browser/firefox.nix
 

@@ -1,8 +1,16 @@
-{ lib, config, inputs, helpers, ... }:
+{
+  lib,
+  config,
+  inputs,
+  helpers,
+  ...
+}:
 let
   cfg = config.services.qbittorrent;
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
-in with lib; {
+in
+with lib;
+{
   options = {
     services.qbittorrent.flood = {
       enable = mkEnableOption (lib.mdDoc "Flood bittorrent webui");
@@ -25,37 +33,39 @@ in with lib; {
     };
   };
 
-  config = let
-    inherit (cfg.flood) host port;
-    toStr = builtins.toString;
-  in mkIf cfg.flood.enable {
-    environment.systemPackages = with pkgs; [ flood ];
+  config =
+    let
+      inherit (cfg.flood) host port;
+      toStr = builtins.toString;
+    in
+    mkIf cfg.flood.enable {
+      environment.systemPackages = with pkgs; [ flood ];
 
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ port ];
-      allowedUDPPorts = [ port ];
-    };
-
-    systemd.services.flood = {
-      description = "Flood service";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "network-online.target" ];
-
-      serviceConfig = {
-        Type = "simple";
-        User = cfg.user;
-        Group = cfg.group;
-
-        ExecStart = # sh
-          ''
-            ${pkgs.flood}/bin/flood \
-              --port ${toStr port} \
-              --host ${host}
-              # --qburl "http://${host}:${toStr cfg.port}"
-          '';
+      networking.firewall = mkIf cfg.openFirewall {
+        allowedTCPPorts = [ port ];
+        allowedUDPPorts = [ port ];
       };
-    };
 
-  };
+      systemd.services.flood = {
+        description = "Flood service";
+        after = [ "network.target" ];
+        wantedBy = [ "multi-user.target" ];
+        requires = [ "network-online.target" ];
+
+        serviceConfig = {
+          Type = "simple";
+          User = cfg.user;
+          Group = cfg.group;
+
+          ExecStart = # sh
+            ''
+              ${pkgs.flood}/bin/flood \
+                --port ${toStr port} \
+                --host ${host}
+                # --qburl "http://${host}:${toStr cfg.port}"
+            '';
+        };
+      };
+
+    };
 }

@@ -1,4 +1,12 @@
-{ pkgs, lib, config, dotfiles, helpers, settings, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  dotfiles,
+  helpers,
+  settings,
+  ...
+}:
 let
   # tpm = pkgs.fetchFromGitHub {
   #   owner = "tmux-plugins";
@@ -13,7 +21,8 @@ let
     extraFlags = "-f ${settings.user.home}/.config/tmux/tmux.conf";
     dependencies = with pkgs; [ fzf ];
   };
-in {
+in
+{
   environment.systemPackages = [ tmux ];
   home.file.".config/tmux" = {
     source = "${dotfiles.path}/tmux";

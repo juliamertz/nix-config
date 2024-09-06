@@ -1,4 +1,10 @@
-{ dotfiles, settings, pkgs, ... }: {
+{
+  dotfiles,
+  settings,
+  pkgs,
+  ...
+}:
+{
   imports = [ ../picom ];
 
   config = {
@@ -23,7 +29,11 @@
         run ${pkgs.blueman}/bin/blueman-applet
       '';
 
-    environment.systemPackages = with pkgs; [ rofi pamixer playerctl ];
+    environment.systemPackages = with pkgs; [
+      rofi
+      pamixer
+      playerctl
+    ];
 
     services.xserver = {
       enable = true;

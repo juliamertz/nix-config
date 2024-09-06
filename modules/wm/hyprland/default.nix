@@ -1,4 +1,9 @@
-{ dotfiles, inputs, helpers, ... }:
+{
+  dotfiles,
+  inputs,
+  helpers,
+  ...
+}:
 let
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
   hyprland = helpers.wrapPackage {
@@ -15,7 +20,8 @@ let
       playerctl
     ];
   };
-in {
+in
+{
   environment.systemPackages = [ hyprland ];
   programs.xwayland.enable = true;
 }

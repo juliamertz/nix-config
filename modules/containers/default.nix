@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {

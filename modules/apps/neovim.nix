@@ -1,17 +1,33 @@
-{ inputs, dotfiles, helpers, settings, ... }:
+{
+  inputs,
+  dotfiles,
+  helpers,
+  settings,
+  ...
+}:
 let
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
   nvim = helpers.wrapPackage {
     name = "nvim";
     package = pkgs.neovim;
-    dependencies = with pkgs; [ ripgrep stdenv.cc nixfmt nil ];
+    dependencies = with pkgs; [
+      ripgrep
+      stdenv.cc
+    ];
     extraFlags = "-u ${dotfiles.path}/nvim/init.lua";
-    extraArgs = [ "--set XDG_CONFIG_HOME '${dotfiles.path}'" "--argv0 'nvim'" ];
+    extraArgs = [
+      "--set XDG_CONFIG_HOME '${dotfiles.path}'"
+      "--argv0 'nvim'"
+    ];
     postWrap = # sh
       "ln -sf $out/bin/nvim $out/bin/vim ";
   };
-in {
-  environment.systemPackages = [ nvim pkgs.nvimpager ];
+in
+{
+  environment.systemPackages = [
+    nvim
+    pkgs.nvimpager
+  ];
 
   # TODO: Seperate into nixos specific
   # programs.nix-ld = {

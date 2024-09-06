@@ -1,9 +1,17 @@
-{ lib, config, settings, helpers, inputs, ... }:
+{
+  lib,
+  config,
+  settings,
+  helpers,
+  inputs,
+  ...
+}:
 let
   cfg = config.jellyfin;
   toStr = builtins.toString;
-in {
-  imports = [ 
+in
+{
+  imports = [
     ./default.nix
     ../multimedia/jellyseerr.nix
   ];
@@ -37,8 +45,7 @@ in {
     users.groups.multimedia = { };
     users.users."${settings.user.username}".extraGroups = [ "multimedia" ];
 
-    systemd.tmpfiles.rules =
-      [ "d /home/media 0770 - multimedia - -" ];
+    systemd.tmpfiles.rules = [ "d /home/media 0770 - multimedia - -" ];
 
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
@@ -62,7 +69,9 @@ in {
           "${cfg.configDir}/cache:/cache"
           "${cfg.configDir}/log:/log"
         ];
-        environment = { JELLYFIN_LOG_DIR = "/log"; };
+        environment = {
+          JELLYFIN_LOG_DIR = "/log";
+        };
         extraOptions = [ "--network=host" ];
       };
     };

@@ -1,8 +1,16 @@
-{ lib, settings, config, inputs, helpers, ... }:
+{
+  lib,
+  settings,
+  config,
+  inputs,
+  helpers,
+  ...
+}:
 let
   cfg = config.home;
   module = if helpers.isLinux then "nixosModules" else "darwinModules";
-in {
+in
+{
   imports = [ inputs.home-manager.${module}.home-manager ];
 
   options = {

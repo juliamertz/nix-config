@@ -34,6 +34,7 @@ let
     ip=$(echo $REMOTES | jq ".$1.host" | xargs)
     ssh $user@$ip
   '';
-in {
+in
+{
   environment.systemPackages = [ (pkgs.writeShellScriptBin "remote" script) ];
 }

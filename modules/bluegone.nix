@@ -1,4 +1,11 @@
-{ lib, rustPlatform, fetchFromGitHub, pkg-config, openssl, cmake }:
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  openssl,
+  cmake,
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "bluegone";
@@ -14,7 +21,11 @@ rustPlatform.buildRustPackage rec {
   cargoHash = "sha256-B0zNm9SRVfwtLNww7wcFkiBNJUfLoaiCzIJyRUmRsKQ=";
 
   buildInputs = [ openssl ];
-  nativeBuildInputs = [ pkg-config cmake rustPlatform.bindgenHook ];
+  nativeBuildInputs = [
+    pkg-config
+    cmake
+    rustPlatform.bindgenHook
+  ];
 
   buildNoDefaultFeatures = true;
 

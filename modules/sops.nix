@@ -1,8 +1,16 @@
-{ pkgs, inputs, settings, lib, config, ... }:
+{
+  pkgs,
+  inputs,
+  settings,
+  lib,
+  config,
+  ...
+}:
 let
   format = "yaml";
   cfg = config.secrets;
-in {
+in
+{
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   options.secrets = {

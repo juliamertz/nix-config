@@ -1,4 +1,10 @@
-{ pkgs, lib, config, settings, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  settings,
+  ...
+}:
 let
   cfg = config.rose-pine;
   colors = pkgs.callPackage ./colors.nix { };
@@ -6,9 +12,9 @@ let
     gtk-theme-name = ${name}
     gtk-icon-theme-name = oomox-${name}
   '';
-  name =
-    if cfg.variant == "main" then "rose-pine" else ("rose-pine-" + cfg.variant);
-in {
+  name = if cfg.variant == "main" then "rose-pine" else ("rose-pine-" + cfg.variant);
+in
+{
   options = {
     rose-pine.variant = lib.mkOption {
       type = lib.types.str;

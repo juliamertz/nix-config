@@ -1,6 +1,15 @@
-{ pkgs, inputs, settings, helpers, config, ... }:
-let user = settings.user.username;
-in {
+{
+  pkgs,
+  inputs,
+  settings,
+  helpers,
+  config,
+  ...
+}:
+let
+  user = settings.user.username;
+in
+{
   config = {
     secrets.profile = "personal";
 

@@ -1,4 +1,12 @@
-{ pkgs, settings, config, helpers, inputs, ... }: {
+{
+  pkgs,
+  settings,
+  config,
+  helpers,
+  inputs,
+  ...
+}:
+{
   config = {
     secrets.profile = "personal";
     nixpkgs.config.allowUnfree = true;
@@ -12,18 +20,20 @@
       busybox
     ];
 
-    jellyfin = let user = settings.user.home;
-    in {
-      configDir = "${user}/jellyfin";
-      volumes = [
-        "/home/media/shows:/shows"
-        "/home/media/movies:/movies"
-        "/home/media/music:/music"
-      ];
-    };
+    jellyfin =
+      let
+        user = settings.user.home;
+      in
+      {
+        configDir = "${user}/jellyfin";
+        volumes = [
+          "/home/media/shows:/shows"
+          "/home/media/movies:/movies"
+          "/home/media/music:/music"
+        ];
+      };
 
-    sops.secrets =
-      helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
+    sops.secrets = helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
 
     services.protonvpn = {
       enable = true;
@@ -52,7 +62,9 @@
       group = "users";
 
       settings = {
-        Core = { AutoDeleteAddedTorrentFile = "Never"; };
+        Core = {
+          AutoDeleteAddedTorrentFile = "Never";
+        };
 
         BitTorrent = {
           Session-Interface = "tun0";
@@ -65,8 +77,7 @@
         Preferences = {
           General-Locale = "en";
           WebUI-LocalHostAuth = false;
-          WebUI-Password_PBKDF2 =
-            "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
+          WebUI-Password_PBKDF2 = "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
           # WebUI-AlternativeUIEnabled = true;
           # WebUI-RootFolder = config.services.qbittorrent.userInterfaces.darklight;
         };

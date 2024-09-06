@@ -1,4 +1,10 @@
-{ pkgs, lib, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
   imports = [ inputs.nixos-cosmic.nixosModules.default ];
 
   # nix.settings = {

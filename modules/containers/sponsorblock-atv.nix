@@ -1,6 +1,14 @@
-{ lib, pkgs, config, settings, ... }:
-let cfg = config.sponsorblock-atv;
-in {
+{
+  lib,
+  pkgs,
+  config,
+  settings,
+  ...
+}:
+let
+  cfg = config.sponsorblock-atv;
+in
+{
   imports = [ ./default.nix ];
 
   options = {
@@ -17,12 +25,14 @@ in {
   };
 
   config = {
-    systemd.tmpfiles.rules = let user = settings.user.username;
-    in [ "d ${cfg.configPath} 0755 ${user} ${user}" ];
+    systemd.tmpfiles.rules =
+      let
+        user = settings.user.username;
+      in
+      [ "d ${cfg.configPath} 0755 ${user} ${user}" ];
 
     environment.systemPackages = [
-      (pkgs.writeShellScriptBin "sponsorblock-setup"
-        "sudo podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli")
+      (pkgs.writeShellScriptBin "sponsorblock-setup" "sudo podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli")
     ];
 
     virtualisation.oci-containers.backend = "podman";

@@ -10,7 +10,8 @@ let
     cudaSupport = true;
     stdenv = pkgs.cudaPackages.backendStdenv;
   };
-in {
+in
+{
   environment.systemPackages = [ pkg ];
   services.udev.packages = [ pkg ];
 
@@ -40,7 +41,12 @@ in {
   # };
 
   networking.firewall = {
-    allowedTCPPorts = [ 47984 47989 47990 48010 ];
+    allowedTCPPorts = [
+      47984
+      47989
+      47990
+      48010
+    ];
     allowedUDPPortRanges = [
       {
         from = 47998;
