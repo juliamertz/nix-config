@@ -1,11 +1,34 @@
-_: {
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+{ config, lib, ... }:
+let cfg = config.openssh;
+in {
+  options = with lib; {
+    openssh = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+      };
+      harden = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
   };
 
-  services.openssh.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedUDPPorts = [ 22 ];
+  config = lib.mkIf cfg.enable {
+    programs.mtr.enable = true;
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+
+    services.openssh = {
+      enable = true;
+      openFirewall = true;
+      settings = lib.mkIf cfg.harden {
+        UsePAM = false;
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
+    };
+  };
 }

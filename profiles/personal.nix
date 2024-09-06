@@ -3,7 +3,6 @@
   inputs,
   settings,
   helpers,
-  config,
   ...
 }:
 let

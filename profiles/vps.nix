@@ -1,24 +1,38 @@
-{ pkgs, settings, config, helpers, inputs, ... }:
+{
+  pkgs,
+  settings,
+  config,
+  helpers,
+  inputs,
+  ...
+}:
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
+  #
+  # lightspeed-dhl-adapter = import (builtins.fetchGit {
+  #   url = "git@github.com/juliamertz/lightspeed-dhl-adapter.git";
+  #   rev = "63f8a7dc6e8a3cf4d97eb7a80fac3f6832dfbfaf";
+  # }) { system = builtins.currentSystem; }.default;
 
-  lightspeed-dhl-adapter = import (builtins.fetchGit {
-    url = "git+ssh://git@github.com/juliamertz/lightspeed-dhl-adapter.git";
-    rev = "63f8a7dc6e8a3cf4d97eb7a80fac3f6832dfbfaf";
-  }) {
-    system = builtins.currentSystem;
-  }.default;
-
-in {
+in
+{
   config = {
-    environment.systemPackages = [ lightspeed-dhl-adapter ];
+    # environment.systemPackages = [ lightspeed-dhl-adapter ];
 
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     nixpkgs.hostPlatform = platform;
     networking.hostName = hostname;
+
+    openssh = {
+      enable = true;
+      harden = true;
+    };
 
     users.users.${username} = {
       description = fullName;
@@ -33,19 +47,8 @@ in {
     networking.firewall.enable = true;
     networking.networkmanager.enable = true;
 
-    time.timeZone = "Europe/Amsterdam";
+    time.timeZone = "Europe/Berlin";
     i18n.defaultLocale = "en_US.utf-8";
-    i18n.extraLocaleSettings = {
-      LC_ADDRESS = "nl_NL.UTF-8";
-      LC_IDENTIFICATION = "nl_NL.UTF-8";
-      LC_MEASUREMENT = "nl_NL.UTF-8";
-      LC_MONETARY = "nl_NL.UTF-8";
-      LC_NAME = "nl_NL.UTF-8";
-      LC_NUMERIC = "nl_NL.UTF-8";
-      LC_PAPER = "nl_NL.UTF-8";
-      LC_TELEPHONE = "nl_NL.UTF-8";
-      LC_TIME = "nl_NL.UTF-8";
-    };
 
     boot.loader.grub = {
       device = "nodev";
@@ -64,8 +67,8 @@ in {
   imports = [
     ../modules/apps/git.nix
     ../modules/io/ssh.nix
+    ../modules/apps/neovim.nix
     # ../modules/apps/terminal/tmux.nix
-    # ../modules/apps/neovim.nix
     # ../modules/apps/lazygit.nix
   ];
 }
