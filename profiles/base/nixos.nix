@@ -6,7 +6,7 @@ let
 in {
   imports = [ ./shared.nix ../../modules/io/ssh.nix ];
 
-  environment.systemPackages = with pkgs; [ xclip ];
+  environment.systemPackages = with pkgs; [ xclip comma ];
 
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;

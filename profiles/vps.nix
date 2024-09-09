@@ -10,15 +10,15 @@ let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
   #
-  # lightspeed-dhl-adapter = import (builtins.fetchGit {
-  #   url = "git@github.com/juliamertz/lightspeed-dhl-adapter.git";
-  #   rev = "63f8a7dc6e8a3cf4d97eb7a80fac3f6832dfbfaf";
-  # }) { system = builtins.currentSystem; }.default;
+  lightspeed-dhl-adapter = import (builtins.fetchGit {
+    url = "https://github.com/juliamertz/lightspeed-dhl-adapter.git";
+    rev = "63f8a7dc6e8a3cf4d97eb7a80fac3f6832dfbfaf";
+  }) { system = builtins.currentSystem; }.default;
 
 in
 {
   config = {
-    # environment.systemPackages = [ lightspeed-dhl-adapter ];
+    environment.systemPackages = [ lightspeed-dhl-adapter ];
 
     nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [
