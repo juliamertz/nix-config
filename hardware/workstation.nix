@@ -1,59 +1,33 @@
 {
   config,
-  inputs,
-  settings,
   lib,
   modulesPath,
   ...
 }:
-let
-  pkgs = import inputs.nixpkgs-unstable {
-    system = settings.system.platform;
-    config.allowUnfree = true;
-  };
-in
 {
-  nixpkgs.config.packageOverrides = pkgs: { inherit (pkgs) linuxPackages_latest nvidia_x11; };
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./nvidia.nix
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  environment.systemPackages = with pkgs; [ cudatoolkit ];
-
-  hardware.opengl = {
-    enable = true;
-  };
-  boot.supportedFilesystems = [ "ntfs" ];
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement = {
-      enable = true;
-      finegrained = false;
-    };
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
 
   networking.useDHCP = lib.mkDefault true;
   networking.interfaces.enp4s0 = {
     wakeOnLan.enable = true;
   };
 
+  boot.supportedFilesystems = [ "ntfs" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ahci"
     "nvme"
     "usbhid"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/7a3e2cc9-a8cd-4c05-ba11-92fc603488e4";

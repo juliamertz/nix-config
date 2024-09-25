@@ -6,19 +6,19 @@
 }:
 let
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
+  dependencies = with pkgs; [
+    swaynotificationcenter
+    waybar
+    swww
+    wofi
+    pamixer
+    playerctl
+  ];
   hyprland = helpers.wrapPackage {
     name = "Hyprland";
     package = pkgs.hyprland;
     extraFlags = "--config ${dotfiles.path}/hypr/hyprland.conf";
-    dependencies = with pkgs; [
-      swaynotificationcenter
-      waybar
-      nvidia-vaapi-driver
-      swww
-      wofi
-      pamixer
-      playerctl
-    ];
+    dependencies = with pkgs; [ nvidia-vaapi-driver ] ++ dependencies;
   };
 in
 {

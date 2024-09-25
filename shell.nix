@@ -27,6 +27,4 @@ mkShell {
     deadnix
     statix
   ];
-
-  # ENVVAR = "testtt";
 }

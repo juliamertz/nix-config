@@ -1,9 +1,5 @@
 {
-  pkgs,
   settings,
-  config,
-  helpers,
-  inputs,
   ...
 }:
 let
@@ -36,7 +32,7 @@ in
 
     users.users.${username} = {
       description = fullName;
-      home = home;
+      inherit home;
       isNormalUser = true;
       extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [

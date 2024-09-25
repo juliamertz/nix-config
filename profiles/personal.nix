@@ -55,7 +55,6 @@ in
     #     [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
     # };
 
-
     environment.systemPackages = with pkgs; [
       inputs.zen-browser.packages."${settings.system.platform}".generic
       qdirstat
@@ -112,6 +111,7 @@ in
     ../modules/apps/browser/librewolf.nix
     ../modules/nerdfonts.nix
     ../modules/de/cosmic
+    # ../modules/de/plasma
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite

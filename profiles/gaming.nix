@@ -37,6 +37,7 @@ in
     discord
     wine
     winetricks
+    prismlauncher
     inputs.suyu.packages.x86_64-linux.suyu
   ];
 }
