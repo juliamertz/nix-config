@@ -77,7 +77,7 @@
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
             repo = "https://github.com/juliamertz/dotfiles";
-            rev = "e0dd331b67d491e528c218cfe6a3c8cc5e5661c5";
+            rev = "e6522c3b97b53306a13cbad5022d96c1463b392c";
             local = {
               enable = false;
               path = "${home}/dotfiles";

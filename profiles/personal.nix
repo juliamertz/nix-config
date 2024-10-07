@@ -108,7 +108,7 @@ in
     ../modules/apps/shell/zsh.nix
     ../modules/apps/neovim.nix
     ../modules/networking/samba/client.nix
-    ../modules/apps/browser/librewolf.nix
+    # ../modules/apps/browser/librewolf.nix
     ../modules/nerdfonts.nix
     ../modules/de/cosmic
     # ../modules/de/plasma
