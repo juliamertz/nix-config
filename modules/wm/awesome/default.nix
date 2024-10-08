@@ -27,7 +27,7 @@
         run ${pkgs.picom}/bin/picom -b
         run ${pkgs.blueman}/bin/blueman-applet
 
-        xinput set-prop 'Logitech USB Receiver Mouse' 'libinput Accel Speed' 1
+        xinput set-prop 'Logitech USB Receiver Mouse' 'libinput Accel Speed' -1
       '';
 
     environment.systemPackages = with pkgs; [
