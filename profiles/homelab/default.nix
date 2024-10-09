@@ -1,7 +1,6 @@
 {
   pkgs,
   settings,
-  config,
   helpers,
   inputs,
   ...
@@ -47,11 +46,15 @@
           country = "NL";
           features = [ "P2P" ];
         };
+        killswitch = {
+          enable = false;
+          custom_rules = [ ];
+        };
       };
     };
 
     services.qbittorrent = {
-      enable = false;
+      enable = true;
       port = 8280;
       openFirewall = true;
       flood.enable = true;
@@ -84,18 +87,22 @@
   };
 
   imports = [
+    ./traefik.nix
+
+    ../../modules/containers/home-assistant.nix
+    ../../modules/containers/jellyfin.nix
+    ../../modules/containers/sponsorblock-atv.nix
+    ../../modules/networking/zerotier
+    ../../modules/networking/adguard
+    ../../modules/sops.nix
+    ../../modules/apps/git.nix
+    ../../modules/apps/terminal/tmux.nix
+    ../../modules/apps/shell/zsh.nix
+    ../../modules/apps/neovim.nix
+    ../../modules/apps/lazygit.nix
+    ../../modules/apps/qbittorrent
+    ../../modules/networking/samba/server.nix
+
     inputs.protonvpn-rs.nixosModules.protonvpn
-    ../modules/containers/home-assistant.nix
-    ../modules/containers/jellyfin.nix
-    ../modules/containers/sponsorblock-atv.nix
-    ../modules/networking/zerotier
-    ../modules/sops.nix
-    ../modules/apps/git.nix
-    ../modules/apps/terminal/tmux.nix
-    ../modules/apps/shell/zsh.nix
-    ../modules/apps/neovim.nix
-    ../modules/apps/lazygit.nix
-    ../modules/apps/qbittorrent
-    ../modules/networking/samba/server.nix
   ];
 }

@@ -22,6 +22,11 @@ let
   };
 in
 {
-  environment.systemPackages = [ hyprland ];
-  programs.xwayland.enable = true;
+  environment.systemPackages = dependencies;
+  # programs.xwayland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = pkgs.hyprland;
+    xwayland.enable = true;
+  };
 }

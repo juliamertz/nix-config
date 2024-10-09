@@ -130,7 +130,7 @@
               platform = "x86_64-linux";
             };
             modules = base ++ [
-              ./profiles/homelab.nix
+              ./profiles/homelab
               ./hardware/homelab.nix
             ];
           };

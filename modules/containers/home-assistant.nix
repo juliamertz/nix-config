@@ -12,20 +12,18 @@ in
 {
   imports = [ ./default.nix ];
 
-  options = {
-    home-assistant = {
-      tag = lib.mkOption {
-        type = lib.types.str;
-        default = "latest"; # stable / latest / beta
-      };
-      port = lib.mkOption {
-        type = lib.types.number;
-        default = 8123;
-      };
-      configPath = lib.mkOption {
-        type = lib.types.str;
-        default = "/home/${settings.user.username}/home-assistant";
-      };
+  options.home-assistant = {
+    tag = lib.mkOption {
+      type = lib.types.str;
+      default = "latest"; # stable / latest / beta
+    };
+    port = lib.mkOption {
+      type = lib.types.number;
+      default = 8123;
+    };
+    configPath = lib.mkOption {
+      type = lib.types.str;
+      default = "/home/${settings.user.username}/home-assistant";
     };
   };
   config = {

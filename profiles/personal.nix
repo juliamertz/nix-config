@@ -98,8 +98,8 @@ in
     ../modules/scripts/deref.nix
     ../modules/apps/git.nix
     ../modules/apps/media/spotify
-    ../modules/apps/ollama.nix
-    ../modules/apps/affinity.nix
+    # ../modules/apps/ollama.nix
+    # ../modules/apps/affinity.nix
     ../modules/apps/lazygit.nix
     ../modules/apps/terminal/kitty.nix
     ../modules/apps/terminal/wezterm.nix
@@ -110,7 +110,7 @@ in
     ../modules/networking/samba/client.nix
     # ../modules/apps/browser/librewolf.nix
     ../modules/nerdfonts.nix
-    ../modules/de/cosmic
+    # ../modules/de/cosmic
     # ../modules/de/plasma
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
