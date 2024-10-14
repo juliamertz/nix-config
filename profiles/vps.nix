@@ -1,7 +1,4 @@
-{
-  settings,
-  ...
-}:
+{ settings, ... }:
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
@@ -14,7 +11,8 @@ let
 in
 {
   config = {
-    environment.systemPackages = [ lightspeed-dhl-adapter ];
+    # environment.systemPackages = [ lightspeed-dhl-adapter ];
+
 
     nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [
@@ -64,6 +62,7 @@ in
     ../modules/apps/git.nix
     ../modules/io/ssh.nix
     ../modules/apps/neovim.nix
+    ../modules/webservices
     # ../modules/apps/terminal/tmux.nix
     # ../modules/apps/lazygit.nix
   ];

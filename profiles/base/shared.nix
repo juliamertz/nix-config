@@ -18,6 +18,7 @@ in
       tldr
       zip
       unzip
+      nixfmt-rfc-style
     ];
 
     nixpkgs.config.allowUnfree = true;

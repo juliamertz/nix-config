@@ -6,7 +6,7 @@
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    # Darwin
+# Darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-24_05";
     nix-homebrew = {
@@ -26,7 +26,7 @@
       flake = false;
     };
 
-    # Misc
+# Misc
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -52,9 +52,11 @@
       url = "github:Mic92/sops-nix";
     };
     stylix = {
-      url = "github:danth/stylix";
+      url = "github:danth/stylix/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
     zen-browser.url = "github:MarceColl/zen-browser-flake";
+    picom.url = "github:yshui/picom";
   };
 
   outputs =
@@ -77,7 +79,7 @@
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
             repo = "https://github.com/juliamertz/dotfiles";
-            rev = "e6522c3b97b53306a13cbad5022d96c1463b392c";
+            rev = "f395543d6fae6c363a9eb4c517298929ff28c947";
             local = {
               enable = false;
               path = "${home}/dotfiles";
