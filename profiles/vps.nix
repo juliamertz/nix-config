@@ -2,18 +2,9 @@
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
-  #
-  lightspeed-dhl-adapter = import (builtins.fetchGit {
-    url = "https://github.com/juliamertz/lightspeed-dhl-adapter.git";
-    rev = "63f8a7dc6e8a3cf4d97eb7a80fac3f6832dfbfaf";
-  }) { system = builtins.currentSystem; }.default;
-
 in
 {
   config = {
-    # environment.systemPackages = [ lightspeed-dhl-adapter ];
-
-
     nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [
       "nix-command"
@@ -57,12 +48,14 @@ in
       flake = "/home/${username}/nix";
     };
 
+    secrets.profile = "vps";
   };
   imports = [
     ../modules/apps/git.nix
     ../modules/io/ssh.nix
     ../modules/apps/neovim.nix
     ../modules/webservices
+    ../modules/sops.nix
     # ../modules/apps/terminal/tmux.nix
     # ../modules/apps/lazygit.nix
   ];
