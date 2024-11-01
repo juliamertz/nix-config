@@ -64,6 +64,7 @@ in
               inherit entryPoints;
               rule = host "adguard.${domain}";
               service = "adguard";
+              middlewares = [ "adguard-theme" ];
             };
 
             qbittorrent = {
@@ -77,6 +78,7 @@ in
               inherit entryPoints;
               rule = host "jellyfin.${domain}";
               service = "jellyfin";
+              middlewares = [ "jellyfin-theme" ];
             };
 
             jellyseerr = {
@@ -105,6 +107,14 @@ in
 
           qbittorrent-theme.plugin.themepark = {
             app = "qbittorrent";
+            theme = "catppuccin-mocha";
+          };
+          jellyfin-theme.plugin.themepark = {
+            app = "jellyfin";
+            theme = "catppuccin-mocha";
+          };
+          adguard-theme.plugin.themepark = {
+            app = "adguard";
             theme = "catppuccin-mocha";
           };
         };
