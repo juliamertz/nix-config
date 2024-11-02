@@ -1,6 +1,43 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   domain = "homelab.lan";
+  localServices = [
+    {
+      name = "jellyfin";
+      subdomain = "jellyfin";
+      port = config.jellyfin.port;
+      # theme = false;
+    }
+    {
+      name = "adguardhome";
+      subdomain = "adguard";
+      port = config.services.adguardhome.port;
+      theme = true;
+    }
+    {
+      name = "qbittorrent";
+      subdomain = "qbittorrent";
+      port = config.services.qbittorrent.port;
+      theme = true;
+    }
+    {
+      name = "home-assistant";
+      subdomain = "hass";
+      port = config.home-assistant.port;
+      theme = false;
+    }
+    {
+      name = "jellyseerr";
+      subdomain = "jellyseerr";
+      port = 5055;
+      theme = false;
+    }
+  ];
 
   theme-park = pkgs.fetchFromGitHub {
     owner = "packruler";
@@ -45,79 +82,64 @@ in
         routers =
           let
             host = target: "Host(`${target}`)";
-            entryPoints = [ "http" ];
           in
-          {
+          lib.mkMerge (
+            map (x: {
+              ${x.name} =
+                let
+                  hasTheme = builtins.isNull (x ? theme);
+                in
+                {
+                  entryPoints = [ "http" ];
+                  rule = host "${x.subdomain}.${domain}";
+                  service = x.name;
+                  # TODO: Fix this monstrosity
+                  ${if hasTheme then null else "middlewares"} =
+                    if hasTheme then [ "${if (builtins.isBool x.theme) then x.name else x.theme}-theme" ] else [];
+                };
+            }) localServices
+          )
+          // {
             api = {
-              inherit entryPoints;
+              entryPoints = [ "http" ];
               rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
               service = "api@internal";
             };
-
-            home-assistant = {
-              inherit entryPoints;
-              rule = host "hass.${domain}";
-              service = "home-assistant";
-            };
-
-            adguard = {
-              inherit entryPoints;
-              rule = host "adguard.${domain}";
-              service = "adguard";
-              middlewares = [ "adguard-theme" ];
-            };
-
-            qbittorrent = {
-              inherit entryPoints;
-              rule = host "qbittorrent.${domain}";
-              service = "qbittorrent";
-              middlewares = [ "qbittorrent-theme" ];
-            };
-
-            jellyfin = {
-              inherit entryPoints;
-              rule = host "jellyfin.${domain}";
-              service = "jellyfin";
-              middlewares = [ "jellyfin-theme" ];
-            };
-
-            jellyseerr = {
-              inherit entryPoints;
-              rule = host "jellyseerr.${domain}";
-              service = "jellyseerr";
-            };
           };
 
-        services =
-          let
-            toStr = builtins.toString;
-            mkService = port: { loadBalancer.servers = [ ({ url = "http://127.0.0.1:${toStr port}"; }) ]; };
-          in
-          with config;
-          {
-            home-assistant = mkService home-assistant.port;
-            qbittorrent = mkService services.qbittorrent.port;
-            adguard = mkService services.adguardhome.port;
-            jellyfin = mkService jellyfin.port;
-            jellyseerr = mkService 5055;
-          };
+        services = builtins.listToAttrs (
+          map (service: {
+            name = service.name;
+            value = {
+              loadBalancer.servers = [ ({ url = "http://127.0.0.1:${builtins.toString service.port}"; }) ];
+            };
+          }) localServices
+        );
+        middlewares =
+          lib.mkMerge (
+            map (x: {
+              ${x.name}.plugin.themepark = {
+                app = if (builtins.isBool x.theme) then x.name else x.theme;
+                theme = "catppuccin-mocha";
+              };
+            }) (lib.lists.filter (x: builtins.isNull (x ? theme)) localServices)
+          )
+          // {
+            auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
 
-        middlewares = {
-          auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
-
-          qbittorrent-theme.plugin.themepark = {
-            app = "qbittorrent";
-            theme = "catppuccin-mocha";
+            # qbittorrent-theme.plugin.themepark = {
+            #   app = "qbittorrent";
+            #   theme = "catppuccin-mocha";
+            # };
+            # jellyfin-theme.plugin.themepark = {
+            #   app = "jellyfin";
+            #   theme = "catppuccin-mocha";
+            # };
+            # adguardhome-theme.plugin.themepark = {
+            #   app = "adguard";
+            #   theme = "catppuccin-mocha";
+            # };
           };
-          jellyfin-theme.plugin.themepark = {
-            app = "jellyfin";
-            theme = "catppuccin-mocha";
-          };
-          adguard-theme.plugin.themepark = {
-            app = "adguard";
-            theme = "catppuccin-mocha";
-          };
-        };
 
       };
     };
