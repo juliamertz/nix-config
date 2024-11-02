@@ -54,11 +54,15 @@ let
   });
 in
 {
+  networking.firewall.allowedTCPPorts = [ 80 ];
+
   services.traefik = {
     enable = true;
     inherit package;
 
     staticConfigOptions = {
+      # log.level = "DEBUG";
+
       api = {
         dashboard = true;
         insecure = true;
@@ -82,24 +86,27 @@ in
         routers =
           let
             host = target: "Host(`${target}`)";
-          in
-          lib.mkMerge (
-            map (s: {
+            mappedServices = map (s: {
               ${s.name} = {
                 entryPoints = [ "http" ];
                 rule = host "${s.subdomain}.${domain}";
                 service = s.name;
                 ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];
               };
-            }) localServices
-          )
-          // {
-            api = {
-              entryPoints = [ "http" ];
-              rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
-              service = "api@internal";
-            };
-          };
+            }) localServices;
+          in
+          lib.mkMerge (
+            mappedServices
+            ++ [
+              {
+                api = {
+                  entryPoints = [ "http" ];
+                  rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
+                  service = "api@internal";
+                };
+              }
+            ]
+          );
 
         services = builtins.listToAttrs (
           map (service: {
