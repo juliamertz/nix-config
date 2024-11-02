@@ -11,7 +11,7 @@ let
       name = "jellyfin";
       subdomain = "jellyfin";
       port = config.jellyfin.port;
-      # theme = false;
+      theme = false;
     }
     {
       name = "adguardhome";
@@ -84,19 +84,13 @@ in
             host = target: "Host(`${target}`)";
           in
           lib.mkMerge (
-            map (x: {
-              ${x.name} =
-                let
-                  hasTheme = builtins.isNull (x ? theme);
-                in
-                {
-                  entryPoints = [ "http" ];
-                  rule = host "${x.subdomain}.${domain}";
-                  service = x.name;
-                  # TODO: Fix this monstrosity
-                  ${if hasTheme then null else "middlewares"} =
-                    if hasTheme then [ "${if (builtins.isBool x.theme) then x.name else x.theme}-theme" ] else [];
-                };
+            map (s: {
+              ${s.name} = {
+                entryPoints = [ "http" ];
+                rule = host "${s.subdomain}.${domain}";
+                service = s.name;
+                ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];
+              };
             }) localServices
           )
           // {
@@ -115,31 +109,23 @@ in
             };
           }) localServices
         );
-        middlewares =
-          lib.mkMerge (
-            map (x: {
-              ${x.name}.plugin.themepark = {
-                app = if (builtins.isBool x.theme) then x.name else x.theme;
-                theme = "catppuccin-mocha";
-              };
-            }) (lib.lists.filter (x: builtins.isNull (x ? theme)) localServices)
-          )
-          // {
-            auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
 
-            # qbittorrent-theme.plugin.themepark = {
-            #   app = "qbittorrent";
-            #   theme = "catppuccin-mocha";
-            # };
-            # jellyfin-theme.plugin.themepark = {
-            #   app = "jellyfin";
-            #   theme = "catppuccin-mocha";
-            # };
-            # adguardhome-theme.plugin.themepark = {
-            #   app = "adguard";
-            #   theme = "catppuccin-mocha";
-            # };
+        middlewares = {
+          auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
+
+          qbittorrent-theme.plugin.themepark = {
+            app = "qbittorrent";
+            theme = "catppuccin-mocha";
           };
+          jellyfin-theme.plugin.themepark = {
+            app = "jellyfin";
+            theme = "catppuccin-mocha";
+          };
+          adguardhome-theme.plugin.themepark = {
+            app = "adguard";
+            theme = "catppuccin-mocha";
+          };
+        };
 
       };
     };
