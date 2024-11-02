@@ -52,44 +52,13 @@
         };
       };
     };
-
-    services.qbittorrent = {
-      enable = true;
-      port = 8280;
-      openFirewall = true;
-      flood.enable = true;
-
-      user = settings.user.username;
-      group = "users";
-
-      settings = {
-        Core = {
-          AutoDeleteAddedTorrentFile = "Never";
-        };
-
-        BitTorrent = {
-          Session-Interface = "tun0";
-          Session-InterfaceName = "tun0";
-          Session-DefaultSavePath = /home/media/downloads;
-          Session-DisableAutoTMMByDefault = false;
-          Session-DisableAutoTMMTriggers-CategorySavePathChanged = false;
-        };
-
-        Preferences = {
-          General-Locale = "en";
-          WebUI-LocalHostAuth = false;
-          WebUI-Password_PBKDF2 = "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
-          # WebUI-AlternativeUIEnabled = true;
-          # WebUI-RootFolder = config.services.qbittorrent.userInterfaces.darklight;
-        };
-      };
-    };
   };
 
   imports = [
     ./traefik.nix
     ./adguard.nix
     ./theme-park.nix
+    ./qbittorrent.nix
 
     ../../modules/containers/home-assistant.nix
     ../../modules/containers/jellyfin.nix
@@ -101,7 +70,6 @@
     ../../modules/apps/shell/zsh.nix
     ../../modules/apps/neovim.nix
     ../../modules/apps/lazygit.nix
-    ../../modules/apps/qbittorrent
     ../../modules/networking/samba/server.nix
 
     inputs.protonvpn-rs.nixosModules.protonvpn

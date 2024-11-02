@@ -60,91 +60,96 @@ let
   });
 in
 {
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  # options.reverse-proxy = with lib; { 
+  #    
+  # };
+  config = {
+    networking.firewall.allowedTCPPorts = [ 80 ];
 
-  services.traefik = {
-    enable = true;
-    inherit package;
+    services.traefik = {
+      enable = true;
+      inherit package;
 
-    staticConfigOptions = {
-      # log.level = "DEBUG";
+      staticConfigOptions = {
+        # log.level = "DEBUG";
 
-      api = {
-        dashboard = true;
-        insecure = true;
-      };
+        api = {
+          dashboard = true;
+          insecure = true;
+        };
 
-      experimental = {
-        localPlugins = {
-          themepark = {
-            modulename = "github.com/packruler/traefik-themepark";
+        experimental = {
+          localPlugins = {
+            themepark = {
+              modulename = "github.com/packruler/traefik-themepark";
+            };
           };
+        };
+
+        entryPoints = {
+          http.address = ":80";
         };
       };
 
-      entryPoints = {
-        http.address = ":80";
-      };
-    };
-
-    dynamicConfigOptions = {
-      http = {
-        routers =
-          let
-            host = target: "Host(`${target}`)";
-            mappedServices = map (s: {
-              ${s.name} = {
-                entryPoints = [ "http" ];
-                rule = host "${s.subdomain}.${domain}";
-                service = s.name;
-                ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];
-              };
-            }) localServices;
-          in
-          lib.mkMerge (
-            mappedServices
-            ++ [
-              {
-                api = {
+      dynamicConfigOptions = {
+        http = {
+          routers =
+            let
+              host = target: "Host(`${target}`)";
+              mappedServices = map (s: {
+                ${s.name} = {
                   entryPoints = [ "http" ];
-                  rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
-                  service = "api@internal";
+                  rule = host "${s.subdomain}.${domain}";
+                  service = s.name;
+                  ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];
                 };
-              }
-            ]
+              }) localServices;
+            in
+            lib.mkMerge (
+              mappedServices
+              ++ [
+                {
+                  api = {
+                    entryPoints = [ "http" ];
+                    rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
+                    service = "api@internal";
+                  };
+                }
+              ]
+            );
+
+          services = builtins.listToAttrs (
+            map (service: {
+              name = service.name;
+              value = {
+                loadBalancer.servers = [ ({ url = "http://127.0.0.1:${builtins.toString service.port}"; }) ];
+              };
+            }) localServices
           );
 
-        services = builtins.listToAttrs (
-          map (service: {
-            name = service.name;
-            value = {
-              loadBalancer.servers = [ ({ url = "http://127.0.0.1:${builtins.toString service.port}"; }) ];
-            };
-          }) localServices
-        );
-
-        middlewares =
-          let
-            theme = app: {
-              plugin.themepark = {
-                inherit app;
-                theme = "rose-pine-moon";
-                baseUrl = "http://themepark.homelab.lan";
+          middlewares =
+            let
+              theme = app: {
+                plugin.themepark = {
+                  inherit app;
+                  theme = "rose-pine-moon";
+                  baseUrl = "http://themepark.homelab.lan";
+                };
               };
+            in
+            {
+              auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
+
+              qbittorrent-theme = theme "qbittorrent";
+              jellyfin-theme = theme "jellyfin";
+              adguardhome-theme = theme "adguard";
             };
-          in
-          {
-            auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
 
-            qbittorrent-theme = theme "qbittorrent";
-            jellyfin-theme = theme "jellyfin";
-            adguardhome-theme = theme "adguard";
-          };
-
+        };
       };
     };
-  };
 
-  # Change working directory to source where local plugins reside
-  systemd.services.traefik.serviceConfig.WorkingDirectory = "${config.services.traefik.package}/bin";
+    # Change working directory to source where local plugins reside
+    systemd.services.traefik.serviceConfig.WorkingDirectory = "${config.services.traefik.package}/bin";
+  };
 }
