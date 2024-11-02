@@ -35,11 +35,17 @@ let
       name = "jellyseerr";
       subdomain = "jellyseerr";
       port = 5055;
+      theme = true;
+    }
+    {
+      name = "theme-park";
+      subdomain = "themepark";
+      port = config.services.theme-park.port;
       theme = false;
     }
   ];
 
-  theme-park = pkgs.fetchFromGitHub {
+  themepark = pkgs.fetchFromGitHub {
     owner = "packruler";
     repo = "traefik-themepark";
     rev = "2c9fc37dfb3e0d94efe53b3857a8da908c189d79";
@@ -49,7 +55,7 @@ let
   package = pkgs.traefik.overrideAttrs (oldAttrs: {
     postInstall = ''
       mkdir -p $out/bin/plugins-local/src/github.com/packruler/
-      cp -r ${theme-park} $out/bin/plugins-local/src/github.com/packruler/traefik-themepark
+      cp -r ${themepark} $out/bin/plugins-local/src/github.com/packruler/traefik-themepark
     '';
   });
 in
@@ -117,22 +123,23 @@ in
           }) localServices
         );
 
-        middlewares = {
-          auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
+        middlewares =
+          let
+            theme = app: {
+              plugin.themepark = {
+                inherit app;
+                theme = "rose-pine-moon";
+                baseUrl = "http://themepark.homelab.lan";
+              };
+            };
+          in
+          {
+            auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
 
-          qbittorrent-theme.plugin.themepark = {
-            app = "qbittorrent";
-            theme = "catppuccin-mocha";
+            qbittorrent-theme = theme "qbittorrent";
+            jellyfin-theme = theme "jellyfin";
+            adguardhome-theme = theme "adguard";
           };
-          jellyfin-theme.plugin.themepark = {
-            app = "jellyfin";
-            theme = "catppuccin-mocha";
-          };
-          adguardhome-theme.plugin.themepark = {
-            app = "adguard";
-            theme = "catppuccin-mocha";
-          };
-        };
 
       };
     };

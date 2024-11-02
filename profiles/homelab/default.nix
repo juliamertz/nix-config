@@ -89,6 +89,7 @@
   imports = [
     ./traefik.nix
     ./adguard.nix
+    ./theme-park.nix
 
     ../../modules/containers/home-assistant.nix
     ../../modules/containers/jellyfin.nix
