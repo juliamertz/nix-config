@@ -88,12 +88,12 @@
 
   imports = [
     ./traefik.nix
+    ./adguard.nix
 
     ../../modules/containers/home-assistant.nix
     ../../modules/containers/jellyfin.nix
     ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier
-    ../../modules/networking/adguard
     ../../modules/sops.nix
     ../../modules/apps/git.nix
     ../../modules/apps/terminal/tmux.nix
