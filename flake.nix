@@ -6,7 +6,7 @@
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-# Darwin
+    # Darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-24_05";
     nix-homebrew = {
@@ -44,6 +44,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    dotfiles.url = "github:juliamertz/dotfiles";
     affinity.url = "github:juliamertz/affinity-nixos";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
@@ -78,8 +79,7 @@
           pkgs = nixpkgs.legacyPackages.${platform};
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
-            repo = "https://github.com/juliamertz/dotfiles";
-            rev = "f395543d6fae6c363a9eb4c517298929ff28c947";
+            package = inputs.dotfiles;
             local = {
               enable = false;
               path = "${home}/dotfiles";
