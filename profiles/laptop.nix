@@ -53,6 +53,7 @@
     ../modules/lang/go.nix
 
     ../modules/apps/browser/firefox.nix
+    ../modules/wm/yabai
 
     # ../modules/sops.nix
     # ../modules/apps/media/spotify
