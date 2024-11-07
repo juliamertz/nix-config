@@ -1,4 +1,4 @@
-{ settings, ... }:
+{ settings, inputs, ... }:
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
@@ -21,6 +21,17 @@ in
       harden = true;
     };
 
+    environment.systemPackages =
+      let
+        wrapped = inputs.dotfiles.packages.${settings.system.platform};
+      in
+      with wrapped;
+      [
+        tmux
+        neovim
+        lazygit
+        zsh
+      ];
 
     system.stateVersion = "24.05";
 
@@ -48,19 +59,17 @@ in
 
     programs.nh = {
       enable = true;
-      clean.enable = true;
-      clean.extraArgs = "--keep-since 4d --keep 3";
       flake = "/home/${username}/nix";
     };
 
   };
   imports = [
     ./wiregaurd.nix
+    ./traefik.nix
 
     ../../modules/apps/git.nix
     ../../modules/io/ssh.nix
     ../../modules/apps/neovim.nix
-    ../../modules/webservices
     ../../modules/sops.nix
     # ../modules/apps/terminal/tmux.nix
     # ../modules/apps/lazygit.nix
