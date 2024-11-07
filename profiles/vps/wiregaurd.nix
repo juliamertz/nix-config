@@ -11,7 +11,7 @@
     wg0 = {
       ips = [ "10.100.0.1/24" ];
       listenPort = 51820;
-      privateKeyFile = "${settings.user.home}/wiregaurd/private";
+      privateKeyFile = "${settings.user.home}/wireguard/private";
       peers = [
         {
           publicKey = "VcEu1t2j+mmiPKI8NBusFp1Qgi/VhblZencgsM4qWwo=";

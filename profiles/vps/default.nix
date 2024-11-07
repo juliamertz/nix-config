@@ -21,6 +21,9 @@ in
       harden = true;
     };
 
+
+    system.stateVersion = "24.05";
+
     users.users.${username} = {
       description = fullName;
       inherit home;
