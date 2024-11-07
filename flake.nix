@@ -26,9 +26,15 @@
       flake = false;
     };
 
-# Misc
+    # Misc
+    dotfiles.url = "github:juliamertz/dotfiles";
+    sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-24_05";
+    };
+    stylix = {
+      url = "github:danth/stylix/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
     suyu = {
@@ -39,24 +45,14 @@
       url = "github:wamserma/flake-programs-sqlite";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    # nixos-cosmic = {
+    #   url = "github:lilyinstarlight/nixos-cosmic";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
 
-    dotfiles.url = "github:juliamertz/dotfiles";
-    affinity.url = "github:juliamertz/affinity-nixos";
+    # affinity.url = "github:juliamertz/affinity-nixos";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-    };
-    stylix = {
-      url = "github:danth/stylix/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-24_05";
-    };
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
     picom.url = "github:yshui/picom";
   };
 
@@ -79,6 +75,7 @@
           pkgs = nixpkgs.legacyPackages.${platform};
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
+            inherit platform;
             package = inputs.dotfiles;
             local = {
               enable = false;

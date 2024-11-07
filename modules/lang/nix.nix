@@ -4,5 +4,7 @@
     nil
     nixd
     nixfmt-rfc-style
+    deadnix
+    statix
   ];
 }

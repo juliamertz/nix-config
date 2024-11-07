@@ -1,8 +1,4 @@
-{
-  dotfiles,
-  pkgs,
-  ...
-}:
+{ dotfiles, pkgs, ... }:
 {
   imports = [ ../picom ];
 
@@ -12,23 +8,25 @@
       recursive = true;
     };
 
-    home.file.".config/awesome/autorun.sh".executable = true;
-    home.file.".config/awesome/autorun.sh".text = # bash
-      ''
-        #!/usr/bin/env sh
+    home.file.".config/awesome/autorun.sh" = {
+      executable = true;
+      text = # bash
+        ''
+          #!/usr/bin/env sh
 
-        run() {
-            if ! pgrep -f "$(basename $1)"; then
-                "$@" &
-            fi
-        }
+          run() {
+              if ! pgrep -f "$(basename $1)"; then
+                  "$@" &
+              fi
+          }
 
-        run ${pkgs.firefox}/bin/firefox
-        run ${pkgs.picom}/bin/picom -b
-        run ${pkgs.blueman}/bin/blueman-applet
+          run ${pkgs.firefox}/bin/firefox
+          run ${pkgs.picom}/bin/picom -b
+          run ${pkgs.blueman}/bin/blueman-applet
 
-        xinput set-prop 'Logitech USB Receiver Mouse' 'libinput Accel Speed' -1
-      '';
+          xinput set-prop 'Logitech USB Receiver Mouse' 'libinput Accel Speed' -1
+        '';
+    };
 
     environment.systemPackages = with pkgs; [
       rofi

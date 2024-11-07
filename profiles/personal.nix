@@ -3,6 +3,7 @@
   inputs,
   settings,
   helpers,
+  dotfiles,
   ...
 }:
 let
@@ -20,7 +21,6 @@ in
     programs.appimage.binfmt = true;
     users.defaultUserShell = pkgs.zsh;
     programs.thunar.enable = true;
-
 
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
@@ -55,22 +55,27 @@ in
     #     [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
     # };
 
-    environment.systemPackages = with pkgs; [
-      inputs.zen-browser.packages."${settings.system.platform}".generic
-      qdirstat
-      btop
-      fastfetch
-      mpv
-      scrot
-      sxiv
-      xorg.xhost
-      networkmanagerapplet
-      usbutils
-      firefox
-      gh
-      ethtool
-      (pkgs.callPackage ../modules/bluegone.nix { })
-    ];
+    environment.systemPackages =
+      (with dotfiles.pkgs; [
+        neovim
+        lazygit
+        tmux
+      ])
+      ++ (with pkgs; [
+        qdirstat
+        btop
+        fastfetch
+        mpv
+        scrot
+        sxiv
+        xorg.xhost
+        networkmanagerapplet
+        usbutils
+        firefox
+        gh
+        ethtool
+        (pkgs.callPackage ../modules/bluegone.nix { })
+      ]);
 
     xdg.portal = {
       enable = true;
@@ -91,20 +96,20 @@ in
     ../modules/sops.nix
     ../modules/themes/rose-pine
     ../modules/wm/awesome
-    ../modules/wm/hyprland
+    # ../modules/wm/hyprland
     ../modules/display-manager/sddm
     ../modules/scripts/home-assistant.nix
     ../modules/scripts/remote.nix
     ../modules/scripts/deref.nix
     ../modules/apps/git.nix
     ../modules/apps/media/spotify
-    ../modules/apps/lazygit.nix
+    # ../modules/apps/lazygit.nix
     ../modules/apps/terminal/kitty.nix
     ../modules/apps/terminal/wezterm.nix
-    ../modules/apps/terminal/tmux.nix
+    # ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/fish.nix
     ../modules/apps/shell/zsh.nix
-    ../modules/apps/neovim.nix
+    # ../modules/apps/neovim.nix
     ../modules/networking/samba/client.nix
     ../modules/nerdfonts.nix
     # ../modules/apps/browser/librewolf.nix
