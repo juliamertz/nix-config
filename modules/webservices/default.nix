@@ -1,6 +1,6 @@
 { pkgs, settings, ... }:
 {
-  imports = [ ./valnetten.nix ];
+  # imports = [ ./valnetten.nix ];
 
   # networking.firewall.allowedTCPPorts = [ 8080 ];
 

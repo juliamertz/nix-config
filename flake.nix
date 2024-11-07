@@ -140,7 +140,7 @@
               hostname = "main";
               platform = "x86_64-linux";
             };
-            modules = [ ./profiles/vps.nix ./hardware/hetzner-cloud.nix ];
+            modules = [ ./profiles/vps ./hardware/hetzner-cloud.nix ];
           };
 
         };

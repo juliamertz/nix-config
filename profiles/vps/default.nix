@@ -5,6 +5,8 @@ let
 in
 {
   config = {
+    secrets.profile = "vps";
+
     nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [
       "nix-command"
@@ -48,9 +50,10 @@ in
       flake = "/home/${username}/nix";
     };
 
-    secrets.profile = "vps";
   };
   imports = [
+    ./wiregaurd.nix
+
     ../../modules/apps/git.nix
     ../../modules/io/ssh.nix
     ../../modules/apps/neovim.nix

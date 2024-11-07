@@ -1,15 +1,6 @@
 #!/usr/bin/env sh
 
 FLAKE=$(dirname $0)
-SSH_KEY=~/.ssh/id_ed25519
-
-if [ -f $SSH_KEY ]; then
-  nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i $SSH_KEY > ~/.config/sops/age/keys.txt"
-else 
-  echo No ssh key found, skipping age key generation.
-fi
-
-
 KERNEL=$(uname -s)
 
 if [[ $KERNEL == "Linux" ]]; then

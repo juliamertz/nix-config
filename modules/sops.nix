@@ -22,6 +22,10 @@ in
       type = lib.types.str;
       default = "yaml";
     };
+    activationScript = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
 
   # Secrets attribute should be set in per-profile configuration
