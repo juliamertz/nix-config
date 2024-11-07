@@ -51,11 +51,11 @@ in
     secrets.profile = "vps";
   };
   imports = [
-    ../modules/apps/git.nix
-    ../modules/io/ssh.nix
-    ../modules/apps/neovim.nix
-    ../modules/webservices
-    ../modules/sops.nix
+    ../../modules/apps/git.nix
+    ../../modules/io/ssh.nix
+    ../../modules/apps/neovim.nix
+    ../../modules/webservices
+    ../../modules/sops.nix
     # ../modules/apps/terminal/tmux.nix
     # ../modules/apps/lazygit.nix
   ];

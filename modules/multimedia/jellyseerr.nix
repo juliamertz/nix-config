@@ -10,6 +10,21 @@ let
   unstable = helpers.getPkgs inputs.nixpkgs-unstable;
 in
 {
+  options.services = with lib; {
+    radarr.port = mkOption {
+      type = types.number;
+      default = 7878;
+    };
+    sonarr.port = mkOption {
+      type = types.number;
+      default = 8989;
+    };
+    jackett.port = mkOption {
+      type = types.number;
+      default = 9117;
+    };
+  };
+
   config = {
     nixpkgs.config = lib.mkIf cfg.enableTorrent {
       packageOverrides = _: {
@@ -25,7 +40,7 @@ in
     services.jellyseerr = {
       enable = cfg.enableTorrent;
       openFirewall = true;
-      # port = 5055;
+      port = 5055;
     };
     services.radarr = {
       enable = cfg.enableTorrent;

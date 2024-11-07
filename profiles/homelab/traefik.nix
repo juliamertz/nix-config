@@ -8,6 +8,12 @@ let
   domain = "homelab.lan";
   localServices = [
     {
+      name = "jellyseerr";
+      subdomain = "jellyseerr";
+      port = config.services.jellyseerr.port;
+      theme = false;
+    }
+    {
       name = "jellyfin";
       subdomain = "jellyfin";
       port = config.jellyfin.port;
@@ -32,9 +38,21 @@ let
       theme = false;
     }
     {
-      name = "jellyseerr";
-      subdomain = "jellyseerr";
-      port = 5055;
+      name = "radarr";
+      subdomain = "radarr";
+      port = config.services.radarr.port;
+      theme = true;
+    }
+    {
+      name = "sonarr";
+      subdomain = "sonarr";
+      port = config.services.sonarr.port;
+      theme = true;
+    }
+    {
+      name = "jackett";
+      subdomain = "jackett";
+      port = config.services.jackett.port;
       theme = true;
     }
     {
@@ -60,9 +78,6 @@ let
   });
 in
 {
-  # options.reverse-proxy = with lib; { 
-  #    
-  # };
   config = {
     networking.firewall.allowedTCPPorts = [ 80 ];
 
@@ -71,8 +86,6 @@ in
       inherit package;
 
       staticConfigOptions = {
-        # log.level = "DEBUG";
-
         api = {
           dashboard = true;
           insecure = true;
@@ -142,7 +155,11 @@ in
 
               qbittorrent-theme = theme "qbittorrent";
               jellyfin-theme = theme "jellyfin";
+              jellyseerr-theme = theme "jellyseerr";
               adguardhome-theme = theme "adguard";
+              sonarr-theme = theme "sonarr";
+              radarr-theme = theme "radarr";
+              jackett-theme = theme "jackett";
             };
 
         };
