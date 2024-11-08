@@ -3,6 +3,7 @@
   settings,
   helpers,
   inputs,
+  dotfiles,
   ...
 }:
 {
@@ -10,25 +11,19 @@
     secrets.profile = "personal";
     users.defaultUserShell = pkgs.zsh;
 
-    environment.systemPackages = with pkgs; [
-      btop
-      fastfetch
-      diskonaut
-      busybox
-    ];
-
-    jellyfin =
-      let
-        user = settings.user.home;
-      in
-      {
-        configDir = "${user}/jellyfin";
-        volumes = [
-          "/home/media/shows:/shows"
-          "/home/media/movies:/movies"
-          "/home/media/music:/music"
-        ];
-      };
+    environment.systemPackages =
+      with pkgs;
+      [
+        btop
+        fastfetch
+        diskonaut
+        busybox
+      ]
+      ++ (with dotfiles.pkgs; [
+        tmux
+        neovim
+        lazygit
+      ]);
 
     sops.secrets = helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
 
@@ -60,17 +55,14 @@
     ./theme-park.nix
     ./qbittorrent.nix
     ./wireguard.nix
+    ./multimedia.nix
 
     ../../modules/containers/home-assistant.nix
-    ../../modules/containers/jellyfin.nix
     ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier
     ../../modules/sops.nix
     ../../modules/apps/git.nix
-    ../../modules/apps/terminal/tmux.nix
     ../../modules/apps/shell/zsh.nix
-    ../../modules/apps/neovim.nix
-    ../../modules/apps/lazygit.nix
     ../../modules/networking/samba/server.nix
 
     inputs.protonvpn-rs.nixosModules.protonvpn

@@ -71,7 +71,5 @@ in
     ../../modules/io/ssh.nix
     ../../modules/apps/neovim.nix
     ../../modules/sops.nix
-    # ../modules/apps/terminal/tmux.nix
-    # ../modules/apps/lazygit.nix
   ];
 }

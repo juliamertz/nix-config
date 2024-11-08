@@ -2,6 +2,7 @@
   lib,
   config,
   helpers,
+  settings,
   inputs,
   ...
 }:
@@ -10,26 +11,22 @@ let
   unstable = helpers.getPkgs inputs.nixpkgs-unstable;
 in
 {
-  options.services = with lib; {
-    radarr.port = mkOption {
-      type = types.number;
-      default = 7878;
-    };
-    sonarr.port = mkOption {
-      type = types.number;
-      default = 8989;
-    };
-    jackett.port = mkOption {
-      type = types.number;
-      default = 9117;
-    };
-  };
-
-imports = [
-../../modules/containers/jellyfin.nix
-];
+  imports = [ ../../modules/containers/jellyfin.nix ];
 
   config = {
+    jellyfin =
+      let
+        user = settings.user.home;
+      in
+      {
+        configDir = "${user}/jellyfin";
+        volumes = [
+          "/home/media/shows:/shows"
+          "/home/media/movies:/movies"
+          "/home/media/music:/music"
+        ];
+      };
+
     nixpkgs.config = lib.mkIf cfg.enableTorrent {
       packageOverrides = _: {
         inherit (unstable)
@@ -50,19 +47,26 @@ imports = [
       enable = cfg.enableTorrent;
       openFirewall = true;
       group = "multimedia";
-      # port = 7878
+      port = 7878;
     };
     services.sonarr = {
       enable = cfg.enableTorrent;
       openFirewall = true;
       group = "multimedia";
-      # port = 8989
+      port = 8989;
     };
     services.jackett = {
       enable = cfg.enableTorrent;
       openFirewall = true;
       group = "multimedia";
-      # port = 9117
+      port = 9117;
     };
+  };
+
+  # these modules don't have a port option yet.
+  options.services = with lib; {
+    radarr.port = mkOption { type = types.number; };
+    sonarr.port = mkOption { type = types.number; };
+    jackett.port = mkOption { type = types.number; };
   };
 }
