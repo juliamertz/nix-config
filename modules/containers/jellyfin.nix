@@ -11,7 +11,6 @@ in
 {
   imports = [
     ./default.nix
-    ../multimedia/jellyseerr.nix
   ];
 
   options = {
