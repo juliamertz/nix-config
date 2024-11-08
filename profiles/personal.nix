@@ -97,19 +97,16 @@ in
     ../modules/themes/rose-pine
     ../modules/wm/awesome
     # ../modules/wm/hyprland
-    ../modules/display-manager/sddm
+    ../modules/dm/sddm
     ../modules/scripts/home-assistant.nix
     ../modules/scripts/remote.nix
     ../modules/scripts/deref.nix
     ../modules/apps/git.nix
     ../modules/apps/media/spotify
-    # ../modules/apps/lazygit.nix
     ../modules/apps/terminal/kitty.nix
     ../modules/apps/terminal/wezterm.nix
-    # ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/fish.nix
     ../modules/apps/shell/zsh.nix
-    # ../modules/apps/neovim.nix
     ../modules/networking/samba/client.nix
     ../modules/nerdfonts.nix
     # ../modules/apps/browser/librewolf.nix
