@@ -54,10 +54,18 @@ in
             service = "jellyfin";
             tls.certResolver = "letsencrypt";
           };
+
+          jellyseerr = {
+            rule = "Host(`jellyseerr.juliamertz.dev`)";
+            entryPoints = [ "https" ];
+            service = "jellyseerr";
+            tls.certResolver = "letsencrypt";
+          };
         };
 
         services = {
           jellyfin.loadBalancer.servers = [ { url = "http://${wg.clientIP}:8096"; } ];
+          jellyseerr.loadBalancer.servers = [ { url = "http://${wg.clientIP}:5055"; } ];
         };
 
         middlewares = {
