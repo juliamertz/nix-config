@@ -59,6 +59,7 @@
     ./adguard.nix
     ./theme-park.nix
     ./qbittorrent.nix
+    ./wireguard.nix
 
     ../../modules/containers/home-assistant.nix
     ../../modules/containers/jellyfin.nix
