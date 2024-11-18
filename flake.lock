@@ -429,7 +429,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-24_05"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {

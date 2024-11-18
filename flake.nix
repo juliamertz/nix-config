@@ -8,7 +8,7 @@
 
     # Darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-24_05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
@@ -65,7 +65,7 @@
         email = "info@juliamertz.dev";
       };
 
-      nixpkgs = inputs.nixpkgs-24_05;
+      nixpkgs = inputs.nixpkgs-unstable;
       getSpecialArgs =
         { hostname, platform }:
         let
@@ -113,7 +113,7 @@
               platform = "x86_64-linux";
             };
             modules = base ++ [
-              ./profiles/personal.nix
+              ./profiles/personal
               ./hardware/workstation.nix
             ];
           };
@@ -149,7 +149,7 @@
             platform = "aarch64-darwin";
           };
           modules = [
-            ./profiles/laptop.nix
+            ./profiles/laptop
             ./profiles/base/darwin.nix
             ./modules/home-manager.nix
           ];

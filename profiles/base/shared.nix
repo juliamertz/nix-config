@@ -18,7 +18,7 @@ in
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
-      # "pipe-operators"
+      "pipe-operators"
     ];
 
     nixpkgs.hostPlatform = platform;
