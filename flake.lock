@@ -90,11 +90,11 @@
         "spotify-player": "spotify-player"
       },
       "locked": {
-        "lastModified": 1731952850,
-        "narHash": "sha256-v94l+n9T5J9WBSVemAy4nk6j8BcvvuPtkIA713qaM7A=",
+        "lastModified": 1731972543,
+        "narHash": "sha256-Pv0e8UOnzhR0sNo0OMBRqRENGEYbJYsVCMcpUytWUnQ=",
         "owner": "juliamertz",
         "repo": "dotfiles",
-        "rev": "f0e28c08e376392cf225dbdf8acb76148080afb3",
+        "rev": "95e62803d49b2900638e0c07bcfe395ede648178",
         "type": "github"
       },
       "original": {
@@ -401,7 +401,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-24_05"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {

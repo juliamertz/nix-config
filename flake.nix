@@ -8,7 +8,7 @@
 
     # Darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-24_05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
