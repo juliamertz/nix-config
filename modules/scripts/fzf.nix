@@ -1,17 +1,13 @@
-{ pkgs, ... }:
-let
-  fd = # bash
-    ''
-      find ''${@:-.} -type d | fzf
-    '';
-  ff = # bash
-    ''
-      find ''${@:-.} -type f | fzf
-    '';
-in
+{ writeShellScriptBin, ... }:
 {
-  environment.systemPackages = [
-    (pkgs.writeShellScriptBin "fd" fd)
-    (pkgs.writeShellScriptBin "ff" ff)
-  ];
+  fd =
+    writeShellScriptBin "fd" # bash
+      ''
+        find ''${@:-.} -type d | fzf
+      '';
+  ff =
+    writeShellScriptBin "ff" # bash
+      ''
+        find ''${@:-.} -type f | fzf
+      '';
 }

@@ -12,6 +12,9 @@
     users.defaultUserShell = pkgs.zsh;
 
     environment.systemPackages =
+      let
+        scripts = import ../../modules/scripts { inherit pkgs; };
+      in
       with pkgs;
       [
         btop
@@ -23,7 +26,14 @@
         tmux
         neovim
         lazygit
-      ]);
+      ])
+      ++ (with scripts; [ wake ]);
+
+    # enable dynamically linked binaries for mason in neovim
+    programs.nix-ld = {
+      enable = true;
+      libraries = with pkgs; [ stdenv.cc.cc ];
+    };
 
     sops.secrets = helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
 
