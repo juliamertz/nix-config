@@ -19,8 +19,7 @@ let
   revision = "9af6be0583bb2ed7bd2717fa09ac786fb40703af";
   repo = "lightspeed-dhl-adapter";
   bin =
-    (builtins.getFlake "github:juliamertz/${repo}/${revision}?dir=nix")
-    .packages.${platform}.default;
+    (builtins.getFlake "github:juliamertz/${repo}/${revision}?dir=nix").packages.${platform}.default;
 
 in
 {

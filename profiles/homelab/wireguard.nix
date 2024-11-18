@@ -1,4 +1,4 @@
-{ pkgs, settings, ... }:
+{ settings, ... }:
 let
   port = 51820;
 in

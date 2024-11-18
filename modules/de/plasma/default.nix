@@ -1,8 +1,4 @@
-{
-  inputs,
-  helpers,
-  ...
-}:
+{ inputs, helpers, ... }:
 let
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
 in

@@ -8,7 +8,7 @@ let
     list:
     map (url: {
       enabled = true;
-      url = url;
+      inherit url;
     }) list;
 in
 {

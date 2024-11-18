@@ -1,8 +1,4 @@
-{
-  settings,
-  helpers,
-  ...
-}:
+{ settings, helpers, ... }:
 let
   user = settings.user.username;
 in

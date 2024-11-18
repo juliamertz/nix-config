@@ -1,8 +1,4 @@
-{
-  pkgs,
-  helpers,
-  ...
-}:
+{ pkgs, helpers, ... }:
 (
   if helpers.isDarwin then
     { homebrew.casks = [ "firefox" ]; }

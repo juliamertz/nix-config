@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.openssh;
-in {
+let
+  cfg = config.openssh;
+in
+{
   options = with lib; {
     openssh = {
       enable = mkOption {

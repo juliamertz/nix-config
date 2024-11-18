@@ -4,17 +4,27 @@ let
   inherit (settings.user) username home;
   inherit (settings.system) timeZone defaultLocale;
 
-in {
-  imports = [ ./shared.nix ../../modules/io/ssh.nix ];
+in
+{
+  imports = [
+    ./shared.nix
+    ../../modules/io/ssh.nix
+  ];
 
-  environment.systemPackages = with pkgs; [ xclip comma ];
+  environment.systemPackages = with pkgs; [
+    xclip
+    comma
+  ];
 
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   time.timeZone = timeZone;

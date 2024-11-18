@@ -10,55 +10,55 @@ let
     {
       name = "jellyseerr";
       subdomain = "jellyseerr";
-      port = config.services.jellyseerr.port;
+      inherit (config.services.jellyseerr) port;
       theme = false;
     }
     {
       name = "jellyfin";
       subdomain = "jellyfin";
-      port = config.jellyfin.port;
+      inherit (config.jellyfin) port;
       theme = false;
     }
     {
       name = "adguardhome";
       subdomain = "adguard";
-      port = config.services.adguardhome.port;
+      inherit (config.services.adguardhome) port;
       theme = true;
     }
     {
       name = "qbittorrent";
       subdomain = "qbittorrent";
-      port = config.services.qbittorrent.port;
+      inherit (config.services.qbittorrent) port;
       theme = true;
     }
     {
       name = "home-assistant";
       subdomain = "hass";
-      port = config.home-assistant.port;
+      inherit (config.home-assistant) port;
       theme = false;
     }
     {
       name = "radarr";
       subdomain = "radarr";
-      port = config.services.radarr.port;
+      inherit (config.services.radarr) port;
       theme = true;
     }
     {
       name = "sonarr";
       subdomain = "sonarr";
-      port = config.services.sonarr.port;
+      inherit (config.services.sonarr) port;
       theme = true;
     }
     {
       name = "jackett";
       subdomain = "jackett";
-      port = config.services.jackett.port;
+      inherit (config.services.jackett) port;
       theme = true;
     }
     {
       name = "theme-park";
       subdomain = "themepark";
-      port = config.services.theme-park.port;
+      inherit (config.services.theme-park) port;
       theme = false;
     }
   ];
@@ -70,7 +70,7 @@ let
     sha256 = "sha256-9JE/iSNulAVBsbcaWSEhCCDqxjkL2F8paXUWqppHFTQ=";
   };
 
-  package = pkgs.traefik.overrideAttrs (oldAttrs: {
+  package = pkgs.traefik.overrideAttrs (_oldAttrs: {
     postInstall = ''
       mkdir -p $out/bin/plugins-local/src/github.com/packruler/
       cp -r ${themepark} $out/bin/plugins-local/src/github.com/packruler/traefik-themepark
@@ -133,9 +133,9 @@ in
 
           services = builtins.listToAttrs (
             map (service: {
-              name = service.name;
+              inherit (service) name;
               value = {
-                loadBalancer.servers = [ ({ url = "http://127.0.0.1:${builtins.toString service.port}"; }) ];
+                loadBalancer.servers = [ { url = "http://127.0.0.1:${builtins.toString service.port}"; } ];
               };
             }) localServices
           );

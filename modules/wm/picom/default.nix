@@ -1,7 +1,7 @@
 {
   dotfiles,
   # pkgs,
-  inputs, 
+  inputs,
   settings,
   helpers,
   ...

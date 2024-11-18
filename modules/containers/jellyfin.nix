@@ -9,9 +9,7 @@ let
   toStr = builtins.toString;
 in
 {
-  imports = [
-    ./default.nix
-  ];
+  imports = [ ./default.nix ];
 
   options = {
     jellyfin = {

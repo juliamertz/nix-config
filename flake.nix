@@ -57,10 +57,7 @@
   };
 
   outputs =
-    {
-      nix-darwin,
-      ...
-    }@inputs:
+    { nix-darwin, ... }@inputs:
     let
       userSettings = {
         username = "julia";
@@ -137,7 +134,10 @@
               hostname = "main";
               platform = "x86_64-linux";
             };
-            modules = [ ./profiles/vps ./hardware/hetzner-cloud.nix ];
+            modules = [
+              ./profiles/vps
+              ./hardware/hetzner-cloud.nix
+            ];
           };
 
         };

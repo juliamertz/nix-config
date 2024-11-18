@@ -1,4 +1,9 @@
-{ inputs, helpers, settings, ... }:
+{
+  inputs,
+  helpers,
+  settings,
+  ...
+}:
 let
   inherit (settings.user) username;
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;

@@ -31,7 +31,7 @@ in
         # httpChallenge.entryPoint = "web";
         letsencrypt = {
           acme = {
-            email = settings.user.email;
+            inherit (settings.user) email;
             storage = "acme.json";
           };
         };

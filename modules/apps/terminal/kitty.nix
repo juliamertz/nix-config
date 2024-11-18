@@ -12,12 +12,12 @@ let
   };
 in
 if helpers.isDarwin then
-    {
-      homebrew.casks = [ "kitty" ];
-      home.file.".config/kitty" = {
-        source = "${dotfiles.path}/kitty";
-        recursive = true;
-      };
-    }
-  else
-    { environment.systemPackages = [ kitty ]; }
+  {
+    homebrew.casks = [ "kitty" ];
+    home.file.".config/kitty" = {
+      source = "${dotfiles.path}/kitty";
+      recursive = true;
+    };
+  }
+else
+  { environment.systemPackages = [ kitty ]; }

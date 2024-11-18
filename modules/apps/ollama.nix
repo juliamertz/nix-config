@@ -1,8 +1,4 @@
-{
-  inputs,
-  settings,
-  ...
-}:
+{ inputs, settings, ... }:
 let
   pkgs = import inputs.nixpkgs-unstable {
     system = settings.system.platform;
