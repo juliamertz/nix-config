@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   settings,
+  dotfiles,
   ...
 }:
 {
@@ -29,23 +30,26 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    sops
-    tldr
-    yq
-    openvpn
-    inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      sops
+      tldr
+      yq
+      openvpn
+      inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
+    ]
+    ++ (with dotfiles.pkgs; [
+      neovim
+      lazygit
+      tmux
+    ]);
 
   system.stateVersion = 4;
 
   imports = [
-    ../modules/apps/neovim.nix
-    ../modules/apps/lazygit.nix
-
     ../modules/apps/terminal/wezterm.nix
     ../modules/apps/terminal/kitty.nix
-    ../modules/apps/terminal/tmux.nix
     ../modules/apps/shell/zsh.nix
     ../modules/apps/git.nix
     ../modules/lang/rust.nix
