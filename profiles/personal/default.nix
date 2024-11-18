@@ -56,7 +56,14 @@ in
     # };
 
     environment.systemPackages =
-      (with dotfiles.pkgs; [
+      let
+        scripts = import ../../modules/scripts { inherit pkgs; };
+      in
+      (with scripts; [
+        wake
+        comma
+      ])
+      ++ (with dotfiles.pkgs; [
         neovim
         lazygit
         tmux

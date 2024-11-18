@@ -13,7 +13,6 @@ in
 
   environment.systemPackages = with pkgs; [
     xclip
-    comma
   ];
 
   networking.firewall.enable = true;
