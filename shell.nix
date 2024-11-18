@@ -9,12 +9,14 @@ let
       ''
         ${getExe deadnix} --edit
         ${getExe statix} fix
+        ${getExe nixfmt-rfc-style} .
       '';
   check =
     writeShellScriptBin "check" # sh
       ''
         ${getExe deadnix}
         ${getExe statix} check
+        ${getExe nixfmt-rfc-style} --check .
       '';
 in
 
