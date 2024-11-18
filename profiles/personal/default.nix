@@ -74,10 +74,10 @@ in
         firefox
         gh
         ethtool
-        (pkgs.callPackage ../modules/bluegone.nix { })
+        (pkgs.callPackage ../../modules/bluegone.nix { })
       ]);
 
-    xdg.portal = {
+    xdg.portal.config = {
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-wlr
@@ -87,7 +87,7 @@ in
   };
 
   imports = [
-    ./gaming
+    ../gaming
 
     ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix
@@ -99,14 +99,13 @@ in
     ../../modules/wm/awesome
     ../../modules/dm/sddm
     ../../modules/scripts/home-assistant.nix
-    ../../modules/scripts/remote.nix
     ../../modules/apps/git.nix
     ../../modules/apps/media/spotify
     ../../modules/apps/terminal/kitty.nix
     ../../modules/apps/terminal/wezterm.nix
     ../../modules/apps/shell/fish.nix
     ../../modules/apps/shell/zsh.nix
-    ../../modules/networking/samba/client.nix
+    # ../../modules/networking/samba/client.nix
     ../../modules/nerdfonts.nix
     # ../modules/wm/hyprland
     # ../modules/apps/browser/librewolf.nix
