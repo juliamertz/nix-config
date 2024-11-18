@@ -57,6 +57,7 @@
     ../../modules/lang/go.nix
     ../../modules/apps/browser/firefox.nix
     ../../modules/wm/yabai
+    ../../modules/nerdfonts.nix
 
     # ../modules/sops.nix
     # ../modules/apps/media/spotify

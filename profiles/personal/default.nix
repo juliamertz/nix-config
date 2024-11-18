@@ -89,25 +89,25 @@ in
   imports = [
     ./gaming
 
-    ../modules/networking/zerotier
-    ../modules/io/bluetooth.nix
-    ../modules/io/pipewire.nix
-    ../modules/io/keyd.nix
-    ../modules/apps/virtmanager.nix
-    ../modules/sops.nix
-    ../modules/themes/rose-pine
-    ../modules/wm/awesome
-    ../modules/dm/sddm
-    ../modules/scripts/home-assistant.nix
-    ../modules/scripts/remote.nix
-    ../modules/apps/git.nix
-    ../modules/apps/media/spotify
-    ../modules/apps/terminal/kitty.nix
-    ../modules/apps/terminal/wezterm.nix
-    ../modules/apps/shell/fish.nix
-    ../modules/apps/shell/zsh.nix
-    ../modules/networking/samba/client.nix
-    ../modules/nerdfonts.nix
+    ../../modules/networking/zerotier
+    ../../modules/io/bluetooth.nix
+    ../../modules/io/pipewire.nix
+    ../../modules/io/keyd.nix
+    ../../modules/apps/virtmanager.nix
+    ../../modules/sops.nix
+    ../../modules/themes/rose-pine
+    ../../modules/wm/awesome
+    ../../modules/dm/sddm
+    ../../modules/scripts/home-assistant.nix
+    ../../modules/scripts/remote.nix
+    ../../modules/apps/git.nix
+    ../../modules/apps/media/spotify
+    ../../modules/apps/terminal/kitty.nix
+    ../../modules/apps/terminal/wezterm.nix
+    ../../modules/apps/shell/fish.nix
+    ../../modules/apps/shell/zsh.nix
+    ../../modules/networking/samba/client.nix
+    ../../modules/nerdfonts.nix
     # ../modules/wm/hyprland
     # ../modules/apps/browser/librewolf.nix
     # ../modules/apps/ollama.nix
