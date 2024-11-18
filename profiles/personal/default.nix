@@ -87,7 +87,8 @@ in
   };
 
   imports = [
-    ./gaming.nix
+    ./gaming
+
     ../modules/networking/zerotier
     ../modules/io/bluetooth.nix
     ../modules/io/pipewire.nix
@@ -96,7 +97,6 @@ in
     ../modules/sops.nix
     ../modules/themes/rose-pine
     ../modules/wm/awesome
-    # ../modules/wm/hyprland
     ../modules/dm/sddm
     ../modules/scripts/home-assistant.nix
     ../modules/scripts/remote.nix
@@ -108,6 +108,7 @@ in
     ../modules/apps/shell/zsh.nix
     ../modules/networking/samba/client.nix
     ../modules/nerdfonts.nix
+    # ../modules/wm/hyprland
     # ../modules/apps/browser/librewolf.nix
     # ../modules/apps/ollama.nix
     # ../modules/apps/affinity.nix

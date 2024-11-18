@@ -48,16 +48,15 @@
   system.stateVersion = 4;
 
   imports = [
-    ../modules/apps/terminal/wezterm.nix
-    ../modules/apps/terminal/kitty.nix
-    ../modules/apps/shell/zsh.nix
-    ../modules/apps/git.nix
-    ../modules/lang/rust.nix
-    ../modules/lang/nix.nix
-    ../modules/lang/go.nix
-
-    ../modules/apps/browser/firefox.nix
-    ../modules/wm/yabai
+    ../../modules/apps/terminal/wezterm.nix
+    ../../modules/apps/terminal/kitty.nix
+    ../../modules/apps/shell/zsh.nix
+    ../../modules/apps/git.nix
+    ../../modules/lang/rust.nix
+    ../../modules/lang/nix.nix
+    ../../modules/lang/go.nix
+    ../../modules/apps/browser/firefox.nix
+    ../../modules/wm/yabai
 
     # ../modules/sops.nix
     # ../modules/apps/media/spotify
