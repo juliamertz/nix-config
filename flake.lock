@@ -442,7 +442,7 @@
         "flake-utils": "flake-utils_2",
         "nix-darwin": "nix-darwin_2",
         "nixpkgs": [
-          "nixpkgs-24_05"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {

@@ -11,18 +11,20 @@
         enable = true;
         openFirewall = true;
 
-        extraConfig = ''
-          server smb encrypt = required
-          server min protocol = SMB3_00
-        '';
+        # extraConfig = ''
+        #   server smb encrypt = required
+        #   server min protocol = SMB3_00
+        # '';
 
-        shares.media = {
+        settings.media = {
           path = "/home/media";
           writable = "true";
           "create mask" = "0644";
           "directory mask" = "0755";
         };
       };
+
+
       avahi = {
         publish.enable = true;
         publish.userServices = true;

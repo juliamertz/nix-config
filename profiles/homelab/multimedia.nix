@@ -67,6 +67,5 @@ in
   options.services = with lib; {
     radarr.port = mkOption { type = types.number; };
     sonarr.port = mkOption { type = types.number; };
-    jackett.port = mkOption { type = types.number; };
   };
 }

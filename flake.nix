@@ -11,7 +11,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-24_05";
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
-      inputs.nixpkgs.follows = "nixpkgs-24_05";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     homebrew-core = {
       url = "github:homebrew/homebrew-core";

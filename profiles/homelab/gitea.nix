@@ -11,6 +11,6 @@ in
   services.gitea = {
     enable = true;
     package = pkgs.gitea;
-    dataDir = "${settings.user.home}/gitea";
+    stateDir = "${settings.user.home}/gitea";
   };
 }
