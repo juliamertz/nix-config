@@ -8,10 +8,6 @@ let
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
 in
 {
-  # environment.systemPackages = with pkgs; [
-  #   
-  # ]; 
-
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;

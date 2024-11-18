@@ -1,14 +1,7 @@
-{
-  pkgs,
-  settings,
-  ...
-}:
+{ pkgs, settings, ... }:
 let
   inherit (settings.user) username fullName;
-  inherit (settings.system)
-    platform
-    hostname
-    ;
+  inherit (settings.system) platform hostname;
 in
 {
   config = {
@@ -25,6 +18,7 @@ in
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"
+      # "pipe-operators"
     ];
 
     nixpkgs.hostPlatform = platform;

@@ -1,7 +1,6 @@
 { pkgs, ... }:
-let
-  call = pkgs.callPackage;
-in
-{
-  wake = call ./wake.nix { };
+mapAttrs (_: path: pkgs.callPackage path { }) {
+  wake = ./wake.nix;
+  deref = ./deref.nix;
+  steamgame = ./steamgame.nix;
 }

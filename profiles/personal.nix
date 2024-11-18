@@ -100,7 +100,6 @@ in
     ../modules/dm/sddm
     ../modules/scripts/home-assistant.nix
     ../modules/scripts/remote.nix
-    ../modules/scripts/deref.nix
     ../modules/apps/git.nix
     ../modules/apps/media/spotify
     ../modules/apps/terminal/kitty.nix
