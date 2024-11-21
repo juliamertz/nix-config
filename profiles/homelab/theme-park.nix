@@ -9,8 +9,8 @@ let
   rosepine = pkgs.fetchFromGitHub {
     owner = "juliamertz";
     repo = "rose-pine-themepark";
-    rev = "ec7ddaba02a24654e9c571d5d2ad1dcfc12230df";
-    sha256 = "sha256-eF7RTgTK0aRkXChqs7wsIuy7UkI3O5FbuzwxQrc8IqY=";
+    rev = "80447c492990568629b4fb37a8204df632cb368d";
+    hash = "sha256-9QA/r+ZtFwnDqhj+tWDiDqogaMt4VYXud0iJhf+Tq7g=";
   };
   copiedFile = path: {
     source = path;
