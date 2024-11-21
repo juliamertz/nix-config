@@ -20,7 +20,7 @@ let
   };
   copiedFile = path: {
     source = path;
-    mode = "0600";
+    # mode = "0600";
     user = settings.user.username;
     group = builtins.toString config.services.theme-park.gid;
   };

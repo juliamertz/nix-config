@@ -26,6 +26,12 @@ let
       theme = true;
     }
     {
+      name = "gitea";
+      subdomain = "git";
+      port = config.services.gitea.settings.server.HTTP_PORT;
+      theme = true;
+    }
+    {
       name = "qbittorrent";
       subdomain = "qbittorrent";
       inherit (config.services.qbittorrent) port;
@@ -157,6 +163,7 @@ in
               jellyfin-theme = theme "jellyfin";
               jellyseerr-theme = theme "jellyseerr";
               adguardhome-theme = theme "adguard";
+              gitea-theme = theme "gitea";
               sonarr-theme = theme "sonarr";
               radarr-theme = theme "radarr";
               jackett-theme = theme "jackett";
