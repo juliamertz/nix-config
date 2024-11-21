@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  settings,
   ...
 }:
 let
@@ -87,6 +88,8 @@ in
   config = {
     networking.firewall.allowedTCPPorts = [ 80 ];
 
+    systemd.tmpfiles.rules = [ "d /var/lib/traefik 0755 traefik traefik" ];
+
     services.traefik = {
       enable = true;
       inherit package;
@@ -107,6 +110,18 @@ in
 
         entryPoints = {
           http.address = ":80";
+          https.address = ":443";
+        };
+
+
+        certificatesResolvers = {
+          myresolver = {
+            acme = {
+              # httpChallenge.entryPoint = "web";
+              inherit (settings.user) email;
+              storage = "/var/lib/traefik/acme.json";
+            };
+          };
         };
       };
 
@@ -117,7 +132,11 @@ in
               host = target: "Host(`${target}`)";
               mappedServices = map (s: {
                 ${s.name} = {
-                  entryPoints = [ "http" ];
+                  entryPoints = [
+                    "http"
+                    "https"
+                  ];
+                  tls.certResolver = "myresolver";
                   rule = host "${s.subdomain}.${domain}";
                   service = s.name;
                   ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];

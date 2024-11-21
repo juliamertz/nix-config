@@ -62,7 +62,7 @@
   imports = [
     ./traefik.nix
     ./adguard.nix
-    ./gitea.nix
+    ./forgejo.nix
     ./theme-park.nix
     ./qbittorrent.nix
     ./wireguard.nix
