@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-SSH_KEY=~/.ssh/id_ed25519
+SSH_KEY=${1:-~/.ssh/id_ed25519}
 
 if [ -f $SSH_KEY ]; then
   mkdir -p ~/.config/sops/age
