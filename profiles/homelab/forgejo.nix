@@ -8,7 +8,10 @@ let
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 3000 ];
+  networking.firewall = {
+    allowedTCPPorts = [ 3000 222 ];
+    allowedUDPPorts = [ 3000 222 ];
+  };
   services.forgejo = {
     enable = true;
     database.type = "postgres";
@@ -16,6 +19,8 @@ in
     settings = {
       server = {
         HTTP_PORT = 3000;
+        SSH_PORT = 222;
+        SSH_DOMAIN = "git.homelab.lan";
         DOMAIN = "git.homelab.lan";
         ROOT_URL = "https://git.homelab.lan/";
       };

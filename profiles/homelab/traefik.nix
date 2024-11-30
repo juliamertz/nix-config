@@ -3,6 +3,7 @@
   lib,
   config,
   settings,
+  helpers,
   ...
 }:
 let
@@ -12,7 +13,7 @@ let
       name = "jellyseerr";
       subdomain = "jellyseerr";
       inherit (config.services.jellyseerr) port;
-      theme = false;
+      theme = true;
     }
     {
       name = "jellyfin";
@@ -88,8 +89,6 @@ in
   config = {
     networking.firewall.allowedTCPPorts = [ 80 ];
 
-    systemd.tmpfiles.rules = [ "d /var/lib/traefik 0755 traefik traefik" ];
-
     services.traefik = {
       enable = true;
       inherit package;
@@ -110,19 +109,55 @@ in
 
         entryPoints = {
           http.address = ":80";
-          https.address = ":443";
+          # https.address = ":443";
         };
-
 
         certificatesResolvers = {
           myresolver = {
             acme = {
-              # httpChallenge.entryPoint = "web";
-              inherit (settings.user) email;
-              storage = "/var/lib/traefik/acme.json";
+              email = "test@example.com";
+              storage = "acme.json";
+
+              # Optional: Uncomment to use Let's Encrypt's staging server.
+              # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
+
+              # Optional: Default certificates' duration is 2160 hours (90 days).
+              # certificatesDuration = 2160;
+
+              # Optional: Preferred certificate chain by issuer Common Name.
+              # preferredChain = "ISRG Root X1";
+
+              # Optional: Key type for certificates.
+              # Available: "EC256", "EC384", "RSA2048", "RSA4096", "RSA8192".
+              # keyType = "RSA4096";
+
+              # Optional: Use a TLS-ALPN-01 ACME challenge.
+              tlsChallenge = { };
+
+              # Optional: Use a HTTP-01 ACME challenge.
+              httpChallenge = {
+                # Required: EntryPoint to use for HTTP-01 challenges.
+                entryPoint = "web";
+              };
+
+              # Optional: Use a DNS-01 ACME challenge for wildcard certificates.
+              dnsChallenge = {
+                # Required: DNS provider used.
+                provider = "digitalocean";
+
+                # Optional: Delay before DNS challenge verification, in seconds.
+                # delayBeforeCheck = 0;
+
+                # Optional: Custom DNS resolvers.
+                # resolvers = [ "1.1.1.1:53" "8.8.8.8:53" ];
+
+                # Optional: Disable DNS propagation checks (NOT RECOMMENDED).
+                # disablePropagationCheck = true;
+              };
             };
           };
         };
+
       };
 
       dynamicConfigOptions = {
@@ -134,9 +169,9 @@ in
                 ${s.name} = {
                   entryPoints = [
                     "http"
-                    "https"
+                    # "https"
                   ];
-                  tls.certResolver = "myresolver";
+                  # tls.certResolver = "myresolver";
                   rule = host "${s.subdomain}.${domain}";
                   service = s.name;
                   ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];
@@ -180,7 +215,7 @@ in
 
               qbittorrent-theme = theme "qbittorrent";
               jellyfin-theme = theme "jellyfin";
-              jellyseerr-theme = theme "jellyseerr";
+              jellyseerr-theme = theme "overseerr";
               adguardhome-theme = theme "adguard";
               gitea-theme = theme "gitea";
               sonarr-theme = theme "sonarr";
