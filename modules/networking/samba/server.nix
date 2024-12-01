@@ -24,7 +24,6 @@
         };
       };
 
-
       avahi = {
         publish.enable = true;
         publish.userServices = true;

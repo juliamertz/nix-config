@@ -4,9 +4,6 @@
   helpers,
   ...
 }:
-let
-  pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
-in
 {
   networking.firewall = {
     allowedTCPPorts = [ 3000 222 ];
