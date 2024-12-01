@@ -24,6 +24,9 @@ in
 
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
+    # open port for development
+    networking.firewall.allowedTCPPorts = [ 1111 ];
+
     services.protonvpn = {
       enable = true;
       requireSops = true;
@@ -49,17 +52,17 @@ in
       };
     };
 
-    # nix.settings = {
-    #   substituters = [ "https://cosmic.cachix.org/" ];
-    #   trusted-public-keys =
-    #     [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-    # };
+    nix.settings = {
+      substituters = [ "https://cosmic.cachix.org/" ];
+      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    };
 
     environment.systemPackages =
       let
         scripts = import ../../modules/scripts { inherit pkgs; };
       in
       (with scripts; [
+        dev
         wake
         comma
       ])
@@ -84,13 +87,20 @@ in
         (pkgs.callPackage ../../modules/bluegone.nix { })
       ]);
 
-    xdg.portal.config = {
+    # enable dynamically linked binaries for mason in neovim
+    programs.nix-ld = {
       enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-wlr
-        xdg-desktop-portal-gtk
-      ];
+      libraries = with pkgs; [ stdenv.cc.cc ];
     };
+
+    # Conflicts with cosmic flake
+    # xdg.portal.config = {
+    #   enable = true;
+    #   extraPortals = with pkgs; [
+    #     xdg-desktop-portal-wlr
+    #     xdg-desktop-portal-gtk
+    #   ];
+    # };
   };
 
   imports = [
@@ -114,11 +124,13 @@ in
     ../../modules/apps/shell/zsh.nix
     # ../../modules/networking/samba/client.nix
     ../../modules/nerdfonts.nix
+    ../../modules/lang/lua.nix
+    ../../modules/lang/nix.nix
     # ../modules/wm/hyprland
     # ../modules/apps/browser/librewolf.nix
     # ../modules/apps/ollama.nix
     # ../modules/apps/affinity.nix
-    # ../modules/de/cosmic
+    ../../modules/de/cosmic
     # ../modules/de/plasma
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
