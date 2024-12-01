@@ -1,6 +1,6 @@
-{ writeShellScriptBin, ... }:
+{ writeShellScriptBin, bash, ... }:
 writeShellScriptBin "deref" ''
-  #!${pkgs.bash}
+  #!${bash}
 
   if [ -h "$1" ] ; then
     target=`readlink $1`
