@@ -9,7 +9,7 @@
     pulse.enable = true;
   };
 
-  services.pipewire.wireplumber.extraConfig."10-bluez" = {
+  services.pipewire.wireplumber.extraConfig = {
     "monitor.bluez.properties" = {
       "bluez5.enable-sbc-xq" = true;
       "bluez5.enable-msbc" = true;
@@ -23,9 +23,9 @@
     };
   };
 
-  services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {
-    "wireplumber.settings" = {
-      "bluetooth.autoswitch-to-headset-profile" = false;
-    };
-  };
+  # services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {
+  #   "wireplumber.settings" = {
+  #     "bluetooth.autoswitch-to-headset-profile" = false;
+  #   };
+  # };
 }
