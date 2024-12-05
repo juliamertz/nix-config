@@ -63,12 +63,12 @@ let
       inherit (config.services.jackett) port;
       theme = true;
     }
-    {
-      name = "theme-park";
-      subdomain = "themepark";
-      inherit (config.services.theme-park) port;
-      theme = false;
-    }
+    # {
+    #   name = "theme-park";
+    #   subdomain = "themepark";
+    #   inherit (config.services.theme-park) port;
+    #   theme = false;
+    # }
   ];
 
   themepark = pkgs.fetchFromGitHub {
@@ -206,7 +206,7 @@ in
                 plugin.themepark = {
                   inherit app;
                   theme = "rose-pine-moon";
-                  baseUrl = "http://themepark.homelab.lan";
+                  baseUrl = "https://develop.theme-park.dev/";
                 };
               };
             in

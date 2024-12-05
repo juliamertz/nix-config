@@ -63,7 +63,7 @@
     ./traefik.nix
     ./adguard.nix
     ./forgejo.nix
-    ./theme-park.nix
+    # ./theme-park.nix
     ./qbittorrent.nix
     ./wireguard.nix
     ./multimedia.nix
