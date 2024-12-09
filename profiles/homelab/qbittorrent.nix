@@ -28,7 +28,7 @@
         General-Locale = "en";
         WebUI-LocalHostAuth = false;
         WebUI-Password_PBKDF2 = "@ByteArray(V5kcWZHn4FTxBM8IxsnsCA==:HPbgopaa1ZO199s4zmJAZfJ+gmGKUyAQMX1MjbphhHTtup80tt/FOFshUMRQnvCqAxAu31F6ziiUqpuUQCytPg==)";
-        WebUI-CustomHTTPHeaders = ''"content-security-policy: default-src 'self'; style-src 'self' 'unsafe-inline' themepark.homelab.lan raw.githubusercontent.com use.fontawesome.com; img-src 'self' themepark.homelab.lan raw.githubusercontent.com data:; script-src 'self' 'unsafe-inline'; object-src 'none'; form-action 'self'; frame-ancestors 'self'; font-src use.fontawesome.com;"'';
+        WebUI-CustomHTTPHeaders = ''"content-security-policy: default-src 'self'; style-src 'self' 'unsafe-inline' develop.theme-park.dev raw.githubusercontent.com use.fontawesome.com; img-src 'self' themepark.homelab.lan raw.githubusercontent.com data:; script-src 'self' 'unsafe-inline'; object-src 'none'; form-action 'self'; frame-ancestors 'self'; font-src use.fontawesome.com;"'';
         WebUI-CustomHTTPHeadersEnabled = true;
         # WebUI-AlternativeUIEnabled = true;
         # WebUI-RootFolder = config.services.qbittorrent.userInterfaces.darklight;
