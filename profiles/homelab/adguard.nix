@@ -94,7 +94,6 @@ in
         protection_enabled = true;
         filtering_enabled = true;
         parental_enabled = false;
-        safe_search.enabled = false;
 
       };
       filters = enabledFilters [

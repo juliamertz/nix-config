@@ -11,6 +11,11 @@
     secrets.profile = "personal";
     users.defaultUserShell = pkgs.zsh;
 
+    networking.nameservers = [
+      "94.140.14.140"
+      "94.140.14.141"
+    ];
+
     environment.systemPackages =
       let
         scripts = import ../../modules/scripts { inherit pkgs; };
