@@ -43,9 +43,14 @@ in
       };
 
       filtering = {
+        safe_search.enabled = false;
         rewrites = [
           {
             domain = "homelab.lan";
+            answer = "192.168.0.100";
+          }
+          {
+            domain = "*.homelab.lan";
             answer = "192.168.0.100";
           }
           {
@@ -53,13 +58,37 @@ in
             answer = "192.168.0.101";
           }
           {
-            domain = "*.homelab.lan";
-            answer = "192.168.0.100";
-          }
-          {
             domain = "router.lan";
             answer = "192.168.0.1";
           }
+        ];
+
+        blocked_services.ids = [
+          # western spyware
+          "4chan"
+          "amazon"
+          "valorant"
+          "vimeo"
+          "skype"
+          "facebook"
+
+          # misc spyware
+          "viber"
+          "nintendo"
+          "samsung_tv_plus"
+          "vk"
+
+          # chinese spyware
+          "tiktok"
+          "weibo"
+          "bilibili"
+          "shein"
+          "aliexpress"
+          "temu"
+          "xiaohongshu"
+          "zhihu"
+          "wechat"
+          "wizz"
         ];
 
         protection_enabled = true;
