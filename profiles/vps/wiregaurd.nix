@@ -38,7 +38,7 @@ in
         peers = [
           {
             publicKey = "VcEu1t2j+mmiPKI8NBusFp1Qgi/VhblZencgsM4qWwo=";
-            allowedIPs = [ "${cfg.clientIP}/32" ];
+            allowedIPs = [ "${cfg.clientIP}/32" "10.100.0.3/32"  ];
           }
         ];
       };

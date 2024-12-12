@@ -129,7 +129,8 @@
             ];
           };
 
-          vps = nixosSystem {
+          # Use more stable branch for vps
+          vps = inputs.nixpkgs-24_05.lib.nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "main";
               platform = "x86_64-linux";

@@ -38,7 +38,7 @@ in
   services.traefik.dynamicConfigOptions.http = {
     routers.lightspeed-dhl-integration = {
       entryPoints = [ "http" ];
-      rule = "Host(`juliamertz.dev`)";
+      rule = "Host(`nettenshop.juliamertz.dev`)";
       service = name;
     };
     services = {

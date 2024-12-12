@@ -18,6 +18,10 @@ in
     package = pkgs.traefik;
 
     staticConfigOptions = {
+      log = {
+        level = "DEBUG";
+      };
+
       api = {
         dashboard = true;
       };
@@ -32,7 +36,8 @@ in
         letsencrypt = {
           acme = {
             inherit (settings.user) email;
-            storage = "acme.json";
+            # storage = "acme.json";
+            storage = "${config.services.traefik.dataDir}/acme.json";
 
             dnsChallenge = {
               provider = "cloudflare";
@@ -59,6 +64,14 @@ in
               tls.certResolver = "letsencrypt";
             };
 
+            lightspeed-dhl = {
+              rule = "Host(`nettenshop.juliamertz.dev`)";
+              entryPoints = [ "http" "https" ];
+              service = "nettenshop";
+              tls.certResolver = "letsencrypt";
+            };
+
+
             jellyfin = {
               rule = "Host(`watch.juliamertz.dev`)";
               entryPoints = [ "https" ];
@@ -75,6 +88,7 @@ in
           };
 
           services = {
+            nettenshop.loadBalancer.servers = [ { url = "http://${wg.clientIP}:42069"; } ];
             jellyfin.loadBalancer.servers = [ { url = "http://${wg.clientIP}:8096"; } ];
             jellyseerr.loadBalancer.servers = [ { url = "http://${wg.clientIP}:5055"; } ];
           };

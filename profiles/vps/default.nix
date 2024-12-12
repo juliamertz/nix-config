@@ -30,7 +30,6 @@ in
         tmux
         neovim
         lazygit
-        zsh
       ];
 
     system.stateVersion = "24.05";
@@ -65,7 +64,8 @@ in
   };
   imports = [
     ./wiregaurd.nix
-    ./traefik.nix
+    ./caddy.nix
+    # ./traefik.nix
 
     ../../modules/apps/git.nix
     ../../modules/io/ssh.nix
