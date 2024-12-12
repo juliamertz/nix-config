@@ -13,13 +13,9 @@ in
       type = types.number;
       default = 51820;
     };
-    serverIP = mkOption {
+    publicNode = mkOption {
       type = types.str;
       default = "10.100.0.1";
-    };
-    clientIP = mkOption {
-      type = types.str;
-      default = "10.100.0.2";
     };
   };
 
@@ -32,13 +28,13 @@ in
     networking.wireguard.enable = true;
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "${cfg.serverIP}/24" ];
+        ips = [ "${cfg.publicNode}/24" ];
         listenPort = cfg.port;
         privateKeyFile = "${settings.user.home}/wireguard/private";
         peers = [
           {
             publicKey = "VcEu1t2j+mmiPKI8NBusFp1Qgi/VhblZencgsM4qWwo=";
-            allowedIPs = [ "${cfg.clientIP}/32" "10.100.0.3/32"  ];
+            allowedIPs = [ "10.100.0.0/24" ];
           }
         ];
       };
