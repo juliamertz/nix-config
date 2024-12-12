@@ -94,7 +94,7 @@ in
           };
 
           middlewares = {
-            auth.basicAuth.users = [ "julia:$apr1$lAxApuuz$m3GaBKv94PNOlVSdqyiTT1" ];
+            auth.basicAuth.users = [ "julia:" ];
           };
         };
       };

@@ -65,7 +65,6 @@ in
   imports = [
     ./wiregaurd.nix
     ./caddy.nix
-    # ./traefik.nix
 
     ../../modules/apps/git.nix
     ../../modules/io/ssh.nix
