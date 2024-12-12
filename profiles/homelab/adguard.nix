@@ -32,8 +32,13 @@ in
     settings = {
       dns = {
         upstream_dns = [
-          "1.1.1.1"
-          "1.0.0.1"
+          # Adguard DNS non-filtering
+          "94.140.14.140"
+          "94.140.14.141"
+
+          # cloudflare
+          # "1.1.1.1"
+          # "1.0.0.1"
         ];
       };
 
@@ -71,6 +76,7 @@ in
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_4_Social/filter.txt" # Social media invase
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_14_Annoyances/filter.txt" # Annoyances
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_8_Dutch/filter.txt" # dutch filter
+        "https://gitlab.com/hagezi/mirror/-/raw/main/dns-blocklists/adblock/pro.mini.txt"
       ];
     };
   };

@@ -63,7 +63,7 @@
     ./traefik.nix
     ./adguard.nix
     ./forgejo.nix
-    # ./theme-park.nix
+    ./samba.nix
     ./qbittorrent.nix
     ./wireguard.nix
     ./multimedia.nix
@@ -74,7 +74,6 @@
     ../../modules/sops.nix
     ../../modules/apps/git.nix
     ../../modules/apps/shell/zsh.nix
-    ../../modules/networking/samba/server.nix
 
     inputs.protonvpn-rs.nixosModules.protonvpn
   ];
