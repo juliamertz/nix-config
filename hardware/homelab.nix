@@ -22,15 +22,21 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/root";
-    fsType = "ext4";
-  };
-
   fileSystems."/home" = {
     device = "/dev/disk/by-label/home";
     fsType = "btrfs";
     options = [ "subvol=/" ];
+  };
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/home" ];
+    interval = "weekly";
+  };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/root";
+    fsType = "ext4";
   };
 
   fileSystems."/boot" = {
