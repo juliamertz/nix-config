@@ -3,25 +3,9 @@
   lib,
   helpers,
   dotfiles,
-  config,
   settings,
   ...
 }:
-let
-  environmentVariables = helpers.formattedEnvVars { EDITOR = "nvim"; };
-  dependencies = with pkgs; [
-    bat
-    jq
-    zoxide
-  ];
-  zsh = helpers.wrapPackage {
-    name = "zsh";
-    package = pkgs.zsh;
-    extraArgs = "--set ZDOTDIR '${dotfiles.path}/zsh' " + environmentVariables;
-  };
-
-  inherit (helpers) isDarwin;
-in
 {
   options = with lib; {
     zsh.environmentVariables = mkOption {
@@ -47,11 +31,10 @@ in
           };
         }
       else
-        { environment.systemPackages = [ zsh ]; }
+        { environment.systemPackages = [ dotfiles.pkgs.zsh ]; }
     )
     {
       programs.zsh.enable = true;
-      environment.systemPackages = dependencies;
       programs.direnv = {
         enable = true;
         silent = true;

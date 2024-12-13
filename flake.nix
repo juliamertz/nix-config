@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
@@ -115,6 +116,17 @@
             modules = base ++ [
               ./profiles/personal
               ./hardware/workstation.nix
+            ];
+          };
+
+          work = nixosSystem {
+            specialArgs = getSpecialArgs {
+              hostname = "work";
+              platform = "x86_64-linux";
+            };
+            modules = base ++ [
+              ./profiles/work
+              ./hardware/hetzner-cloud.nix
             ];
           };
 

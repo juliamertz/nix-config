@@ -52,10 +52,10 @@ in
       };
     };
 
-    nix.settings = {
-      substituters = [ "https://cosmic.cachix.org/" ];
-      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-    };
+    # nix.settings = {
+    #   substituters = [ "https://cosmic.cachix.org/" ];
+    #   trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    # };
 
     environment.systemPackages =
       let
@@ -65,6 +65,7 @@ in
         dev
         wake
         comma
+        fishies
       ])
       ++ (with dotfiles.pkgs; [
         neovim
@@ -130,7 +131,7 @@ in
     # ../modules/apps/browser/librewolf.nix
     # ../modules/apps/ollama.nix
     # ../modules/apps/affinity.nix
-    ../../modules/de/cosmic
+    # ../../modules/de/cosmic
     # ../modules/de/plasma
     inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix

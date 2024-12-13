@@ -8,4 +8,5 @@ lib.mapAttrs (_: path: pkgs.callPackage path { }) {
   deref = ./deref.nix;
   steamgame = ./steamgame.nix;
   dev = ./dev.nix;
+  fishies = ./fishies.nix;
 }
