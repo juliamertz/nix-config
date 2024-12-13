@@ -16,21 +16,11 @@
         #   server min protocol = SMB3_00
         # '';
 
-        # settings.media = {
-        #   path = "/home/media";
-        #   writable = "true";
-        #   "create mask" = "0644";
-        #   "directory mask" = "0755";
-        # };
-
-        settins.media = {
-          path = "/home/share";
-          public = "yes";
-          "guest only" = "yes";
-          writable = "yes";
-          "force create mode" = "0666";
-          "force directory mode" = "0777";
-          browseable = "yes";
+        settings.media = {
+          path = "/home/media";
+          writable = "true";
+          "create mask" = "0644";
+          "directory mask" = "0755";
         };
 
       };

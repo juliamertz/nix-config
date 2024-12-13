@@ -11,6 +11,7 @@
     secrets.profile = "personal";
     users.defaultUserShell = pkgs.zsh;
 
+    # AdGuard DNS without filters
     networking.nameservers = [
       "94.140.14.140"
       "94.140.14.141"
