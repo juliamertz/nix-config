@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./wheel.nix
+    # ./wheel.nix
 
     ../../modules/apps/sunshine.nix
     ../../modules/apps/game-launchers.nix

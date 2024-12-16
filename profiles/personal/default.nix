@@ -123,7 +123,7 @@ in
     ../../modules/apps/terminal/wezterm.nix
     ../../modules/apps/shell/fish.nix
     ../../modules/apps/shell/zsh.nix
-    # ../../modules/networking/samba/client.nix
+    ../../modules/networking/samba/client.nix
     ../../modules/nerdfonts.nix
     ../../modules/lang/lua.nix
     ../../modules/lang/nix.nix
