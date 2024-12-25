@@ -25,6 +25,7 @@ mkShell {
     clean
     check
 
+    nixos-generators
     nixfmt-rfc-style
     deadnix
     statix

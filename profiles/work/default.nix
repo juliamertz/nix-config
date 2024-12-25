@@ -4,18 +4,15 @@
   dotfiles,
   ...
 }:
+let
+  scripts = import ../../modules/scripts { inherit pkgs; };
+  user = settings.user.username;
+in
 {
   config = {
-    users.users.nixvm.isNormalUser = true;
-    users.users.nixvm.initialPassword = "123";
-    users.users.nixvm.group = "nixvm";
-    users.groups.nixvm = { };
-
     secrets.profile = "work";
+    users.users.${user}.initialPassword = "123";
 
-    environment.variables = {
-      XDG_CONFIG_HOME = "/home/nixvm/.config";
-    };
     programs.direnv = {
       enable = true;
       silent = true;
@@ -33,9 +30,6 @@
     ];
 
     environment.systemPackages =
-      let
-        scripts = import ../../modules/scripts { inherit pkgs; };
-      in
       (with scripts; [
         dev
         comma
@@ -44,6 +38,7 @@
         neovim
         lazygit
         tmux
+        kitty
       ])
       ++ (with pkgs; [
         xorg.xhost
@@ -51,9 +46,6 @@
         librewolf
         chromium
         gh
-        wezterm
-        xterm
-        kitty
       ]);
 
     # enable dynamically linked binaries for mason in neovim
@@ -61,24 +53,30 @@
       enable = true;
       libraries = with pkgs; [ stdenv.cc.cc ];
     };
+
+    nix.settings = {
+      substituters = [ "https://cosmic.cachix.org/" ];
+      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    };
+
+    services.displayManager.cosmic-greeter.enable = true;
   };
 
   imports = [
+    # desktop & login manager
+    ../../modules/de/cosmic
+    # ../../modules/dm/sddm
+    # ../../modules/wm/awesome
+
     ../../modules/io/bluetooth.nix
     ../../modules/io/pipewire.nix
     # remap caps to esc
     ../../modules/io/keyd.nix
     # secrets management
     ../../modules/sops.nix
-    # desktop & login manager
-    ../../modules/wm/awesome
-    ../../modules/dm/sddm
-    # ../../modules/wm/hyprland
-    # ../../modules/de/plasma
 
     # devtools
     ../../modules/apps/git.nix
-    # ../../modules/apps/terminal/wezterm.nix
     ../../modules/apps/shell/zsh.nix
     ../../modules/nerdfonts.nix
   ];

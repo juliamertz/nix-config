@@ -25,7 +25,7 @@ in
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
     # open port for development
-    networking.firewall.allowedTCPPorts = [ 1111 ];
+    networking.firewall.allowedTCPPorts = [ 1111 1112 ];
 
     services.protonvpn = {
       enable = true;
@@ -52,10 +52,10 @@ in
       };
     };
 
-    # nix.settings = {
-    #   substituters = [ "https://cosmic.cachix.org/" ];
-    #   trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-    # };
+    nix.settings = {
+      substituters = [ "https://cosmic.cachix.org/" ];
+      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    };
 
     environment.systemPackages =
       let
@@ -69,6 +69,7 @@ in
       ])
       ++ (with dotfiles.pkgs; [
         neovim
+        kitty
         lazygit
         tmux
       ])
@@ -119,7 +120,7 @@ in
     ../../modules/scripts/home-assistant.nix
     ../../modules/apps/git.nix
     ../../modules/apps/media/spotify
-    ../../modules/apps/terminal/kitty.nix
+    # ../../modules/apps/terminal/kitty.nix
     ../../modules/apps/terminal/wezterm.nix
     ../../modules/apps/shell/fish.nix
     ../../modules/apps/shell/zsh.nix
