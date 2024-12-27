@@ -31,14 +31,20 @@ in
 
     settings = {
       dns = {
+        bind_hosts = "192.168.0.100";
+        upstream_mode = "parallel";
         upstream_dns = [
           # Adguard DNS non-filtering
           "94.140.14.140"
           "94.140.14.141"
 
           # cloudflare
-          # "1.1.1.1"
-          # "1.0.0.1"
+          "1.1.1.1"
+          "1.0.0.1"
+
+          # dns0.eu
+          "193.110.81.0"
+          "185.253.5.0"
         ];
       };
 
