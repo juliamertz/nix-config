@@ -4,14 +4,19 @@
   settings,
   lib,
   config,
+  helpers,
   ...
 }:
 let
   format = "yaml";
   cfg = config.secrets;
+  inherit (inputs) sops-nix;
 in
 {
-  imports = [ inputs.sops-nix.nixosModules.sops ];
+  imports =
+    if helpers.isDarwin 
+      then [ sops-nix.darwinModules.sops ] 
+      else [ sops-nix.nixosModules.sops ];
 
   options.secrets = {
     profile = lib.mkOption {

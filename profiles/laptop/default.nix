@@ -3,6 +3,7 @@
   inputs,
   settings,
   dotfiles,
+  helpers,
   ...
 }:
 {
@@ -30,6 +31,8 @@
     };
   };
 
+  sops.secrets = helpers.ownedSecrets settings.user.username [ "spotify_client_id" ];
+
   environment.systemPackages =
     with pkgs;
     [
@@ -48,8 +51,8 @@
   system.stateVersion = 4;
 
   imports = [
-    ../../modules/apps/terminal/wezterm.nix
     ../../modules/apps/terminal/kitty.nix
+    # ../../modules/apps/terminal/wezterm.nix
     ../../modules/apps/shell/zsh.nix
     ../../modules/apps/git.nix
     ../../modules/lang/rust.nix
@@ -59,7 +62,7 @@
     ../../modules/wm/yabai
     ../../modules/nerdfonts.nix
 
-    # ../modules/sops.nix
+    ../../modules/sops.nix
     # ../modules/apps/media/spotify
   ];
 }
