@@ -17,6 +17,10 @@ in
       type = types.str;
       default = "10.100.0.1";
     };
+    clientIP = mkOption {
+      type = types.str;
+      default = "10.100.0.2";
+    };
   };
 
   config = {
@@ -34,7 +38,7 @@ in
         peers = [
           {
             publicKey = "VcEu1t2j+mmiPKI8NBusFp1Qgi/VhblZencgsM4qWwo=";
-            allowedIPs = [ "10.100.0.0/24" ];
+            allowedIPs = [ "${cfg.clientIP}/32" ];
           }
         ];
       };
