@@ -61,10 +61,11 @@ in
 
       "watch.juliamertz.dev".extraConfig = ''
         reverse_proxy http://10.100.0.2:8096
-        basicauth / {
-          Julia $2a$14$pPXridH6UTUpvfYjVF4L3.S.29qvBD6RYKC8hWnhx4K0F0mZkRsgC
-        }
       '';
+
+      # basicauth / {
+      #   Julia $2a$14$pPXridH6UTUpvfYjVF4L3.S.29qvBD6RYKC8hWnhx4K0F0mZkRsgC
+      # }
     };
   };
 
