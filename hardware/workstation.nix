@@ -37,6 +37,7 @@
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/2e75cdd2-6cec-47cb-951d-f88101e80b31";
     fsType = "ext4";
+    neededForBoot = true;
   };
 
   fileSystems."/games" = {

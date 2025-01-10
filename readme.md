@@ -92,9 +92,6 @@ All my favourite programs are wrapped and exported from my [dotfiles repo](https
 These are also included as a flake input in this repository and avaiable under `dotfiles.pkgs` in the global namespace
 
 ```sh
-# get up and running anywhere
-nix run github:juliamertz/dotfiles#wezterm
-nix run github:juliamertz/dotfiles#tmux new
-nix run github:juliamertz/dotfiles#neovim
-nix run github:juliamertz/dotfiles#lazygit
+# Open up new shell with all my configured software
+nix develop github:juliamertz/dotfiles
 ```
