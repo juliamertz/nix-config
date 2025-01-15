@@ -25,32 +25,35 @@ in
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
     # open port for development
-    networking.firewall.allowedTCPPorts = [ 1111 1112 ];
+    networking.firewall.allowedTCPPorts = [
+      1111
+      1112
+    ];
 
-    services.protonvpn = {
-      enable = true;
-      requireSops = true;
-
-      settings = {
-        credentials_path = "/run/secrets/openvpn_auth";
-        autostart_default = true;
-
-        default_select = "Fastest";
-        default_protocol = "Udp";
-        default_criteria = {
-          country = "NL";
-          features = [ "Streaming" ];
-        };
-        killswitch = {
-          enable = false;
-          applyFirewallRules = true;
-          custom_rules = [
-            "-A INPUT -s 192.168.0.0/24 -j ACCEPT"
-            "-A OUTPUT -d 192.168.0.0/24 -j ACCEPT"
-          ];
-        };
-      };
-    };
+    # services.protonvpn = {
+    #   enable = true;
+    #   requireSops = true;
+    #
+    #   settings = {
+    #     credentials_path = "/run/secrets/openvpn_auth";
+    #     autostart_default = true;
+    #
+    #     default_select = "Fastest";
+    #     default_protocol = "Udp";
+    #     default_criteria = {
+    #       country = "NL";
+    #       features = [ "Streaming" ];
+    #     };
+    #     killswitch = {
+    #       enable = false;
+    #       applyFirewallRules = true;
+    #       custom_rules = [
+    #         "-A INPUT -s 192.168.0.0/24 -j ACCEPT"
+    #         "-A OUTPUT -d 192.168.0.0/24 -j ACCEPT"
+    #       ];
+    #     };
+    #   };
+    # };
 
     nix.settings = {
       substituters = [ "https://cosmic.cachix.org/" ];
@@ -111,12 +114,17 @@ in
     ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix
     ../../modules/io/pipewire.nix
-    ../../modules/io/keyd.nix
-    ../../modules/apps/virtmanager.nix
     ../../modules/sops.nix
-    ../../modules/themes/rose-pine
+
+    # desktop environment
     ../../modules/wm/awesome
     ../../modules/dm/sddm
+    ../../modules/wm/hyprland
+    ../../modules/io/keyd.nix
+    ../../modules/themes/rose-pine
+
+    # apps
+    ../../modules/apps/virtmanager.nix
     ../../modules/scripts/home-assistant.nix
     ../../modules/apps/git.nix
     ../../modules/apps/media/spotify
@@ -128,13 +136,12 @@ in
     ../../modules/nerdfonts.nix
     ../../modules/lang/lua.nix
     ../../modules/lang/nix.nix
-    # ../modules/wm/hyprland
     # ../modules/apps/browser/librewolf.nix
     # ../modules/apps/ollama.nix
     # ../modules/apps/affinity.nix
     # ../../modules/de/cosmic
     # ../modules/de/plasma
-    inputs.protonvpn-rs.nixosModules.protonvpn
+    # inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
