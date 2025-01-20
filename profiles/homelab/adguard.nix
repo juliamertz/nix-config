@@ -31,7 +31,7 @@ in
 
     settings = {
       dns = {
-        bind_hosts = "192.168.0.100";
+        bind_hosts = [ "192.168.0.100" ];
         upstream_mode = "parallel";
         upstream_dns = [
           # Adguard DNS non-filtering

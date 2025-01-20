@@ -15,7 +15,7 @@ in
         peers = [
           {
             publicKey = "mgQ/nNqnwBYN6gUJdxTAOzn7/9vNBH+4Hz9V6k1/YmU=";
-            allowedIPs = [ "0.0.0.0/0" ];
+            allowedIPs = [ "10.100.0.0/24" ];
             endpoint = "188.245.65.183:${builtins.toString port}";
             persistentKeepalive = 25;
           }
