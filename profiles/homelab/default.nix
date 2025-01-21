@@ -41,6 +41,10 @@
       libraries = with pkgs; [ stdenv.cc.cc ];
     };
 
+    nix.settings = {
+      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
+    };
+
     sops.secrets = helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
 
     services.protonvpn = {
