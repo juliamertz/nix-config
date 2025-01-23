@@ -1,4 +1,4 @@
-{ settings, inputs, ... }:
+{ settings, inputs, dotfiles, ... }:
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
@@ -8,10 +8,13 @@ in
     secrets.profile = "vps";
 
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+    nix.settings = {
+      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
 
     nixpkgs.hostPlatform = platform;
     networking.hostName = hostname;
@@ -22,11 +25,9 @@ in
     };
 
     environment.systemPackages =
-      let
-        wrapped = inputs.dotfiles.packages.${settings.system.platform};
-      in
-      with wrapped;
+      with dotfiles.pkgs;
       [
+        zsh
         tmux
         neovim
         lazygit
@@ -58,13 +59,16 @@ in
 
     programs.nh = {
       enable = true;
-      flake = "/home/${username}/nix";
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "${home}/nix";
     };
-
   };
+
   imports = [
     ./wiregaurd.nix
     ./caddy.nix
+    ./services/valnetten.nix
 
     ../../modules/apps/git.nix
     ../../modules/io/ssh.nix

@@ -6,6 +6,11 @@
 }:
 let
   cfg = config.wireguard;
+  allowedIPs =  [ 
+    "10.100.0.2"
+    "10.100.0.3"
+    "10.100.0.3"
+  ];
 in
 {
   options.wireguard = with lib; {
@@ -13,13 +18,9 @@ in
       type = types.number;
       default = 51820;
     };
-    publicNode = mkOption {
+    serverIP = mkOption {
       type = types.str;
       default = "10.100.0.1";
-    };
-    clientIP = mkOption {
-      type = types.str;
-      default = "10.100.0.2";
     };
   };
 
@@ -32,13 +33,14 @@ in
     networking.wireguard.enable = true;
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "${cfg.publicNode}/24" ];
+        ips = [ "${cfg.serverIP}/24" ];
         listenPort = cfg.port;
         privateKeyFile = "${settings.user.home}/wireguard/private";
         peers = [
           {
             publicKey = "VcEu1t2j+mmiPKI8NBusFp1Qgi/VhblZencgsM4qWwo=";
-            allowedIPs = [ "${cfg.clientIP}/32" ];
+            allowedIPs = map (ip: "${ip}/32") allowedIPs;
+            # allowedIPs = [ "${cfg.clientIP}/32" ];
           }
         ];
       };

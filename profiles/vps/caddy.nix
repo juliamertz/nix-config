@@ -59,6 +59,10 @@ in
         root * ${callPackage ./services/blog.nix { }}
       '';
 
+      "nettenshop.juliamertz.dev".extraConfig = ''
+        reverse_proxy http://127.0.0.1:42069
+      '';
+
       "watch.juliamertz.dev".extraConfig = ''
         reverse_proxy http://10.100.0.2:8096
       '';
