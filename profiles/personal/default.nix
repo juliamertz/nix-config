@@ -24,40 +24,15 @@ in
 
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
-    # open port for development
+    # open ports for development
     networking.firewall.allowedTCPPorts = [
       1111
       1112
     ];
 
-    # services.protonvpn = {
-    #   enable = true;
-    #   requireSops = true;
-    #
-    #   settings = {
-    #     credentials_path = "/run/secrets/openvpn_auth";
-    #     autostart_default = true;
-    #
-    #     default_select = "Fastest";
-    #     default_protocol = "Udp";
-    #     default_criteria = {
-    #       country = "NL";
-    #       features = [ "Streaming" ];
-    #     };
-    #     killswitch = {
-    #       enable = false;
-    #       applyFirewallRules = true;
-    #       custom_rules = [
-    #         "-A INPUT -s 192.168.0.0/24 -j ACCEPT"
-    #         "-A OUTPUT -d 192.168.0.0/24 -j ACCEPT"
-    #       ];
-    #     };
-    #   };
-    # };
-
     nix.settings = {
-      substituters = [ "https://cosmic.cachix.org/" ];
-      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+      trusted-users = [ settings.user.username ];
+      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
     };
 
     environment.systemPackages =
@@ -89,23 +64,7 @@ in
         firefox
         gh
         ethtool
-        (pkgs.callPackage ../../modules/bluegone.nix { })
       ]);
-
-    # enable dynamically linked binaries for mason in neovim
-    programs.nix-ld = {
-      enable = true;
-      libraries = with pkgs; [ stdenv.cc.cc ];
-    };
-
-    # Conflicts with cosmic flake
-    # xdg.portal.config = {
-    #   enable = true;
-    #   extraPortals = with pkgs; [
-    #     xdg-desktop-portal-wlr
-    #     xdg-desktop-portal-gtk
-    #   ];
-    # };
   };
 
   imports = [

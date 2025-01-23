@@ -1,4 +1,4 @@
-{ pkgs, settings, ... }:
+{ pkgs, lib, settings, ... }:
 let
   inherit (settings.user) username fullName;
   inherit (settings.system) platform hostname;
@@ -15,7 +15,7 @@ in
     ];
 
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = [
+    nix.settings.experimental-features = lib.mkDefault [
       "nix-command"
       "flakes"
       "pipe-operators"
