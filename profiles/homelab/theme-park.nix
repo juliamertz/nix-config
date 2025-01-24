@@ -10,7 +10,6 @@ let
   themepark =
     let
       repo = "juliamertz/theme.park";
-      hash = "sha256-KEDiaowklp5Bi/N5ak1ZCmWGiLSnCkYvQLM0PAWZFq0=";
       rev = "0f99c377e6a41dd90c12e007eacbae18a36c5286";
     in
     (builtins.getFlake "github:${repo}/${rev}?dir=nix").packages.${pkgs.system}.default;

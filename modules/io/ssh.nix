@@ -23,6 +23,8 @@ in
       enableSSHSupport = true;
     };
 
+    services.fail2ban.enable = cfg.harden;
+
     services.openssh = {
       enable = true;
       openFirewall = true;

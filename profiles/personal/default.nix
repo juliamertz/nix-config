@@ -30,11 +30,6 @@ in
       1112
     ];
 
-    nix.settings = {
-      trusted-users = [ settings.user.username ];
-      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
-    };
-
     environment.systemPackages =
       (with dotfiles.pkgs; [
         scripts
@@ -42,6 +37,9 @@ in
         kitty
         lazygit
         tmux
+        weechat
+        w3m
+        zathura
       ])
       ++ (with pkgs; [
         qdirstat

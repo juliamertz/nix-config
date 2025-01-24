@@ -17,6 +17,11 @@ in
     allowedUDPPorts = [ 53 ];
   };
 
+  networking.nameservers = [
+    "94.140.14.140"
+    "94.140.14.141"
+  ];
+
   systemd.services.adguardhome = {
     serviceConfig = {
       User = "root";
