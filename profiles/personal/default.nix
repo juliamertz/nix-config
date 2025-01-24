@@ -36,16 +36,8 @@ in
     };
 
     environment.systemPackages =
-      let
-        scripts = import ../../modules/scripts { inherit pkgs; };
-      in
-      (with scripts; [
-        dev
-        wake
-        comma
-        fishies
-      ])
-      ++ (with dotfiles.pkgs; [
+      (with dotfiles.pkgs; [
+        scripts
         neovim
         kitty
         lazygit
@@ -84,7 +76,6 @@ in
 
     # apps
     ../../modules/apps/virtmanager.nix
-    ../../modules/scripts/home-assistant.nix
     ../../modules/apps/git.nix
     ../../modules/apps/media/spotify
     # ../../modules/apps/terminal/kitty.nix

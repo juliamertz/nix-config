@@ -5,7 +5,6 @@
   ...
 }:
 let
-  scripts = import ../../modules/scripts { inherit pkgs; };
   user = settings.user.username;
 in
 {
@@ -30,11 +29,7 @@ in
     ];
 
     environment.systemPackages =
-      (with scripts; [
-        dev
-        comma
-      ])
-      ++ (with dotfiles.pkgs; [
+      (with dotfiles.pkgs; [
         neovim
         lazygit
         tmux

@@ -18,9 +18,6 @@
     ];
 
     environment.systemPackages =
-      let
-        scripts = import ../../modules/scripts { inherit pkgs; };
-      in
       with pkgs;
       [
         btop
@@ -29,11 +26,11 @@
         busybox
       ]
       ++ (with dotfiles.pkgs; [
+        scripts
         tmux
         neovim
         lazygit
-      ])
-      ++ (with scripts; [ wake ]);
+      ]);
 
     nix.settings = {
       trusted-users = [ settings.user.username ];

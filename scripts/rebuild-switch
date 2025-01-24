@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+FLAKE=$(dirname "$0/../")
+KERNEL=$(uname -s)
+
+if test "$KERNEL" = "Linux"; then
+  sudo nixos-rebuild switch --flake "$FLAKE#$1"
+
+elif test "$KERNEL" = "Darwin"; then
+  nix run --extra-experimental-features "nix-command flakes" \
+    nix-darwin -- switch --flake "$FLAKE#$1"
+fi

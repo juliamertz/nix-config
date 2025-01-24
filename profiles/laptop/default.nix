@@ -43,6 +43,7 @@
       inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
     ]
     ++ (with dotfiles.pkgs; [
+      scripts
       neovim
       lazygit
       tmux

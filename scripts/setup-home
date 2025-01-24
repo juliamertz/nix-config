@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+DIR=$HOME
+REPO=https://github.com/juliamertz/dotfiles
+# OUT="$DIR/dotfiles"
+OUT="./temp"
+
+mkdir -vp "$DIR/projects/$(date +%Y)"
+mkdir -vp "$DIR/notes"
+mkdir -vp "$DIR/screenshots"
+mkdir -vp "$DIR/wallpapers"
+
+if ! command -v git >/dev/null 2>&1; then
+    nix-shell -p git --run "git clone $REPO $OUT" \
+      || echo Unable to clone repository, 'git' is missing from PATH \
+      && exit 1;
+fi
+
+if test ! -d "$DIR/dotfiles"; then
+  git clone "$REPO" "$OUT"
+fi
+
+
