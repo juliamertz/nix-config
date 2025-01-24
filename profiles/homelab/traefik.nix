@@ -33,12 +33,12 @@ let
       port = config.services.gitea.settings.server.HTTP_PORT;
       theme = true;
     }
-    {
-      name = "qbittorrent";
-      subdomain = "qbittorrent";
-      inherit (config.services.qbittorrent) port;
-      theme = true;
-    }
+    # {
+    #   name = "qbittorrent";
+    #   subdomain = "qbittorrent";
+    #   inherit (config.services.qbittorrent) port;
+    #   theme = true;
+    # }
     {
       name = "home-assistant";
       subdomain = "hass";

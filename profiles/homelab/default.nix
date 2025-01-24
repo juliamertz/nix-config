@@ -35,37 +35,9 @@
       ])
       ++ (with scripts; [ wake ]);
 
-    # enable dynamically linked binaries for mason in neovim
-    programs.nix-ld = {
-      enable = true;
-      libraries = with pkgs; [ stdenv.cc.cc ];
-    };
-
     nix.settings = {
+      trusted-users = [ settings.user.username ];
       trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
-    };
-
-    sops.secrets = helpers.ownedSecrets settings.user.username [ "openvpn_auth" ];
-
-    services.protonvpn = {
-      enable = true;
-      requireSops = true;
-
-      settings = {
-        credentials_path = "/run/secrets/openvpn_auth";
-        autostart_default = true;
-
-        default_select = "Fastest";
-        default_protocol = "Udp";
-        default_criteria = {
-          country = "NL";
-          features = [ "P2P" ];
-        };
-        killswitch = {
-          enable = false;
-          custom_rules = [ ];
-        };
-      };
     };
   };
 
@@ -74,7 +46,7 @@
     ./adguard.nix
     ./forgejo.nix
     ./samba.nix
-    ./qbittorrent.nix
+    # ./qbittorrent.nix
     ./wireguard.nix
     ./multimedia.nix
 
@@ -85,6 +57,6 @@
     ../../modules/apps/git.nix
     ../../modules/apps/shell/zsh.nix
 
-    inputs.protonvpn-rs.nixosModules.protonvpn
+    # inputs.protonvpn-rs.nixosModules.protonvpn
   ];
 }
