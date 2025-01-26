@@ -25,17 +25,20 @@ in
 
     nixpkgs.config.allowUnfree = mkDefault true;
     nix = {
-      trusted-users = [
-        "root"
-        settings.user.username
-      ];
-      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
       package = unstable.nix;
-      settings.experimental-features = mkDefault [
-        "nix-command"
-        "flakes"
-        "pipe-operators"
-      ];
+      settings = {
+        experimental-features = mkDefault [
+          "nix-command"
+          "flakes"
+          "pipe-operators"
+        ];
+
+        trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
+        trusted-users = [
+          "root"
+          settings.user.username
+        ];
+      };
     };
 
     nixpkgs.hostPlatform = platform;
