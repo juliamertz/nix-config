@@ -16,7 +16,6 @@
       [
         btop
         fastfetch
-        diskonaut
         busybox
       ]
       ++ (with dotfiles.pkgs; [

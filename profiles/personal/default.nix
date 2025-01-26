@@ -35,6 +35,7 @@ in
         scripts
         neovim
         kitty
+        wezterm
         lazygit
         tmux
         weechat
@@ -75,10 +76,7 @@ in
     # apps
     ../../modules/apps/virtmanager.nix
     ../../modules/apps/git.nix
-    ../../modules/apps/media/spotify
-    # ../../modules/apps/terminal/kitty.nix
-    ../../modules/apps/terminal/wezterm.nix
-    ../../modules/apps/shell/fish.nix
+    ../../modules/apps/media/spotify.nix
     ../../modules/apps/shell/zsh.nix
     ../../modules/networking/samba/client.nix
     ../../modules/nerdfonts.nix

@@ -12,11 +12,10 @@ let
   };
 in
 {
-  # imports = [ ./tui.nix ];
-
   sops.secrets = helpers.ownedSecrets settings.user.username [ "spotify_client_id" ];
   environment.systemPackages = [
     dotfiles.pkgs.spotify-player
     pkgs.spotify
   ];
 }
+

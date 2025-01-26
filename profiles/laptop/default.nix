@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   settings,
   dotfiles,
   helpers,
@@ -13,7 +12,13 @@
       remapCapsLockToEscape = true;
       nonUS.remapTilde = true;
     };
+
     defaults = {
+      trackpad.Clicking = true;
+      NSGlobalDomain = {
+        "com.apple.swipescrolldirection" = false; # disable natural scrolling
+      };
+
       dock = {
         autohide = true;
         autohide-delay = 0.0;
@@ -22,16 +27,16 @@
         orientation = "right";
         minimize-to-application = true;
       };
-
-      trackpad.Clicking = true;
-
-      NSGlobalDomain = {
-        "com.apple.swipescrolldirection" = false; # disable natural scrolling
-      };
     };
   };
 
-  sops.secrets = helpers.ownedSecrets settings.user.username [ "spotify_client_id" ];
+  sops.secrets = helpers.ownedSecrets settings.user.username [
+    "spotify_client_id"
+    "hass_token"
+  ];
+
+  # disable default zsh shell so we can use wrapped pkg
+  programs.zsh.enable = false;
 
   environment.systemPackages =
     with pkgs;
@@ -40,21 +45,20 @@
       tldr
       yq
       openvpn
-      inputs.protonvpn-rs.packages.${settings.system.platform}.protonvpn-rs
     ]
     ++ (with dotfiles.pkgs; [
       scripts
+      zsh
       neovim
+      kitty
       lazygit
       tmux
+      w3m
     ]);
 
   system.stateVersion = 4;
 
   imports = [
-    ../../modules/apps/terminal/kitty.nix
-    # ../../modules/apps/terminal/wezterm.nix
-    ../../modules/apps/shell/zsh.nix
     ../../modules/apps/git.nix
     ../../modules/lang/rust.nix
     ../../modules/lang/nix.nix
@@ -62,8 +66,7 @@
     ../../modules/apps/browser/firefox.nix
     ../../modules/wm/yabai
     ../../modules/nerdfonts.nix
-
     ../../modules/sops.nix
-    # ../modules/apps/media/spotify
+    ../../modules/apps/media/spotify.nix
   ];
 }
