@@ -51,7 +51,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # affinity.url = "github:juliamertz/affinity-nixos";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
     picom.url = "github:yshui/picom";

@@ -7,11 +7,6 @@
 let
   cfg = config.rose-pine;
   colors = pkgs.callPackage ./colors.nix { };
-  gtkSettings = ''
-    gtk-theme-name = ${name}
-    gtk-icon-theme-name = oomox-${name}
-  '';
-  name = if cfg.variant == "main" then "rose-pine" else ("rose-pine-" + cfg.variant);
 in
 {
   options = {
@@ -35,10 +30,14 @@ in
     ];
 
     home.config.stylix.targets.gtk.enable = false;
-    home.file.".config/gtk-2.0/gtkrc".text = gtkSettings;
+    home.file.".config/gtk-2.0/gtkrc".text = ''
+      gtk-theme-name = rose-pine-moon
+      gtk-icon-theme-name = oomox-rose-pine-moon
+    '';
     home.file.".config/gtk-3.0/settings.ini".text = ''
       [Settings]
-      ${gtkSettings}
+      gtk-theme-name = rose-pine-moon
+      gtk-icon-theme-name = oomox-rose-pine-moon
     '';
 
     qt = {

@@ -20,7 +20,6 @@ in
     };
     programs.appimage.binfmt = true;
     users.defaultUserShell = pkgs.zsh;
-    programs.thunar.enable = true;
 
     sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
@@ -82,9 +81,9 @@ in
     ../../modules/nerdfonts.nix
     ../../modules/lang/lua.nix
     ../../modules/lang/nix.nix
+    ../../modules/apps/thunar.nix
     # ../modules/apps/browser/librewolf.nix
     # ../modules/apps/ollama.nix
-    # ../modules/apps/affinity.nix
     # ../../modules/de/cosmic
     # ../modules/de/plasma
     # inputs.protonvpn-rs.nixosModules.protonvpn
