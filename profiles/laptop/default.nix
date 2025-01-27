@@ -37,16 +37,9 @@
 
   # disable default zsh shell so we can use wrapped pkg
   programs.zsh.enable = false;
-
   environment.systemPackages =
-    with pkgs;
+    with dotfiles.pkgs;
     [
-      sops
-      tldr
-      yq
-      openvpn
-    ]
-    ++ (with dotfiles.pkgs; [
       scripts
       zsh
       neovim
@@ -54,6 +47,10 @@
       lazygit
       tmux
       w3m
+    ]
+    ++ (with pkgs; [
+      yq
+      openvpn
     ]);
 
   system.stateVersion = 4;

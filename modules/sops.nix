@@ -32,31 +32,36 @@ in
   };
 
   # Secrets attribute should be set in per-profile configuration
-  config = {
-    environment.systemPackages = [ pkgs.sops ];
-    sops = {
-      defaultSopsFile = ../secrets/${cfg.profile}.${cfg.format};
-      defaultSopsFormat = format;
-      age.keyFile = "${settings.user.home}/.config/sops/age/keys.txt";
-    };
-
-  };
-  # ++ (lib.optionals helpers.isDarwin [
-  #   {
-  #     # If age keys are stored on a file-system that is mounted later in the boot process
-  #     # secrets won't be put in /run/secrets, this works around this issue.
-  #     # https://github.com/Mic92/sops-nix/issues/149#issuecomment-1656036132
-  #     systemd.services.decrypt-sops = lib.mkIf cfg.activationScript {
-  #       description = "Decrypt sops secrets";
-  #       wantedBy = [ "multi-user.target" ];
-  #       after = [ "network-online.target" ];
-  #       serviceConfig = {
-  #         Type = "oneshot";
-  #         RemainAfterExit = true;
-  #         Restart = "on-failure";
-  #         RestartSec = "2s";
-  #       };
-  #       script = config.system.activationScripts.setupSecrets.text;
-  #     };
-  #   }
+  config = lib.mkMerge [
+    {
+      environment.systemPackages = [ pkgs.sops ];
+      sops = {
+        defaultSopsFile = ../secrets/${cfg.profile}.${cfg.format};
+        defaultSopsFormat = format;
+        age.keyFile = "${settings.user.home}/.config/sops/age/keys.txt";
+      };
+    }
+    (
+      if helpers.isLinux then
+        {
+          # If age keys are stored on a file-system that is mounted later in the boot process
+          # secrets won't be put in /run/secrets, this works around this issue.
+          # https://github.com/Mic92/sops-nix/issues/149#issuecomment-1656036132
+          systemd.services.decrypt-sops = lib.mkIf cfg.activationScript {
+            description = "Decrypt sops secrets";
+            wantedBy = [ "multi-user.target" ];
+            after = [ "network-online.target" ];
+            serviceConfig = {
+              Type = "oneshot";
+              RemainAfterExit = true;
+              Restart = "on-failure";
+              RestartSec = "2s";
+            };
+            script = config.system.activationScripts.setupSecrets.text;
+          };
+        }
+      else
+        { }
+    )
+  ];
 }

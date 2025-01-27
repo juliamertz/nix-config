@@ -17,7 +17,7 @@ in
     environment.systemPackages = with pkgs; [
       openssl
       curl
-      tldr
+      tealdeer # tldr client
       zip
       unzip
       nixfmt-rfc-style
