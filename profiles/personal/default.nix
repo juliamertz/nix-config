@@ -82,8 +82,8 @@ in
     ../../modules/lang/lua.nix
     ../../modules/lang/nix.nix
     ../../modules/apps/thunar.nix
+    ../../modules/apps/ollama.nix
     # ../modules/apps/browser/librewolf.nix
-    # ../modules/apps/ollama.nix
     # ../../modules/de/cosmic
     # ../modules/de/plasma
     # inputs.protonvpn-rs.nixosModules.protonvpn

@@ -6,13 +6,20 @@ let
   };
 in
 {
+  # systemd.tmpfiles.rules = [
+  #   "d /home/${user} 0775 ${user} ${group}"
+  # ];
+
   services.ollama = {
-    package = pkgs.ollama;
     enable = true;
+    # inherit user group;
+    user = "ollama";
+    group = "ollama";
+
+    package = pkgs.ollama;
     acceleration = "cuda";
-    sandbox = false;
-    home = "${settings.user.home}";
-    models = "${settings.user.home}/.ollama";
-    # writablePaths = [ "${settings.user.home}" ];
+
+    home = "/games/ollama";
+    models = "/games/ollama/models";
   };
 }

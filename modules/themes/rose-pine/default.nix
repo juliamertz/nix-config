@@ -34,10 +34,13 @@ in
       gtk-theme-name = rose-pine-moon
       gtk-icon-theme-name = oomox-rose-pine-moon
     '';
-    home.file.".config/gtk-3.0/settings.ini".text = ''
+    home.file.".config/gtk-3.0/settings.ini".text = 
+    # ini
+    ''
       [Settings]
-      gtk-theme-name = rose-pine-moon
-      gtk-icon-theme-name = oomox-rose-pine-moon
+      gtk-theme-name=rose-pine-moon 
+      gtk-icon-theme-name=rose-pine-moon                                                                                      
+      gtk-font-name=Sans 10
     '';
 
     qt = {
