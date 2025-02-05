@@ -51,6 +51,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # unfree fonts patched with nerdfont glyphs
+    fonts.url = "git+ssh://git@github.com/juliamertz/fonts.git";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
     picom.url = "github:yshui/picom";
