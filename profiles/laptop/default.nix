@@ -24,7 +24,6 @@
         autohide = true;
         autohide-delay = 0.0;
         expose-animation-duration = 0.0;
-
         orientation = "right";
         minimize-to-application = true;
       };

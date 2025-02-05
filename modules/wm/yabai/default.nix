@@ -1,28 +1,26 @@
 {
-  inputs,
-  helpers,
+  pkgs,
   dotfiles,
   ...
 }:
-let
-  pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
-in
 {
+  # Window manager
   services.yabai = {
     enable = true;
-    enableScriptingAddition = true;
-    package = pkgs.yabai;
     extraConfig = builtins.readFile "${dotfiles.path}/yabai/yabairc";
+
+    # Requires system integrity protection to be disabled
+    # https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection
+    enableScriptingAddition = true;
   };
 
-  environment.systemPackages = with pkgs; [ skhd ];
-
+  # Hotkey daemon
   services.skhd = {
     enable = true;
-    package = pkgs.skhd;
-    skhdConfig = builtins.readFile "${dotfiles.path}/skhd/skhdrc";
+    package = dotfiles.pkgs.skhd;
   };
 
+  # Status bar
   services.sketchybar = {
     enable = true;
     package = pkgs.sketchybar;
