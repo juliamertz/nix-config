@@ -21,8 +21,6 @@
         run ${pkgs.firefox}/bin/firefox
         run ${pkgs.picom}/bin/picom -b
         run ${pkgs.blueman}/bin/blueman-applet
-
-        xinput set-prop 'Logitech USB Receiver Mouse' 'libinput Accel Speed' -1
       '';
     in
     {
@@ -46,8 +44,6 @@
             run ${pkgs.firefox}/bin/firefox
             run ${pkgs.picom}/bin/picom -b
             run ${pkgs.blueman}/bin/blueman-applet
-
-            xinput set-prop 'Logitech USB Receiver Mouse' 'libinput Accel Speed' -1
           '';
       };
 

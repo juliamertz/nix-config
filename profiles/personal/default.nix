@@ -67,7 +67,7 @@ in
 
     # desktop environment
     ../../modules/wm/awesome
-    ../../modules/dm/sddm
+    ../../modules/dm/sddm.nix
     ../../modules/wm/hyprland
     ../../modules/io/keyd.nix
     ../../modules/themes/rose-pine
@@ -85,7 +85,6 @@ in
     ../../modules/apps/ollama.nix
     # ../modules/apps/browser/librewolf.nix
     # ../../modules/de/cosmic
-    # ../modules/de/plasma
     # inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite

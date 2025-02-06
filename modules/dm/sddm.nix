@@ -1,9 +1,8 @@
 { pkgs, lib, ... }:
-let
-  rose-pine-sddm = pkgs.libsForQt5.callPackage ./sddm-rose-pine.nix { };
-in
 {
-  environment.systemPackages = [ rose-pine-sddm ];
+  environment.systemPackages = [
+    (pkgs.libsForQt5.callPackage ../../pkgs/sddm-rosepine.nix { })
+  ];
 
   services.displayManager = {
     defaultSession = "none+awesome";
@@ -12,6 +11,7 @@ in
       theme = "rose-pine";
       setupScript = # bash
         ''
+          # turn off left monitor
           ${lib.getExe pkgs.xorg.xrandr} --output HDMI-0 --off
         '';
     };

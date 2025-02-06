@@ -9,7 +9,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "sddm-rose-pine";
-  version = "1..0";
+  version = "1.0.0";
   dontBuild = true;
   src = fetchFromGitHub {
     owner = "juliamertz";
