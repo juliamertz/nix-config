@@ -20,7 +20,6 @@ in
       tealdeer # tldr client
       zip
       unzip
-      nixfmt-rfc-style
     ];
 
     nixpkgs.config.allowUnfree = mkDefault true;
@@ -41,8 +40,8 @@ in
       };
     };
 
-    nixpkgs.hostPlatform = platform;
-    networking.hostName = hostname;
+    nixpkgs.hostPlatform = mkDefault platform;
+    networking.hostName = mkDefault hostname;
 
     users.users.${username} = {
       description = fullName;

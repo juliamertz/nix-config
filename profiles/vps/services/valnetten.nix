@@ -1,25 +1,19 @@
 {
   pkgs,
   settings,
-  config,
-  helpers,
   ...
 }:
 let
   inherit (settings.system) platform;
   inherit (pkgs) lib;
-  toStr = builtins.toString;
-
-  port = 42069;
   name = "lightspeed-dhl-adapter";
 
   user = "valnetten";
   group = "valnetten";
 
   revision = "e05387b30debe2b2fbe60c265103451c16267f3e";
-  repo = "lightspeed-dhl-adapter";
   bin =
-    (builtins.getFlake "github:juliamertz/${repo}/${revision}?dir=nix").packages.${platform}.default;
+    (builtins.getFlake "github:juliamertz/${name}/${revision}?dir=nix").packages.${platform}.default;
 
 in
 {
