@@ -9,7 +9,7 @@ let
   allowedIPs =  [ 
     "10.100.0.2"
     "10.100.0.3"
-    "10.100.0.3"
+    "10.100.0.4"
   ];
 in
 {
@@ -40,7 +40,6 @@ in
           {
             publicKey = "VcEu1t2j+mmiPKI8NBusFp1Qgi/VhblZencgsM4qWwo=";
             allowedIPs = map (ip: "${ip}/32") allowedIPs;
-            # allowedIPs = [ "${cfg.clientIP}/32" ];
           }
         ];
       };

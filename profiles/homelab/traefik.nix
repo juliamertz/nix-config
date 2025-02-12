@@ -107,55 +107,7 @@ in
 
         entryPoints = {
           http.address = ":80";
-          # https.address = ":443";
         };
-
-        certificatesResolvers = {
-          myresolver = {
-            acme = {
-              email = "test@example.com";
-              storage = "acme.json";
-
-              # Optional: Uncomment to use Let's Encrypt's staging server.
-              # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory";
-
-              # Optional: Default certificates' duration is 2160 hours (90 days).
-              # certificatesDuration = 2160;
-
-              # Optional: Preferred certificate chain by issuer Common Name.
-              # preferredChain = "ISRG Root X1";
-
-              # Optional: Key type for certificates.
-              # Available: "EC256", "EC384", "RSA2048", "RSA4096", "RSA8192".
-              # keyType = "RSA4096";
-
-              # Optional: Use a TLS-ALPN-01 ACME challenge.
-              tlsChallenge = { };
-
-              # Optional: Use a HTTP-01 ACME challenge.
-              httpChallenge = {
-                # Required: EntryPoint to use for HTTP-01 challenges.
-                entryPoint = "web";
-              };
-
-              # Optional: Use a DNS-01 ACME challenge for wildcard certificates.
-              dnsChallenge = {
-                # Required: DNS provider used.
-                provider = "digitalocean";
-
-                # Optional: Delay before DNS challenge verification, in seconds.
-                # delayBeforeCheck = 0;
-
-                # Optional: Custom DNS resolvers.
-                # resolvers = [ "1.1.1.1:53" "8.8.8.8:53" ];
-
-                # Optional: Disable DNS propagation checks (NOT RECOMMENDED).
-                # disablePropagationCheck = true;
-              };
-            };
-          };
-        };
-
       };
 
       dynamicConfigOptions = {

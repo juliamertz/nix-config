@@ -1,9 +1,6 @@
 { pkgs, settings, ... }:
 let
-
   inherit (settings.user) username home;
-  inherit (settings.system) timeZone defaultLocale;
-
 in
 {
   imports = [
@@ -13,6 +10,9 @@ in
 
   environment.systemPackages = with pkgs; [
     xclip
+    tealdeer # tldr client
+    zip
+    unzip
   ];
 
   networking.firewall.enable = true;
@@ -22,26 +22,8 @@ in
     isNormalUser = true;
     extraGroups = [
       "networkmanager"
-      "wheel"
     ];
   };
-
-  time.timeZone = timeZone;
-  i18n.defaultLocale = defaultLocale;
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "nl_NL.UTF-8";
-    LC_IDENTIFICATION = "nl_NL.UTF-8";
-    LC_MEASUREMENT = "nl_NL.UTF-8";
-    LC_MONETARY = "nl_NL.UTF-8";
-    LC_NAME = "nl_NL.UTF-8";
-    LC_NUMERIC = "nl_NL.UTF-8";
-    LC_PAPER = "nl_NL.UTF-8";
-    LC_TELEPHONE = "nl_NL.UTF-8";
-    LC_TIME = "nl_NL.UTF-8";
-  };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   programs.nh = {
     enable = true;

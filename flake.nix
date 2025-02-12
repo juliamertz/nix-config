@@ -151,6 +151,7 @@
             modules = [
               ./profiles/vps
               ./hardware/hetzner-cloud.nix
+              ./profiles/base/nixos.nix
             ];
           };
 

@@ -13,13 +13,12 @@ let
   inherit (settings.system) platform hostname;
 in
 {
+  imports = [ ../../modules/settings.nix ];
+
   config = {
     environment.systemPackages = with pkgs; [
       openssl
       curl
-      tealdeer # tldr client
-      zip
-      unzip
     ];
 
     nixpkgs.config.allowUnfree = mkDefault true;
@@ -46,6 +45,9 @@ in
     users.users.${username} = {
       description = fullName;
       inherit (settings.user) home;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJaSMVfNtTgKjZBn0OurWXDpNrV+soaog7W0Svv4vE40"
+      ];
     };
   };
 }

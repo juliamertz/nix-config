@@ -1,27 +1,13 @@
 {
   pkgs,
   inputs,
-  settings,
-  helpers,
   dotfiles,
   ...
 }:
-let
-  user = settings.user.username;
-in
 {
   config = {
     secrets.profile = "personal";
-
-    programs.direnv = {
-      enable = true;
-      silent = true;
-      nix-direnv.enable = true;
-    };
-    programs.appimage.binfmt = true;
     users.defaultUserShell = pkgs.zsh;
-
-    sops.secrets = helpers.ownedSecrets user [ "openvpn_auth" ];
 
     # open ports for development
     networking.firewall.allowedTCPPorts = [

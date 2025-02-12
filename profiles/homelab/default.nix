@@ -1,8 +1,5 @@
 {
   pkgs,
-  settings,
-  helpers,
-  inputs,
   dotfiles,
   ...
 }:
@@ -25,11 +22,6 @@
         neovim
         lazygit
       ]);
-
-    nix.settings = {
-      trusted-users = [ settings.user.username ];
-      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
-    };
   };
 
   imports = [
@@ -37,7 +29,7 @@
     ./adguard.nix
     ./forgejo.nix
     ./samba.nix
-    # ./qbittorrent.nix
+    ./qbittorrent.nix
     ./wireguard.nix
     ./multimedia.nix
 

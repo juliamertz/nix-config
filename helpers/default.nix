@@ -6,7 +6,7 @@
 let
   inherit (builtins) elem;
 in
-{
+rec {
   wrapPackage = callPackage ./wrap-package.nix { };
 
   ownedSecrets =
@@ -37,4 +37,6 @@ in
     "aarch64-linux"
     "x86_64-linux"
   ];
+
+  perPlatform = modules: if isDarwin then modules.darwin else modules.linux;
 }

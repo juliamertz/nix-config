@@ -6,6 +6,12 @@
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
+  boot.loader.grub = {
+    device = "nodev";
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+  };
+
   boot.initrd.availableKernelModules = [
     "ahci"
     "xhci_pci"

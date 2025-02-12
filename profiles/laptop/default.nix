@@ -16,7 +16,8 @@
     defaults = {
       trackpad.Clicking = true;
       NSGlobalDomain = {
-        "com.apple.swipescrolldirection" = false; # disable natural scrolling
+        # disable natural scrolling
+        "com.apple.swipescrolldirection" = false;
       };
 
       dock = {
