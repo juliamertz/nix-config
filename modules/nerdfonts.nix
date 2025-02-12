@@ -1,5 +1,5 @@
 { pkgs, inputs, ... }:
-let 
+let
   unfree = inputs.fonts.packages.${pkgs.system};
 in
 {

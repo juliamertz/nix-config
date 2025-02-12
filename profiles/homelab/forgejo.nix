@@ -6,8 +6,14 @@
 }:
 {
   networking.firewall = {
-    allowedTCPPorts = [ 3000 222 ];
-    allowedUDPPorts = [ 3000 222 ];
+    allowedTCPPorts = [
+      3000
+      222
+    ];
+    allowedUDPPorts = [
+      3000
+      222
+    ];
   };
   services.forgejo = {
     enable = true;

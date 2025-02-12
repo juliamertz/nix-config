@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.wireguard;
-  allowedIPs =  [ 
+  allowedIPs = [
     "10.100.0.2"
     "10.100.0.3"
     "10.100.0.4"

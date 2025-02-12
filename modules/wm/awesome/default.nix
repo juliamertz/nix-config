@@ -8,20 +8,21 @@
 
   config =
     let
-      autorun = pkgs.writeText "autorun.sh" # sh
-      ''
-        #!/usr/bin/env sh
+      autorun =
+        pkgs.writeText "autorun.sh" # sh
+          ''
+            #!/usr/bin/env sh
 
-        run() {
-            if ! pgrep -f "$(basename $1)"; then
-                "$@" &
-            fi
-        }
+            run() {
+                if ! pgrep -f "$(basename $1)"; then
+                    "$@" &
+                fi
+            }
 
-        run ${pkgs.firefox}/bin/firefox
-        run ${pkgs.picom}/bin/picom -b
-        run ${pkgs.blueman}/bin/blueman-applet
-      '';
+            run ${pkgs.firefox}/bin/firefox
+            run ${pkgs.picom}/bin/picom -b
+            run ${pkgs.blueman}/bin/blueman-applet
+          '';
     in
     {
       home.file.".config/awesome" = {
