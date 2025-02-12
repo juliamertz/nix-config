@@ -11,7 +11,7 @@ let
   user = "valnetten";
   group = "valnetten";
 
-  revision = "e05387b30debe2b2fbe60c265103451c16267f3e";
+  revision = "f86b48784829cb47d40a48b4be5b5277b479f606";
   bin =
     (builtins.getFlake "github:juliamertz/${name}/${revision}?dir=nix").packages.${platform}.default;
 

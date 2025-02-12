@@ -1,4 +1,10 @@
-{ settings, inputs, dotfiles, ... }:
+{
+  settings,
+  inputs,
+  helpers,
+  dotfiles,
+  ...
+}:
 let
   inherit (settings.system) platform hostname;
   inherit (settings.user) username fullName home;
@@ -8,14 +14,6 @@ in
     secrets.profile = "vps";
 
     nixpkgs.config.allowUnfree = true;
-    nix.settings = {
-      trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-    };
-
     nixpkgs.hostPlatform = platform;
     networking.hostName = hostname;
 
@@ -45,6 +43,27 @@ in
       ];
     };
 
+    nix =
+      let
+        unstable = helpers.getPkgs inputs.nixpkgs-unstable;
+      in
+      {
+        package = unstable.nix;
+        settings = {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+            "pipe-operators"
+          ];
+
+          trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
+          trusted-users = [
+            "root"
+            settings.user.username
+          ];
+        };
+      };
+
     networking.firewall.enable = true;
     networking.networkmanager.enable = true;
 
@@ -72,7 +91,6 @@ in
 
     ../../modules/apps/git.nix
     ../../modules/io/ssh.nix
-    ../../modules/apps/neovim.nix
     ../../modules/sops.nix
   ];
 }
