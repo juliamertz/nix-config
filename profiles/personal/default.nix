@@ -15,6 +15,8 @@
       1112
     ];
 
+    nerdfonts.enableUnfree = true;
+
     environment.systemPackages =
       (with dotfiles.pkgs; [
         scripts
@@ -73,7 +75,6 @@
     # ../../modules/de/cosmic
     # inputs.protonvpn-rs.nixosModules.protonvpn
     inputs.stylix.nixosModules.stylix
-    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
 }

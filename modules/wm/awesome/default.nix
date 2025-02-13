@@ -1,11 +1,10 @@
 {
   dotfiles,
   pkgs,
+  lib,
   ...
 }:
 {
-  imports = [ ../picom ];
-
   config =
     let
       autorun =
@@ -19,8 +18,8 @@
                 fi
             }
 
-            run ${pkgs.firefox}/bin/firefox
-            run ${pkgs.picom}/bin/picom -b
+            run ${lib.getExe pkgs.picom} --config ${dotfiles.path}/picom/picom.conf -b
+            run ${lib.getExe pkgs.firefox}
             run ${pkgs.blueman}/bin/blueman-applet
           '';
     in

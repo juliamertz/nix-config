@@ -30,6 +30,8 @@
     };
   };
 
+  nerdfonts.enableUnfree = true;
+
   sops.secrets = helpers.ownedSecrets settings.user.username [
     "spotify_client_id"
     "hass_token"

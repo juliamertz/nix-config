@@ -5,7 +5,7 @@
 - `helpers` - Utility functions put in the global namespace
 - `modules` 
 - `profiles` - Configurations for nixos/nix-darwin system
-    - `base` - Shared configurations for all systems
+    - `base` - Shared files that should be imported for all system profiles
         - `darwin.nix`
         - `nixos.nix`
         - `shared.nix`

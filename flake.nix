@@ -8,8 +8,10 @@
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     # Darwin
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -28,8 +30,11 @@
     };
 
     # Misc
-    dotfiles.url = "github:juliamertz/dotfiles";
     sops-nix.url = "github:Mic92/sops-nix";
+    dotfiles = {
+      url = "github:juliamertz/dotfiles";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -42,20 +47,10 @@
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
-    flake-programs-sqlite = {
-      url = "github:wamserma/flake-programs-sqlite";
-      inputs.nixpkgs.follows = "nixpkgs-24_05";
-    };
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
 
-    # unfree fonts patched with nerdfont glyphs
-    fonts.url = "git+ssh://git@github.com/juliamertz/fonts.git";
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
-    picom.url = "github:yshui/picom";
   };
 
   outputs =
