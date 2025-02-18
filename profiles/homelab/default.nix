@@ -32,6 +32,7 @@
     ./qbittorrent.nix
     ./wireguard.nix
     ./multimedia.nix
+    ./home-assistant
 
     ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier

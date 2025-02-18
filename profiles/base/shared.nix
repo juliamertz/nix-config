@@ -16,6 +16,17 @@ in
   imports = [ ../../modules/settings.nix ];
 
   config = {
+    nixpkgs.overlays = [
+      (self: super: {
+        fetchGist =
+          opts:
+          pkgs.fetchurl {
+            url = with opts; "https://gist.githubusercontent.com/${id}/raw/${rev}/${file}";
+            inherit (opts) hash;
+          };
+      })
+    ];
+
     environment.systemPackages = with pkgs; [
       openssl
       curl
