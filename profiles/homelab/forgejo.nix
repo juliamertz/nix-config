@@ -16,7 +16,7 @@
 
   reverse-proxy.services.forgejo = {
     subdomain = "git";
-    port = config.services.gitea.settings.server.HTTP_PORT;
+    port = config.services.forgejo.settings.server.HTTP_PORT;
     theme = "gitea";
   };
 
