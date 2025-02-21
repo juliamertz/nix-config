@@ -1,10 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
+    ./sunshine.nix
+    ./launchers.nix
     # ./wheel.nix
-
-    ../../modules/apps/sunshine.nix
-    ../../modules/apps/game-launchers.nix
   ];
 
   environment.systemPackages = with pkgs; [

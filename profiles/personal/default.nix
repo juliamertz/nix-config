@@ -46,8 +46,7 @@
   };
 
   imports = [
-    ../gaming
-    ./home-assistant
+    ./gaming
 
     ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix

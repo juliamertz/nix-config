@@ -9,7 +9,6 @@
         - `darwin.nix`
         - `nixos.nix`
         - `shared.nix`
-    - `gaming` - Launchers, emulators and drivers to enable gaming on linux
     - `homelab`
     - `laptop` - Nix darwin configuration for laptop
     - `personal` - NixOS configuration for workstation
