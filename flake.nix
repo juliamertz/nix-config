@@ -115,17 +115,6 @@
             ];
           };
 
-          work = nixosSystem {
-            specialArgs = getSpecialArgs {
-              hostname = "work";
-              platform = "x86_64-linux";
-            };
-            modules = base ++ [
-              ./profiles/work
-              ./hardware/hetzner-cloud.nix
-            ];
-          };
-
           homelab = nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "homelab";

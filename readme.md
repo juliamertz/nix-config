@@ -12,7 +12,6 @@
     - `homelab`
     - `laptop` - Nix darwin configuration for laptop
     - `workstation` - NixOS configuration for workstation
-    - `work` - minimal NixOS development environment
 - `scripts` - Shell scripts to automate some parts of bootstapping NixOS/nix-darin systems
 - `secrets` - Per system runtime secrets encrypted with [sops](https://github.com/getsops/sops)
 
