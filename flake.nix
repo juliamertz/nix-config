@@ -110,7 +110,7 @@
               platform = "x86_64-linux";
             };
             modules = base ++ [
-              ./profiles/personal
+              ./profiles/workstation
               ./hardware/workstation.nix
             ];
           };
