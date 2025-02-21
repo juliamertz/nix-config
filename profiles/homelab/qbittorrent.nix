@@ -1,6 +1,12 @@
-{ settings, ... }:
+{ settings, config, ... }:
 {
   imports = [ ../../modules/apps/qbittorrent ];
+
+  reverse-proxy.services.qbittorrent = {
+    subdomain = "qbittorrent";
+    port = config.services.qbittorrent.port;
+    theme = true;
+  };
 
   services.qbittorrent = {
     enable = true;

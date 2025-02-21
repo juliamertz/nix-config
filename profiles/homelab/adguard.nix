@@ -1,4 +1,9 @@
-{ inputs, helpers, ... }:
+{
+  config,
+  inputs,
+  helpers,
+  ...
+}:
 let
   host = "0.0.0.0";
   port = 3003;
@@ -22,11 +27,18 @@ in
     "94.140.14.141"
   ];
 
+  # TODO: get this working without root privilleges
   systemd.services.adguardhome = {
     serviceConfig = {
       User = "root";
       Group = "root";
     };
+  };
+
+  reverse-proxy.services.adguardhome = {
+    subdomain = "adguard";
+    port = config.services.adguardhome.port;
+    theme = true;
   };
 
   services.adguardhome = {

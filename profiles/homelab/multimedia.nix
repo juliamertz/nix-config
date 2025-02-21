@@ -1,9 +1,7 @@
 {
   lib,
   config,
-  helpers,
   settings,
-  inputs,
   ...
 }:
 let
@@ -70,6 +68,33 @@ in
       openFirewall = true;
       group = "multimedia";
       port = 9117;
+    };
+
+    reverse-proxy.services = {
+      jellyfin = {
+        subdomain = "jellyfin";
+        port = config.jellyfin.port;
+      };
+      jellyseerr = {
+        subdomain = "jellyseerr";
+        port = config.services.jellyseerr.port;
+        theme = true;
+      };
+      radarr = {
+        subdomain = "radarr";
+        port = config.services.radarr.port;
+        theme = true;
+      };
+      sonarr = {
+        subdomain = "sonarr";
+        port = config.services.sonarr.port;
+        theme = true;
+      };
+      jackett = {
+        subdomain = "jackett";
+        port = config.services.jackett.port;
+        theme = true;
+      };
     };
   };
 

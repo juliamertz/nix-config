@@ -33,13 +33,10 @@
     ./wireguard.nix
     ./multimedia.nix
 
-    ../../modules/containers/home-assistant.nix
     ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier
     ../../modules/sops.nix
     ../../modules/apps/git.nix
     ../../modules/apps/shell/zsh.nix
-
-    # inputs.protonvpn-rs.nixosModules.protonvpn
   ];
 }

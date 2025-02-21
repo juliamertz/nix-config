@@ -1,7 +1,5 @@
 {
-  settings,
-  inputs,
-  helpers,
+  config,
   ...
 }:
 {
@@ -15,6 +13,14 @@
       222
     ];
   };
+
+  # TODO: optional custom theme name instead of inferred from service name
+  reverse-proxy.services.gitea = {
+    subdomain = "git";
+    port = config.services.gitea.settings.server.HTTP_PORT;
+    theme = true;
+  };
+
   services.forgejo = {
     enable = true;
     database.type = "postgres";

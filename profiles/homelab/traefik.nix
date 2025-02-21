@@ -6,69 +6,7 @@
 }:
 let
   domain = "homelab.lan";
-  localServices = [
-    {
-      name = "jellyseerr";
-      subdomain = "jellyseerr";
-      inherit (config.services.jellyseerr) port;
-      theme = true;
-    }
-    {
-      name = "jellyfin";
-      subdomain = "jellyfin";
-      inherit (config.jellyfin) port;
-      theme = false;
-    }
-    {
-      name = "adguardhome";
-      subdomain = "adguard";
-      inherit (config.services.adguardhome) port;
-      theme = true;
-    }
-    {
-      name = "gitea";
-      subdomain = "git";
-      port = config.services.gitea.settings.server.HTTP_PORT;
-      theme = true;
-    }
-    # {
-    #   name = "qbittorrent";
-    #   subdomain = "qbittorrent";
-    #   inherit (config.services.qbittorrent) port;
-    #   theme = true;
-    # }
-    {
-      name = "home-assistant";
-      subdomain = "hass";
-      inherit (config.home-assistant) port;
-      theme = false;
-    }
-    {
-      name = "radarr";
-      subdomain = "radarr";
-      inherit (config.services.radarr) port;
-      theme = true;
-    }
-    {
-      name = "sonarr";
-      subdomain = "sonarr";
-      inherit (config.services.sonarr) port;
-      theme = true;
-    }
-    {
-      name = "jackett";
-      subdomain = "jackett";
-      inherit (config.services.jackett) port;
-      theme = true;
-    }
-    # {
-    #   name = "theme-park";
-    #   subdomain = "themepark";
-    #   inherit (config.services.theme-park) port;
-    #   theme = false;
-    # }
-  ];
-
+  cfg = config.reverse-proxy;
   themepark = pkgs.fetchFromGitHub {
     owner = "packruler";
     repo = "traefik-themepark";
@@ -82,8 +20,42 @@ let
       cp -r ${themepark} $out/bin/plugins-local/src/github.com/packruler/traefik-themepark
     '';
   });
+
 in
 {
+  options.reverse-proxy = with lib; {
+    services = mkOption {
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            subdomain = mkOption {
+              type = types.nonEmptyStr;
+              default = "";
+            };
+            port = mkOption {
+              description = "Port where service is running";
+              type = types.port;
+            };
+            theme = mkOption {
+              description = ''
+                Apply theme.park theme via proxy subfiltering
+
+                If a boolean is given it will use the service's name to look up it's theme
+                Otherwise if it is a string that will be used as the theme name
+              '';
+              # TODO: handle string case
+              type = types.oneOf [
+                types.bool
+                types.nonEmptyStr
+              ];
+              default = false;
+            };
+          };
+        }
+      );
+    };
+  };
+
   config = {
     networking.firewall.allowedTCPPorts = [ 80 ];
 
@@ -105,50 +77,32 @@ in
           };
         };
 
-        entryPoints = {
-          http.address = ":80";
-        };
+        entryPoints.http.address = ":80";
       };
 
       dynamicConfigOptions = {
         http = {
           routers =
             let
-              host = target: "Host(`${target}`)";
-              mappedServices = map (s: {
-                ${s.name} = {
-                  entryPoints = [
-                    "http"
-                    # "https"
-                  ];
-                  # tls.certResolver = "myresolver";
-                  rule = host "${s.subdomain}.${domain}";
-                  service = s.name;
-                  ${if s.theme then "middlewares" else null} = [ "${s.name}-theme" ];
-                };
-              }) localServices;
+              services = lib.mapAttrs (name: value: {
+                entryPoints = [ "http" ];
+                rule = "Host(`${value.subdomain}.${domain}`)";
+                service = name;
+                ${if value.theme then "middlewares" else null} = [ "${name}-theme" ];
+              }) cfg.services;
             in
-            lib.mkMerge (
-              mappedServices
-              ++ [
-                {
-                  api = {
-                    entryPoints = [ "http" ];
-                    rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
-                    service = "api@internal";
-                  };
-                }
-              ]
-            );
-
-          services = builtins.listToAttrs (
-            map (service: {
-              inherit (service) name;
-              value = {
-                loadBalancer.servers = [ { url = "http://127.0.0.1:${builtins.toString service.port}"; } ];
+            services
+            // {
+              api = {
+                entryPoints = [ "http" ];
+                rule = "Host(`traefik.${domain}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
+                service = "api@internal";
               };
-            }) localServices
-          );
+            };
+
+          services = lib.mapAttrs (_: service: {
+            loadBalancer.servers = [ { url = "http://127.0.0.1:${builtins.toString service.port}"; } ];
+          }) cfg.services;
 
           middlewares =
             let
@@ -177,7 +131,9 @@ in
       };
     };
 
-    # Change working directory to source where local plugins reside
-    systemd.services.traefik.serviceConfig.WorkingDirectory = "${config.services.traefik.package}/bin";
+    # Change working directory to source where plugins reside
+    systemd.services.traefik.serviceConfig = {
+      WorkingDirectory = "${config.services.traefik.package}/bin";
+    };
   };
 }
