@@ -14,11 +14,10 @@
     ];
   };
 
-  # TODO: optional custom theme name instead of inferred from service name
-  reverse-proxy.services.gitea = {
+  reverse-proxy.services.forgejo = {
     subdomain = "git";
     port = config.services.gitea.settings.server.HTTP_PORT;
-    theme = true;
+    theme = "gitea";
   };
 
   services.forgejo = {

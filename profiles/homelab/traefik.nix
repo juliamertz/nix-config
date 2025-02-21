@@ -43,7 +43,6 @@ in
                 If a boolean is given it will use the service's name to look up it's theme
                 Otherwise if it is a string that will be used as the theme name
               '';
-              # TODO: handle string case
               type = types.oneOf [
                 types.bool
                 types.nonEmptyStr
@@ -83,15 +82,16 @@ in
       dynamicConfigOptions = {
         http = {
           routers =
-            let
-              services = lib.mapAttrs (name: value: {
-                entryPoints = [ "http" ];
-                rule = "Host(`${value.subdomain}.${domain}`)";
-                service = name;
-                ${if value.theme then "middlewares" else null} = [ "${name}-theme" ];
-              }) cfg.services;
-            in
-            services
+            lib.mapAttrs (name: service: {
+              entryPoints = [ "http" ];
+              rule = "Host(`${service.subdomain}.${domain}`)";
+              service = name;
+              middlewares =
+                if builtins.isString service.theme then
+                  [ "${service.theme}-theme" ]
+                else
+                  lib.optionals service.theme [ "${name}-theme" ];
+            }) cfg.services
             // {
               api = {
                 entryPoints = [ "http" ];
