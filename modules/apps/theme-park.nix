@@ -19,18 +19,14 @@ in
     enable = mkEnableOption (mkDoc "theme.park");
     openFirewall = mkEnableOption (mkDoc "Open firewall port to static file server");
     port = mkOption {
-      type = types.number;
+      type = types.port;
       default = 5069;
     };
   };
 
   config = {
-    networking.firewall = lib.mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
-
-    services.theme-park = {
-      enable = true;
-      port = 5069;
-      openFirewall = true;
+    networking.firewall = lib.mkIf cfg.openFirewall {
+      allowedTCPPorts = [ cfg.port ];
     };
 
     systemd.services.theme-park = lib.mkIf cfg.enable {

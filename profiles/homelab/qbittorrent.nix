@@ -12,7 +12,7 @@
     enable = true;
     port = 8280;
     openFirewall = true;
-    flood.enable = true;
+    flood.enable = false;
 
     user = settings.user.username;
     group = "users";
