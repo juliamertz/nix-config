@@ -31,10 +31,7 @@
 
     # Misc
     sops-nix.url = "github:Mic92/sops-nix";
-    dotfiles = {
-      url = "github:juliamertz/dotfiles";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    dotfiles.url = "github:juliamertz/dotfiles";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
