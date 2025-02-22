@@ -8,14 +8,17 @@ let
   custom-lovelace-modules = pkgs.home-assistant-custom-lovelace-modules;
   custom-themes = pkgs.home-assistant-custom-themes;
 
-  include = path: pkgs.callPackage path {};
+  lights = [
+    "bed"
+    "bed_links"
+    "bureau"
+    "bureau_links"
+    "kast"
+  ];
+
+  include = path: pkgs.callPackage path { inherit lights; };
 in
 {
-  reverse-proxy.services.home-assistant = {
-    subdomain = "hass";
-    port = config.services.home-assistant.port;
-  };
-
   services.home-assistant = {
     enable = true;
     openFirewall = true;
@@ -32,8 +35,16 @@ in
     ];
 
     config = {
-      default_config = { };
       weather = { };
+
+      light = [
+        {
+          platform = "group";
+          name = "All";
+          unique_id = "all";
+          entities = map (name: "light.${name}") lights;
+        }
+      ];
 
       http = {
         use_x_forwarded_for = true;
@@ -59,6 +70,11 @@ in
       title = "Home";
       views = include ./views.nix;
     };
+  };
+
+  reverse-proxy.services.home-assistant = {
+    subdomain = "hass";
+    port = config.services.home-assistant.port;
   };
 
   imports = [

@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, lights, ... }:
 let
   colors = {
     rgb = r: g: b: {
@@ -53,14 +53,6 @@ let
     |> map ( { name, value }: { name = "light.${name}"; value = mkLight value; })
     |> lib.listToAttrs
     |> mkScene name;
-
-  lights = [
-    "bed"
-    "bed_links"
-    "bureau"
-    "bureau_links"
-    "kast"
-  ];
 in
 with colors;
 [
