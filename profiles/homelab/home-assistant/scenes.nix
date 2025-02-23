@@ -57,7 +57,7 @@ in
 with colors;
 [
   (mkUniformLightScene "Daylight" lights {
-    color = temperature 4500;
+    color = temperature 3750;
   })
   (mkUniformLightScene "Warm" lights {
     color = temperature 2000;
