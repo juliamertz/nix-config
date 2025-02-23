@@ -59,9 +59,6 @@
 
   imports = [
     ../../modules/apps/git.nix
-    ../../modules/lang/rust.nix
-    ../../modules/lang/nix.nix
-    ../../modules/lang/go.nix
     ../../modules/apps/browser/firefox.nix
     ../../modules/wm/yabai
     ../../modules/nerdfonts.nix

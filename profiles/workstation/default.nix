@@ -67,8 +67,6 @@
     ../../modules/apps/shell/zsh.nix
     ../../modules/networking/samba/client.nix
     ../../modules/nerdfonts.nix
-    ../../modules/lang/lua.nix
-    ../../modules/lang/nix.nix
     ../../modules/apps/thunar.nix
     ../../modules/apps/ollama.nix
     # ../modules/apps/browser/librewolf.nix
