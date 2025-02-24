@@ -49,6 +49,8 @@
       lazygit
       tmux
       w3m
+      spotify
+      spotify-player
     ]
     ++ (with pkgs; [
       yq
@@ -63,6 +65,5 @@
     ../../modules/wm/yabai
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
-    ../../modules/apps/media/spotify.nix
   ];
 }

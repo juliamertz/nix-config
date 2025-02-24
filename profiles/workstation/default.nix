@@ -20,18 +20,16 @@
     environment.systemPackages =
       (with dotfiles.pkgs; [
         scripts
-
-        kitty
-        wezterm
-        zathura
-        spotify
-
+        tmux
         neovim
         lazygit
-        tmux
+        kitty
+        wezterm
+        spotify
+        spotify-player
         w3m
         weechat
-        spotify-player
+        zathura
       ])
       ++ (with pkgs; [
         qdirstat

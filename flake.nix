@@ -51,7 +51,7 @@
   };
 
   outputs =
-    { nix-darwin, ... }@inputs:
+    { nixpkgs-unstable, nix-darwin, ... }@inputs:
     let
       userSettings = {
         username = "julia";
@@ -59,11 +59,10 @@
         email = "info@juliamertz.dev";
       };
 
-      nixpkgs = inputs.nixpkgs-unstable;
       getSpecialArgs =
         { hostname, platform }:
         let
-          pkgs = nixpkgs.legacyPackages.${platform};
+          pkgs = nixpkgs-unstable.legacyPackages.${platform};
           helpers = pkgs.callPackage ./helpers { inherit platform; };
           dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
             inherit platform;
@@ -93,7 +92,7 @@
     in
     {
       nixosConfigurations =
-        with nixpkgs.lib;
+        with nixpkgs-unstable.lib;
         let
           base = [
             ./profiles/base/nixos.nix
