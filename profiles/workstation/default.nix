@@ -20,14 +20,18 @@
     environment.systemPackages =
       (with dotfiles.pkgs; [
         scripts
-        neovim
+
         kitty
         wezterm
+        zathura
+        spotify
+
+        neovim
         lazygit
         tmux
-        weechat
         w3m
-        zathura
+        weechat
+        spotify-player
       ])
       ++ (with pkgs; [
         qdirstat
@@ -63,12 +67,12 @@
     # apps
     ../../modules/apps/virtmanager.nix
     ../../modules/apps/git.nix
-    ../../modules/apps/media/spotify.nix
     ../../modules/apps/shell/zsh.nix
     ../../modules/networking/samba/client.nix
     ../../modules/nerdfonts.nix
     ../../modules/apps/thunar.nix
     ../../modules/apps/ollama.nix
+    # ../../modules/apps/media/spotify.nix
     # ../modules/apps/browser/librewolf.nix
     # ../../modules/de/cosmic
     # inputs.protonvpn-rs.nixosModules.protonvpn
