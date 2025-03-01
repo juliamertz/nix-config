@@ -41,7 +41,6 @@
         xorg.xhost
         networkmanagerapplet
         usbutils
-        firefox
         gh
         ethtool
       ]);
@@ -63,6 +62,7 @@
     ../../modules/themes/rose-pine
 
     # apps
+    ../../modules/apps/browser/librewolf
     ../../modules/apps/virtmanager.nix
     ../../modules/apps/git.nix
     ../../modules/apps/shell/zsh.nix

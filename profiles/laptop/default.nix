@@ -61,7 +61,7 @@
 
   imports = [
     ../../modules/apps/git.nix
-    ../../modules/apps/browser/firefox.nix
+    ../../modules/apps/browser/librewolf
     ../../modules/wm/yabai
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix

@@ -44,6 +44,10 @@
       url = "git+https://git.suyu.dev/suyu/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs-24_05";
     };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
