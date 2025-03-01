@@ -42,7 +42,12 @@ in
           "pipe-operators"
         ];
 
-        trusted-public-keys = [ "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E=" ];
+        substituters = [ "https://juliamertz.cachix.org" ];
+        trusted-public-keys = [
+          "cache.juliamertz.dev-1:Jy4H1rmdG1b9lqEl5Ldy0i8+6Gqr/5DLG90r4keBq+E="
+          "juliamertz.cachix.org-1:l9jCGk7vAKU5kS07eulGJiEsZjluCG5HTczsY2IL2aw="
+        ];
+
         trusted-users = [
           "root"
           settings.user.username
