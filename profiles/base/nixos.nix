@@ -30,7 +30,7 @@ in
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "${home}/nix";
+    flake = "${home}/nix-config";
   };
 
   system.stateVersion = "24.05";

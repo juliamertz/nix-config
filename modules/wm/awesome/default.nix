@@ -24,7 +24,7 @@
           }
 
           run ${lib.getExe dotfiles.pkgs.picom} -b
-          run ${lib.getExe pkgs.firefox}
+          run ${lib.getExe pkgs.librewolf}
           run ${pkgs.blueman}/bin/blueman-applet
         '';
     };

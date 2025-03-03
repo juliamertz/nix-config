@@ -17,6 +17,11 @@
 
     nerdfonts.enableUnfree = true;
 
+    environment.variables = {
+      BROWSER = "librewolf";
+      TERMINAL = "kitty";
+    };
+
     environment.systemPackages =
       (with dotfiles.pkgs; [
         scripts
@@ -24,7 +29,6 @@
         neovim
         lazygit
         kitty
-        wezterm
         spotify
         spotify-player
         w3m
@@ -70,10 +74,9 @@
     ../../modules/nerdfonts.nix
     ../../modules/apps/thunar.nix
     ../../modules/apps/ollama.nix
-    # ../../modules/apps/media/spotify.nix
-    # ../modules/apps/browser/librewolf.nix
+    ../../modules/containers/default.nix
     # ../../modules/de/cosmic
-    # inputs.protonvpn-rs.nixosModules.protonvpn
+
     inputs.stylix.nixosModules.stylix
   ];
 
