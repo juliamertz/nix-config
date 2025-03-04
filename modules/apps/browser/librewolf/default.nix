@@ -1,33 +1,12 @@
 {
-  pkgs,
   inputs,
+  pkgs,
+  lib,
   settings,
   ...
 }:
 let
-  # update addons by running this command in librewolf directory:
-  # nix run github:stnley/mozilla-addons-to-nix extra-addons.json addons.nix
-  addons =
-    (inputs.firefox-addons.packages.${pkgs.system})
-    // (pkgs.callPackage ./addons.nix {
-      # from https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/default.nix
-      buildFirefoxXpiAddon = { pname, meta, version, addonId, url, sha256, ... }:
-        pkgs.stdenv.mkDerivation {
-          name = "${pname}-${version}";
-          src = pkgs.fetchurl { inherit url sha256; };
-          preferLocalBuild = true;
-          allowSubstitutes = true;
-          passthru = { inherit addonId; };
-          inherit meta;
-          buildCommand =
-            # sh
-            ''
-              dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-              mkdir -p "$dst"
-              install -v -m644 "$src" "$dst/${addonId}.xpi"
-            '';
-        };
-    });
+  addons = pkgs.callPackage ./addons.nix { inherit inputs; };
 in
 {
   home.config = {
@@ -36,7 +15,7 @@ in
       profiles.${settings.user.username} = {
         isDefault = true;
 
-        extensions = with addons; [
+        extensions.packages = with addons; [
           vimium
           darkreader
           proton-pass
@@ -128,28 +107,10 @@ in
         };
 
         search.force = true;
-
-        # TODO:
-        # bookmarks = [
-        #   {
-        #     name = "NixOS bookmarks toolbar";
-        #     toolbar = true;
-        #     bookmarks = [
-        #       {
-        #         name = "lofi";
-        #         url = "https://music.youtube.com/watch?v=jfKfPfyJRdk";
-        #       }
-        #     ];
-        #   }
-        #   {
-        #     name = "https://www.epochconverter.com/";
-        #     url = "https://www.epochconverter.com/";
-        #   }
-        # ];
       };
     };
 
-    xdg.mimeApps.defaultApplications = {
+    xdg.mimeApps.defaultApplications = lib.mkIf pkgs.stdenv.isLinux {
       "text/html" = "librewolf.desktop";
       "x-scheme-handler/http" = "librewolf.desktop";
       "x-scheme-handler/https" = "librewolf.desktop";
