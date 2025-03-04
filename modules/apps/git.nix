@@ -1,4 +1,4 @@
-{ settings, helpers, ... }:
+{ lib, settings, helpers, ... }:
 let
   config = {
     init.defaultBranch = "main";
@@ -43,13 +43,6 @@ if helpers.isLinux then
   }
 else
   {
-    home.programs.git = {
-      enable = true;
-      extraConfig = config;
-    };
-
-    home.file.".gitconfig".text = ''
-      [include]
-      path=${settings.user.home}/.config/git/config
-    '';
+    home.programs.git.enable = true;
+    home.file.".gitconfig".text = lib.generators.toGitINI config;
   }
