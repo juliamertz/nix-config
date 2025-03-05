@@ -64,30 +64,27 @@
       };
 
       getSpecialArgs =
-        { hostname, platform }:
+        { hostname, system }:
         let
-          pkgs = nixpkgs-unstable.legacyPackages.${platform};
-          helpers = pkgs.callPackage ./helpers { inherit platform; };
-          dotfiles = pkgs.callPackage ./helpers/dotfiles.nix {
-            inherit platform;
-            package = inputs.dotfiles;
-            local = {
-              enable = false;
-              path = "${home}/dotfiles";
-            };
+          pkgs = nixpkgs-unstable.legacyPackages.${system};
+          helpers = pkgs.callPackage ./helpers.nix { };
+          dotfiles = {
+            pkgs = inputs.dotfiles.packages.${system};
+            path = "${inputs.dotfiles}";
           };
 
           homeDir = if helpers.isDarwin then "/Users" else "/home";
           home = "${homeDir}/${userSettings.username}";
         in
         {
-          inherit inputs helpers dotfiles;
+          inherit inputs helpers dotfiles system;
           settings = {
             user = userSettings // {
               inherit home;
             };
             system = {
-              inherit hostname platform;
+              inherit hostname;
+              platform = system;
               timeZone = "Europe/Amsterdam";
               defaultLocale = "en_US.UTF-8";
             };
@@ -107,7 +104,7 @@
           workstation = nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "workstation";
-              platform = "x86_64-linux";
+              system = "x86_64-linux";
             };
             modules = base ++ [
               ./profiles/workstation
@@ -118,7 +115,7 @@
           homelab = nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "homelab";
-              platform = "x86_64-linux";
+              system = "x86_64-linux";
             };
             modules = base ++ [
               ./profiles/homelab
@@ -130,7 +127,7 @@
           vps = inputs.nixpkgs-24_05.lib.nixosSystem {
             specialArgs = getSpecialArgs {
               hostname = "main";
-              platform = "x86_64-linux";
+              system = "x86_64-linux";
             };
             modules = [
               ./profiles/vps
@@ -145,7 +142,7 @@
         macbookpro = darwinSystem {
           specialArgs = getSpecialArgs {
             hostname = "macbookpro";
-            platform = "aarch64-darwin";
+            system = "aarch64-darwin";
           };
           modules = [
             ./profiles/laptop

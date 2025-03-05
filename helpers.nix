@@ -1,14 +1,12 @@
 {
   callPackage,
   lib,
-  platform,
+  system,
 }:
 let
   inherit (builtins) elem;
 in
 rec {
-  wrapPackage = callPackage ./wrap-package.nix { };
-
   ownedSecrets =
     owner: keys:
     builtins.listToAttrs (
@@ -20,20 +18,13 @@ rec {
       }) keys
     );
 
-  formattedEnvVars =
-    envVars:
-    let
-      formatEnvVar = name: value: "--set ${name} '${value}'";
-    in
-    lib.concatStringsSep " " (lib.mapAttrsToList formatEnvVar envVars);
+  getPkgs = branch: branch.legacyPackages.${system};
 
-  getPkgs = branch: branch.legacyPackages.${platform};
-
-  isDarwin = elem platform [
+  isDarwin = elem system [
     "aarch64-darwin"
     "x86_64-darwin"
   ];
-  isLinux = elem platform [
+  isLinux = elem system [
     "aarch64-linux"
     "x86_64-linux"
   ];
