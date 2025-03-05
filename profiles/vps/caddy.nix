@@ -1,34 +1,38 @@
 {
-  pkgs,
+  lib,
+  config,
   ...
 }:
+let
+  cfg = config.services.caddy;
+in
 {
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
+  imports = [
+    ./services/blog.nix
+    ./services/valnetten.nix
   ];
 
-  services.caddy = {
-    enable = true;
+  options.services.caddy = with lib; {
+    domain = mkOption {
+      type = types.nonEmptyStr;
+      default = "";
+    };
+  };
 
-    virtualHosts =
-      let
-        domain = "juliamertz.dev";
-      in
-      {
-        ${domain}.extraConfig = ''
-          encode gzip
-          file_server
-          root * ${pkgs.callPackage ./services/blog.nix { }}
-        '';
+  config = {
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
 
-        "nettenshop.${domain}".extraConfig = ''
-          reverse_proxy http://127.0.0.1:42069
-        '';
-
-        "watch.${domain}".extraConfig = ''
+    services.caddy = {
+      enable = true;
+      domain = "juliamertz.dev";
+      virtualHosts = {
+        "watch.${cfg.domain}".extraConfig = ''
           reverse_proxy http://10.100.0.2:8096
         '';
       };
+    };
   };
 }

@@ -30,7 +30,6 @@
   imports = [
     ./wiregaurd.nix
     ./caddy.nix
-    ./services/valnetten.nix
 
     ../../modules/apps/git.nix
     ../../modules/sops.nix
