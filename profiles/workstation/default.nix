@@ -36,6 +36,8 @@
         zathura
       ])
       ++ (with pkgs; [
+        emote # gtk emote picker popup 
+        gpu-screen-recorder-gtk
         qdirstat
         btop
         fastfetch
