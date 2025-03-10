@@ -57,6 +57,11 @@ in
         # automatically enable all extensions
         "extensions.autoDisableScopes" = 0;
 
+        # dont maximize window when website goes fullscreen
+        "full-screen-api.ignore-widgets" = true;
+        "full-screen-api.warning.timeout" = 0;
+        "full-screen-api.warning.delay" = 0;
+
         # "identity.fxaccounts.enabled" = false; # Disable fx accounts
         # Disable "save password" prompt
         "signon.rememberSignons" = false;
