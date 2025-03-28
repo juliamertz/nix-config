@@ -26,7 +26,7 @@ in
       ])
       ++ lib.optionals cfg.enableUnfree (
         let
-          revision = "2e81dc4af958e4083a9cd1435cc35f87f468ca85";
+          revision = "5dd5da7823475972be33eaf2d8df0933896b67db";
           repo = "git+ssh://git@github.com/juliamertz/fonts.git?rev=${revision}";
           fonts = (builtins.getFlake repo).packages.${pkgs.system};
         in
