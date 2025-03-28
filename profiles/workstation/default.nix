@@ -34,14 +34,18 @@
         zathura
       ])
       ++ (with pkgs; [
-        emote # gtk emote picker popup 
+        ripgrep # find
+        repgrep # replace
+        emote # gtk emote picker popup
         gpu-screen-recorder-gtk
-        qdirstat
-        btop
+        qdirstat # disk space explorer
+        btop # resource monitor
         fastfetch
-        mpv
-        scrot
-        sxiv
+        mpv # video player
+        scrot # screenshot utility
+        sxiv # image viewer
+
+        # misc utils
         xorg.xhost
         networkmanagerapplet
         usbutils
