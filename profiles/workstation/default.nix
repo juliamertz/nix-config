@@ -29,8 +29,6 @@
         neovim
         lazygit
         kitty
-        spotify
-        spotify-player
         w3m
         weechat
         zathura
@@ -69,6 +67,7 @@
 
     # apps
     ../../modules/apps/browser/librewolf
+    ../../modules/apps/media/spotify.nix
     ../../modules/apps/virtmanager.nix
     ../../modules/apps/git.nix
     ../../modules/apps/shell/zsh.nix
