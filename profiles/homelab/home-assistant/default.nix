@@ -50,6 +50,7 @@ in
         use_x_forwarded_for = true;
         trusted_proxies = [
           "192.168.0.100"
+          "10.100.0.1"
           "127.0.0.1"
         ];
       };
