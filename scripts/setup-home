@@ -2,8 +2,7 @@
 
 DIR=$HOME
 REPO=https://github.com/juliamertz/dotfiles
-# OUT="$DIR/dotfiles"
-OUT="./temp"
+OUT="$DIR/dotfiles"
 
 mkdir -vp "$DIR/projects/$(date +%Y)"
 mkdir -vp "$DIR/notes"

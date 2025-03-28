@@ -26,7 +26,7 @@ KEY=~/.ssh/id_ed25519
 # Optionally generate a new ssh key if you don't have one
 ssh-keygen -t ed25519 -a 32 -C "Name you@email.com" -f $KEY
 # Outputs sops age key to ~/.config/sops/age/keys.txt
-./scripts/derive-key.sh $KEY
+./scripts/derive-key $KEY
 ```
 
 ### Get Nix
@@ -64,11 +64,11 @@ After installation, open a new terminal session to make the `nix` executable ava
 >   }
 > ```
 
-To build a configuration and switch to it for the first time run the script in `./scripts/rebuild-switch.sh`
+To build a configuration and switch to it for the first time run the script in `./scripts/rebuild-switch`
 passing the desired profile name to it as the first argument like this:
 
 ```sh
-./scripts/rebuild-switch.sh homelab
+./scripts/rebuild-switch homelab
 ```
 
 The avaiable system configurations are:
@@ -81,7 +81,7 @@ The avaiable system configurations are:
     - laptop
 
 > [!NOTE]
-> Consider setting up your home directory on a fresh system with `./scripts/setup-home.sh`
+> Consider setting up your home directory on a fresh system with `./scripts/setup-home`
 > This will clone my dotfiles to the home directory and create ~/notes ~/projects etc..
 
 ## Dotfiles
