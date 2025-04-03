@@ -1,6 +1,11 @@
-{ lib, settings, helpers, ... }:
+{
+  lib,
+  settings,
+  pkgs,
+  ...
+}:
 let
-  config = {
+  gitConfig = lib.generators.toGitINI {
     init.defaultBranch = "main";
     core.editor = "nvim";
     pull.rebase = true;
@@ -34,15 +39,10 @@ let
   };
 
 in
-if helpers.isLinux then
-  {
-    programs.git = {
-      enable = true;
-      inherit config;
-    };
-  }
-else
-  {
-    home.programs.git.enable = true;
-    home.file.".gitconfig".text = lib.generators.toGitINI config;
-  }
+{
+  home.file.".gitconfig".text = gitConfig;
+  environment.systemPackages = with pkgs; [
+    git
+    gh
+  ];
+}

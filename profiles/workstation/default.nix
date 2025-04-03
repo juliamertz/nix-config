@@ -49,7 +49,6 @@
         xorg.xhost
         networkmanagerapplet
         usbutils
-        gh
         ethtool
       ]);
   };
