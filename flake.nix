@@ -13,8 +13,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:zhaofengli/nix-homebrew";
+      # inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
@@ -22,10 +22,6 @@
     };
     homebrew-cask = {
       url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
-    homebrew-bundle = {
-      url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
 
