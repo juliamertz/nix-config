@@ -9,14 +9,10 @@ let
 in
 {
   options.nerdfonts = with lib; {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-    };
-    enableUnfree = mkOption {
-      type = types.bool;
-      default = false;
-    };
+    enable = mkEnableOption (mkDoc "Nerd fonts");
+    enableUnfree = mkEnableOption (mkDoc ''
+      Include unfree nerdfonts from private repository
+    '');
   };
 
   config = lib.mkIf cfg.enable {

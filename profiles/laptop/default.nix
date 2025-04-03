@@ -30,40 +30,41 @@
     };
   };
 
-  nerdfonts.enableUnfree = true;
+  nerdfonts = {
+    enable = true;
+    enableUnfree = true;
+  };
 
   sops.secrets = helpers.ownedSecrets settings.user.username [
-    "spotify_client_id"
     "hass_token"
   ];
 
   # disable default zsh shell so we can use wrapped pkg
   programs.zsh.enable = false;
-  environment.systemPackages =
-    with dotfiles.pkgs;
-    [
-      scripts
-      zsh
-      neovim
-      kitty
-      lazygit
-      tmux
-      w3m
-      spotify
-      spotify-player
-    ]
-    ++ (with pkgs; [
-      yq
-      openvpn
-    ]);
+  environment.systemPackages = with dotfiles.pkgs; [
+    scripts
+    zsh
+    neovim
+    kitty
+    lazygit
+    tmux
+    w3m
+  ];
 
   system.stateVersion = 4;
 
   imports = [
-    ../../modules/apps/git.nix
+    # apps
     ../../modules/apps/browser/librewolf
+    ../../modules/apps/git.nix
+    ../../modules/apps/media/spotify.nix
+
+    # window manager
     ../../modules/wm/yabai
+
+    # system components
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
+    ../../modules/homebrew.nix
   ];
 }

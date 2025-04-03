@@ -15,7 +15,10 @@
       1112
     ];
 
-    nerdfonts.enableUnfree = true;
+    nerdfonts = {
+      enable = true;
+      enableUnfree = true;
+    };
 
     environment.variables = {
       BROWSER = "librewolf";
