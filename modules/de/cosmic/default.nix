@@ -1,11 +1,23 @@
-{ inputs, ... }:
+{ lib, config, inputs, ... }:
+let
+  cfg = config.cosmic-desktop;
+in
 {
-  imports = [ inputs.nixos-cosmic.nixosModules.default ];
+  imports = [ inputs.cosmic.nixosModules.default ];
 
-  nix.settings = {
-    substituters = [ "https://cosmic.cachix.org/" ];
-    trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+  options.cosmic-desktop = with lib; {
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
-  services.desktopManager.cosmic.enable = true;
+  config = {
+    services.desktopManager.cosmic.enable = cfg.enable;
+
+    nix.settings = {
+      substituters = [ "https://cosmic.cachix.org/" ];
+      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    };
+  };
 }

@@ -47,6 +47,7 @@
         mpv # video player
         scrot # screenshot utility
         sxiv # image viewer
+        lsof
 
         # misc utils
         xorg.xhost
@@ -63,6 +64,9 @@
     ../../modules/io/bluetooth.nix
     ../../modules/io/pipewire.nix
     ../../modules/sops.nix
+    ../../modules/networking/samba/client.nix
+    ../../modules/nerdfonts.nix
+    ../../modules/containers/runtime/docker.nix
 
     # desktop environment
     ../../modules/wm/awesome
@@ -70,19 +74,16 @@
     ../../modules/wm/hyprland
     ../../modules/io/keyd.nix
     ../../modules/themes/rose-pine
+    # ../../modules/de/cosmic
 
     # apps
-    ../../modules/apps/browser/librewolf
-    ../../modules/apps/media/spotify.nix
-    ../../modules/apps/virtmanager.nix
     ../../modules/apps/git.nix
     ../../modules/apps/shell/zsh.nix
-    ../../modules/networking/samba/client.nix
-    ../../modules/nerdfonts.nix
+    ../../modules/apps/media/spotify.nix
+    ../../modules/apps/browser/librewolf
+    ../../modules/apps/virtmanager.nix
     ../../modules/apps/thunar.nix
-    ../../modules/apps/ollama.nix
-    ../../modules/containers/default.nix
-    # ../../modules/de/cosmic
+    # ../../modules/apps/ollama.nix
 
     inputs.stylix.nixosModules.stylix
   ];

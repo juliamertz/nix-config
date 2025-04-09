@@ -26,8 +26,10 @@
     };
 
     # Misc
-    sops-nix.url = "github:Mic92/sops-nix";
     dotfiles.url = "github:juliamertz/dotfiles";
+    nur.url = "github:juliamertz/nur";
+
+    sops-nix.url = "github:Mic92/sops-nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -45,7 +47,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
   };
@@ -73,7 +75,12 @@
           home = "${homeDir}/${userSettings.username}";
         in
         {
-          inherit inputs helpers dotfiles system;
+          inherit
+            inputs
+            helpers
+            dotfiles
+            system
+            ;
           settings = {
             user = userSettings // {
               inherit home;
@@ -130,6 +137,14 @@
               ./hardware/hetzner-cloud.nix
               ./profiles/base/nixos.nix
             ];
+          };
+
+          installerIso = nixosSystem {
+            specialArgs = getSpecialArgs {
+              hostname = "nixos-liveboot";
+              system = "x86_64-linux";
+            };
+            modules = [ ./profiles/installer ];
           };
 
         };
