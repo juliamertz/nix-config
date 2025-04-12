@@ -11,7 +11,9 @@ let
   module = if helpers.isLinux then "nixosModules" else "darwinModules";
 in
 {
-  imports = [ inputs.home-manager.${module}.home-manager ];
+  imports = [ 
+    inputs.home-manager.${module}.home-manager
+  ];
 
   options = {
     home.file = lib.mkOption {

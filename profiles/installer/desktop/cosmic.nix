@@ -1,25 +1,34 @@
-{ lib, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [
     ../base/installer-desktop.nix
     ../base/graphical.nix
-    inputs.cosmic.nixosModules.default
-  ];
 
-  installer-desktop.enable = true;
+    # build from personal configuration
+    # requires home-manager to set preferences
+    ../../workstation/cosmic-desktop
+  ];
 
   isoImage.edition = lib.mkDefault "cosmic";
 
-  nix.settings = {
-    substituters = [ "https://cosmic.cachix.org/" ];
-    trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+  cosmic-desktop = {
+    enable = true;
+    configForUser = "nixos";
   };
 
-  services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
+  installer-desktop.enable = false;
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "nixos";
+  # Use SDDM for autologin as cosmic-greeter does not formally support this yet
+  services.displayManager = {
+    sddm.enable = true;
+    autoLogin = {
+      enable = true;
+      user = "nixos";
+    };
   };
 }

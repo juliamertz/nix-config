@@ -18,7 +18,8 @@ in
   config = lib.mkIf cfg.enable {
     system.activationScripts.installerDesktop =
       let
-        homeDir = "/home/nixos/";
+        user = "nixos";
+        homeDir = "/home/${user}/";
         desktopDir = homeDir + "Desktop/";
 
         linkDesktopFiles =

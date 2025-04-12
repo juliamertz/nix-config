@@ -9,16 +9,24 @@
 
   installer-desktop.enable = true;
 
-  services.xserver.desktopManager.gnome = {
-    enable = true;
-    favoriteAppsOverride = ''
-      [org.gnome.shell]
-      favorite-apps=[ ${
-        map (file: "'${builtins.baseNameOf file}'") config.installer-desktop.paths
-        |> lib.concatStringsSep ", "
-      } ]
-    '';
-  };
+  services.xserver.desktopManager.gnome =
+    let
+      favoriteApps =
+        map (
+          pkg:
+          let
+            desktopFiles = builtins.readDir "${pkg}/share/applications/" |> lib.attrNames;
+          in
+          map (filename: "'${filename}'") desktopFiles |> lib.concatStringsSep ", "
+        ) config.installer-desktop.paths
+        |> lib.concatStringsSep ", ";
+    in
+    {
+      enable = true;
+      favoriteAppsOverride = ''
+        [org.gnome.shell]
+        favorite-apps=[ ${favoriteApps} ] '';
+    };
 
   services.xserver.displayManager.gdm = {
     enable = true;

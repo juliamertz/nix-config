@@ -2,8 +2,12 @@
   pkgs,
   inputs,
   dotfiles,
+  settings,
   ...
 }:
+let
+  nurPackages = inputs.nur.packages.${pkgs.system};
+in
 {
   config = {
     secrets.profile = "personal";
@@ -20,6 +24,11 @@
       enableUnfree = true;
     };
 
+    cosmic-desktop = {
+      enable = true;
+      configForUser = settings.user.username;
+    };
+
     environment.variables = {
       BROWSER = "librewolf";
       TERMINAL = "kitty";
@@ -32,9 +41,13 @@
         neovim
         lazygit
         kitty
+        wezterm
         w3m
         weechat
         zathura
+      ])
+      ++ (with nurPackages; [
+        nixpins
       ])
       ++ (with pkgs; [
         ripgrep # find
@@ -54,11 +67,13 @@
         networkmanagerapplet
         usbutils
         ethtool
+
       ]);
   };
 
   imports = [
     ./gaming
+    ./cosmic-desktop
 
     ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix
@@ -74,7 +89,6 @@
     ../../modules/wm/hyprland
     ../../modules/io/keyd.nix
     ../../modules/themes/rose-pine
-    # ../../modules/de/cosmic
 
     # apps
     ../../modules/apps/git.nix

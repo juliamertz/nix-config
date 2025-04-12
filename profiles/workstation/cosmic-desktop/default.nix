@@ -1,4 +1,10 @@
-{ lib, config, inputs, ... }:
+{
+  lib,
+  config,
+  inputs,
+  settings,
+  ...
+}:
 let
   cfg = config.cosmic-desktop;
 in
@@ -10,6 +16,11 @@ in
       type = types.bool;
       default = false;
     };
+
+    configForUser = mkOption {
+      type = types.str;
+      default = settings.user.username;
+    };
   };
 
   config = {
@@ -18,6 +29,13 @@ in
     nix.settings = {
       substituters = [ "https://cosmic.cachix.org/" ];
       trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    };
+
+    home-manager.users.${cfg.configForUser} = {
+      imports = [
+        (import ./home.nix inputs)
+        inputs.cosmic-manager.homeManagerModules.cosmic-manager
+      ];
     };
   };
 }

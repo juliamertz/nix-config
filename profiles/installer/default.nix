@@ -9,7 +9,6 @@
     ./base/calamares.nix
     ./desktop/cosmic.nix
 
-    ../base/nixos.nix
     ../../modules/nerdfonts.nix
   ];
 
@@ -29,7 +28,10 @@
     pkgs.efibootmgr
   ];
 
+  home-manager.users.nixos.home.stateVersion = "24.05";
+
   users.defaultUserShell = pkgs.zsh;
+
   programs.zsh.enable = true;
 
   nerdfonts = {

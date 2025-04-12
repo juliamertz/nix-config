@@ -2,7 +2,8 @@
   description = "My nixos/nix-darwin configuration";
 
   inputs = {
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.follows = "cosmic/nixpkgs";
     nixpkgs-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -48,6 +49,15 @@
     };
 
     cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    cosmic-manager = {
+      url = "github:HeitorAugustoLN/cosmic-manager";
+      inputs = {
+        nixpkgs.follows = "cosmic/nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+    rose-pine-cosmic.url = "github:rose-pine/cosmic-desktop";
+
     spotify-player.url = "github:juliamertz/spotify-player/dev?dir=nix";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
   };
@@ -144,7 +154,7 @@
               hostname = "nixos-liveboot";
               system = "x86_64-linux";
             };
-            modules = [ ./profiles/installer ];
+            modules = base ++ [ ./profiles/installer ];
           };
 
         };
