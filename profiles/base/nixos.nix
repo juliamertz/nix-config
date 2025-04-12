@@ -10,7 +10,6 @@ in
 
   environment.systemPackages = with pkgs; [
     xclip
-    tealdeer # tldr client
     zip
     unzip
   ];

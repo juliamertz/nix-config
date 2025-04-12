@@ -28,6 +28,7 @@ in
     ];
 
     environment.systemPackages = with pkgs; [
+      tealdeer # tldr client
       cachix
       openssl
       curl
