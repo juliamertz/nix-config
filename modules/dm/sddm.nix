@@ -1,7 +1,11 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   environment.systemPackages = [
-    (pkgs.libsForQt5.callPackage ../../pkgs/sddm-rosepine.nix { })
+    inputs.nur.packages.${pkgs.system}.sddm-rose-pine
   ];
 
   services.displayManager = {
@@ -9,7 +13,8 @@
     sddm = {
       enable = true;
       theme = "rose-pine";
-      setupScript = # bash
+      setupScript =
+        # bash
         ''
           # turn off left monitor
           ${lib.getExe pkgs.xorg.xrandr} --output HDMI-0 --off

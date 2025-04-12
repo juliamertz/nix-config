@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-let
-  colors = pkgs.callPackage ./colors.nix { };
-in
-{
+{pkgs, ...}: let
+  colors = pkgs.callPackage ./colors.nix {};
+in {
   stylix.image = ./bg.jpeg;
   stylix.enable = true;
   stylix.polarity = "dark";
@@ -20,5 +18,5 @@ in
     icon-theme-name = "rose-pine-moon";
   };
 
-  imports = [ ../gtk.nix ];
+  imports = [../gtk.nix];
 }

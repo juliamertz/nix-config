@@ -2,12 +2,21 @@ keys:
   - &workstation age1wu0knmpfys4szjf09cgvc7fq8u34h0dyu9uk6sfzvkmqlklcya6skhmhs5
   - &vps age1hvvrnkwkmk9h4vsh5w8pdm7tczawftjg9nfse8z8cu2p53ymke3sccvl4h
 
+
 creation_rules:
   - path_regex: secrets/personal.yaml
     key_groups:
     - age:
       - *workstation
+
   - path_regex: secrets/vps.yaml
     key_groups:
     - age:
       - *vps
+
+  - path_regex: secrets/ssh.yaml
+    key_groups:
+    - age:
+      - *workstation
+      - *vps
+

@@ -1,5 +1,8 @@
-{ lib, settings, ... }:
 {
+  lib,
+  settings,
+  ...
+}: {
   virtualisation = {
     containers.enable = true;
     docker = {
@@ -16,5 +19,5 @@
   # https://github.com/NixOS/nixpkgs/issues/298165
   networking.firewall.checkReversePath = false;
 
-  users.users.${settings.user.username}.extraGroups = [ "docker" ];
+  users.users.${settings.user.username}.extraGroups = ["docker"];
 }

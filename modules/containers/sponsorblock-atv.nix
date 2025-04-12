@@ -4,12 +4,10 @@
   config,
   settings,
   ...
-}:
-let
+}: let
   cfg = config.sponsorblock-atv;
-in
-{
-  imports = [ ./default.nix ];
+in {
+  imports = [./default.nix];
 
   options = {
     sponsorblock-atv = {
@@ -25,11 +23,9 @@ in
   };
 
   config = {
-    systemd.tmpfiles.rules =
-      let
-        user = settings.user.username;
-      in
-      [ "d ${cfg.configPath} 0755 ${user} ${user}" ];
+    systemd.tmpfiles.rules = let
+      user = settings.user.username;
+    in ["d ${cfg.configPath} 0755 ${user} ${user}"];
 
     environment.systemPackages = [
       (pkgs.writeShellScriptBin "sponsorblock-setup" "sudo podman run --rm -it -v ${cfg.configPath}:/app/data ${cfg.image} --setup-cli")
@@ -40,8 +36,8 @@ in
       sponsorblock-atv = {
         inherit (cfg) image;
         autoStart = true;
-        volumes = [ "${cfg.configPath}:/app/data" ];
-        extraOptions = [ "--network=host" ];
+        volumes = ["${cfg.configPath}:/app/data"];
+        extraOptions = ["--network=host"];
       };
     };
   };

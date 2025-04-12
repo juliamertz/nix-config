@@ -3,11 +3,9 @@
   inputs,
   helpers,
   ...
-}:
-let
+}: let
   pkgs = helpers.getPkgs inputs.nixpkgs-24_11;
-in
-{
+in {
   environment.systemPackages = with pkgs; [
     swaynotificationcenter
     waybar

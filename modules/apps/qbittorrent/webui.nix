@@ -2,8 +2,7 @@
   stdenv,
   fetchgit,
   fetchzip,
-}:
-{
+}: {
   # An iOS styled, mobile focused WebUI theme
   iQbit = stdenv.mkDerivation {
     name = "iQbit";

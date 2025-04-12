@@ -3,18 +3,15 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   cfg = config.services.theme-park;
 
-  themepark =
-    let
-      repo = "juliamertz/theme.park";
-      rev = "0f99c377e6a41dd90c12e007eacbae18a36c5286";
-    in
+  themepark = let
+    repo = "juliamertz/theme.park";
+    rev = "0f99c377e6a41dd90c12e007eacbae18a36c5286";
+  in
     (builtins.getFlake "github:${repo}/${rev}?dir=nix").packages.${pkgs.system}.default;
-in
-{
+in {
   options.services.theme-park = with lib; {
     enable = mkEnableOption (mkDoc "theme.park");
     openFirewall = mkEnableOption (mkDoc "Open firewall port to static file server");
@@ -26,7 +23,7 @@ in
 
   config = {
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
+      allowedTCPPorts = [cfg.port];
     };
 
     systemd.services.theme-park = lib.mkIf cfg.enable {

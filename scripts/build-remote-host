@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+nixos-rebuild "$1" \
+  --target-host "$2" \
+  --build-host localhost \
+  --flake "$3" 

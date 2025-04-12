@@ -2,11 +2,9 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   cfg = config.gtk;
-in
-{
+in {
   options.gtk = with lib; {
     enable = mkOption {
       type = types.bool;

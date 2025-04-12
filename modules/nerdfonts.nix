@@ -3,11 +3,9 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   cfg = config.nerdfonts;
-in
-{
+in {
   options.nerdfonts = with lib; {
     enable = mkEnableOption (mkDoc "Nerd fonts");
     enableUnfree = mkEnableOption (mkDoc ''
@@ -26,10 +24,9 @@ in
           repo = "git+ssh://git@github.com/juliamertz/fonts.git?rev=${revision}";
           fonts = (builtins.getFlake repo).packages.${pkgs.system};
         in
-        with fonts;
-        [
-          berkeley-mono
-        ]
+          with fonts; [
+            berkeley-mono
+          ]
       );
   };
 }

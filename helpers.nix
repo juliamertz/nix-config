@@ -2,20 +2,18 @@
   callPackage,
   lib,
   system,
-}:
-let
+}: let
   inherit (builtins) elem;
-in
-rec {
-  ownedSecrets =
-    owner: keys:
+in rec {
+  ownedSecrets = owner: keys:
     builtins.listToAttrs (
       map (key: {
         name = key;
         value = {
           inherit owner;
         };
-      }) keys
+      })
+      keys
     );
 
   getPkgs = branch: branch.legacyPackages.${system};
@@ -29,5 +27,8 @@ rec {
     "x86_64-linux"
   ];
 
-  perPlatform = modules: if isDarwin then modules.darwin else modules.linux;
+  perPlatform = modules:
+    if isDarwin
+    then modules.darwin
+    else modules.linux;
 }

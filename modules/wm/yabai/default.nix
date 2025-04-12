@@ -2,8 +2,7 @@
   pkgs,
   dotfiles,
   ...
-}:
-{
+}: {
   # Window manager
   services.yabai = {
     enable = true;

@@ -3,11 +3,9 @@
   lib,
   helpers,
   ...
-}:
-let
+}: let
   cfg = config.settings;
-in
-{
+in {
   options.settings = with lib; {
     timeZone = mkOption {
       type = types.str;
@@ -43,6 +41,6 @@ in
       };
     };
 
-    darwin = { };
+    darwin = {};
   };
 }

@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   home.file = {
     ".config/awesome" = {
       source = "${dotfiles.path}/awesome";
@@ -13,7 +12,8 @@
 
     ".config/awesome/autorun.sh" = {
       executable = true;
-      text = # sh
+      text =
+        # sh
         ''
           #!/usr/bin/env sh
 
@@ -34,7 +34,7 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      luaModules = with pkgs.luaPackages; [ luarocks ];
+      luaModules = with pkgs.luaPackages; [luarocks];
     };
   };
 

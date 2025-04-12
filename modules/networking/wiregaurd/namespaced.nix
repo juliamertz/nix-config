@@ -1,10 +1,9 @@
-{ pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [ wireguard-tools ];
+{pkgs, ...}: {
+  environment.systemPackages = with pkgs; [wireguard-tools];
 
   systemd.services."netns@" = {
     description = "%I network namespace";
-    before = [ "network.target" ];
+    before = ["network.target"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -15,17 +14,16 @@
 
   systemd.services.wg = {
     description = "wg network interface";
-    bindsTo = [ "netns@wg.service" ];
-    requires = [ "network-online.target" ];
-    after = [ "netns@wg.service" ];
+    bindsTo = ["netns@wg.service"];
+    requires = ["network-online.target"];
+    after = ["netns@wg.service"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart =
-        let
-          iproute = "${pkgs.iproute}/bin/ip";
-          wg = "${pkgs.wireguard-tools}/bin/wg";
-        in
+      ExecStart = let
+        iproute = "${pkgs.iproute}/bin/ip";
+        wg = "${pkgs.wireguard-tools}/bin/wg";
+      in
         pkgs.writers.writeBash "wg-up" ''
           set -e
           ${iproute} link add wg0 type wireguard
@@ -36,8 +34,7 @@
           ${iproute} -n wg link set wg0 up
           ${iproute} -n wg route add default dev wg0
         '';
-      ExecStop =
-        with pkgs;
+      ExecStop = with pkgs;
         writers.writeBash "wg-down" ''
           ${iproute} -n wg route del default dev wg0
           ${iproute} -n wg link del wg0

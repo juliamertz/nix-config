@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   services.ollama = {
     enable = true;
     user = "ollama";

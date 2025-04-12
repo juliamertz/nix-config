@@ -3,13 +3,11 @@
   config,
   settings,
   ...
-}:
-let
+}: let
   cfg = config.jellyfin;
   toStr = builtins.toString;
-in
-{
-  imports = [ ./default.nix ];
+in {
+  imports = [./default.nix];
 
   options = {
     jellyfin = {
@@ -27,7 +25,7 @@ in
       };
       volumes = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        default = [ ];
+        default = [];
       };
       enableTorrent = lib.mkOption {
         type = lib.types.bool;
@@ -37,15 +35,16 @@ in
   };
 
   config = {
-    users.groups.multimedia = { };
-    users.users."${settings.user.username}".extraGroups = [ "multimedia" ];
+    users.groups.multimedia = {};
+    users.users."${settings.user.username}".extraGroups = ["multimedia"];
 
-    systemd.tmpfiles.rules = [ "d /home/media 0770 - multimedia - -" ];
+    systemd.tmpfiles.rules = ["d /home/media 0770 - multimedia - -"];
 
-    networking.firewall.allowedTCPPorts = [ cfg.port ];
-    networking.firewall.allowedUDPPorts = [ cfg.port ];
+    networking.firewall.allowedTCPPorts = [cfg.port];
+    networking.firewall.allowedUDPPorts = [cfg.port];
 
-    system.activationScripts.jellyfin.text = # sh
+    system.activationScripts.jellyfin.text =
+      # sh
       ''
         dir=${cfg.configDir}
         if [ ! -e $dir ]; then
@@ -58,19 +57,19 @@ in
       jellyfin = {
         image = "docker.io/jellyfin/jellyfin:${cfg.tag}";
         autoStart = true;
-        ports = [ "${toStr cfg.port}:${toStr cfg.port}" ];
-        volumes = cfg.volumes ++ [
-          "${cfg.configDir}/config:/config"
-          "${cfg.configDir}/cache:/cache"
-          "${cfg.configDir}/log:/log"
-        ];
+        ports = ["${toStr cfg.port}:${toStr cfg.port}"];
+        volumes =
+          cfg.volumes
+          ++ [
+            "${cfg.configDir}/config:/config"
+            "${cfg.configDir}/cache:/cache"
+            "${cfg.configDir}/log:/log"
+          ];
         environment = {
           JELLYFIN_LOG_DIR = "/log";
         };
-        extraOptions = [ "--network=host" ];
+        extraOptions = ["--network=host"];
       };
     };
-
   };
-
 }

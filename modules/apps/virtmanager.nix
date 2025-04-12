@@ -2,14 +2,12 @@
   pkgs,
   settings,
   ...
-}:
-let
+}: let
   inherit (settings.user) username;
-in
-{
+in {
   virtualisation.libvirtd = {
     enable = true;
-    qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+    qemu.vhostUserPackages = with pkgs; [virtiofsd];
   };
   programs.virt-manager = {
     enable = true;
@@ -17,6 +15,6 @@ in
   };
 
   users.users.${username} = {
-    extraGroups = [ "libvirtd" ];
+    extraGroups = ["libvirtd"];
   };
 }
