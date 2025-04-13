@@ -48,17 +48,19 @@
     #   inputs.nixpkgs.follows = "nixpkgs-24_05";
     # };
 
+    alejandra.url = "github:kamadorueda/alejandra/4.0.0";
+    rose-pine-cosmic.url = "github:rose-pine/cosmic-desktop";
+    protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
+
+    cosmic-comp.url = "github:juliamertz/cosmic-comp";
     cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     cosmic-manager = {
-      url = "github:HeitorAugustoLN/cosmic-manager";
+      url = "github:juliamertz/cosmic-manager";
       inputs = {
         nixpkgs.follows = "cosmic/nixpkgs";
         home-manager.follows = "home-manager";
       };
     };
-    alejandra.url = "github:kamadorueda/alejandra/4.0.0";
-    rose-pine-cosmic.url = "github:rose-pine/cosmic-desktop";
-    protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
   };
 
   outputs = {

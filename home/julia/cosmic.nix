@@ -104,6 +104,23 @@
       }
 
       {
+        key = "Super+Alt+h";
+        action = ron.valueEnum "Resize" (ron.enum "Left");
+      }
+      {
+        key = "Super+Alt+j";
+        action = ron.valueEnum "Resize" (ron.enum "Down");
+      }
+      {
+        key = "Super+Alt+k";
+        action = ron.valueEnum "Resize" (ron.enum "Up");
+      }
+      {
+        key = "Super+Alt+l";
+        action = ron.valueEnum "Resize" (ron.enum "Right");
+      }
+
+      {
         key = "Super+n";
         action = ron.enum "Minimize";
       }

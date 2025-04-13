@@ -75,7 +75,7 @@ in {
     ./hardware.nix
 
     ./modules/games.nix
-    ./modules/desktop.nix
+    ./modules/cosmic.nix
 
     ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix
