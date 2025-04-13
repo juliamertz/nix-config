@@ -4,8 +4,7 @@
   dotfiles,
   helpers,
   ...
-}:
-{
+}: {
   imports = [
     ../../base/darwin.nix
     ./hardware.nix
