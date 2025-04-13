@@ -19,7 +19,7 @@ in {
 
     nerdfonts = {
       enable = true;
-      # enableUnfree = true;
+      enableUnfree = true;
     };
 
     environment.variables = {
@@ -30,7 +30,6 @@ in {
     environment.systemPackages =
       (with dotfiles.pkgs; [
         scripts
-        git
         tmux
         neovim
         lazygit
@@ -67,6 +66,7 @@ in {
       imports = [
         ../../home/julia/cosmic.nix
         ../../home/julia/librewolf.nix
+        ../../home/julia/git.nix
       ];
     };
   };
