@@ -181,11 +181,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1744473574,
-        "narHash": "sha256-QfaWebTPKHy3tTziQlilZQIFETu02nCPrJCYUBQyzvk=",
+        "lastModified": 1744529798,
+        "narHash": "sha256-Z1/P0bFLVP8IG3h1DYCGma/op1I2OWfiqC69IC4vXg4=",
         "owner": "juliamertz",
         "repo": "dotfiles",
-        "rev": "9ab68a22e82c145cc20e72dbe1d8f8ed90b4da8e",
+        "rev": "a31edf9fbf8cc9da3487eff68a97b7c6fad00d1c",
         "type": "github"
       },
       "original": {
