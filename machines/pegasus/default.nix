@@ -6,15 +6,13 @@
   ...
 }: {
   imports = [
-    ../../base/darwin.nix
     ./hardware.nix
 
+    ../../base/darwin.nix
+    ../../base/work.nix
+
+    # ../../modules/wm/aerospace
     ../../modules/apps/media/spotify.nix
-
-    # window manager
-    ../../modules/wm/yabai
-
-    # system components
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
     ../../modules/homebrew.nix
@@ -83,5 +81,5 @@
     ];
   };
 
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 }

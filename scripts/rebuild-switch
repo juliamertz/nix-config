@@ -1,12 +1,19 @@
 #!/usr/bin/env sh
 
-FLAKE=$(dirname "$0/../")
+# FIX: ignoring untrusted substituter you are not a trusted user.
+
+FLAKE=${FLAKE:-.}
 KERNEL=$(uname -s)
+
+export NIX_CONFIG="
+  extra-experimental-features = nix-command flakes pipe-operators
+  extra-substituters = https://juliamertz.cachix.org
+  trusted-users = root $(whoami)
+"
 
 if test "$KERNEL" = "Linux"; then
   sudo nixos-rebuild switch --flake "$FLAKE#$1"
 
 elif test "$KERNEL" = "Darwin"; then
-  nix run --extra-experimental-features "nix-command flakes" \
-    nix-darwin -- switch --flake "$FLAKE#$1"
+  nix run nix-darwin -- switch  --flake "$FLAKE#$1"
 fi
