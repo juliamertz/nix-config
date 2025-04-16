@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
+    bazel_7
     bazelisk # bazel version manager
 
     # kubernetes/containers

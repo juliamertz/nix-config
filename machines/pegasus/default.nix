@@ -16,6 +16,12 @@
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
     ../../modules/homebrew.nix
+    ../../modules/apps/shell/zsh.nix
+  ];
+
+  home-manager.users.julia.imports = [
+    ../../home/julia/librewolf.nix
+    ../../home/julia/git.nix
   ];
 
   system = {
@@ -52,11 +58,8 @@
     "hass_token"
   ];
 
-  # disable default zsh shell so we can use wrapped pkg
-  programs.zsh.enable = false;
   environment.systemPackages = with dotfiles.pkgs; [
     scripts
-    zsh
     neovim
     kitty
     lazygit
@@ -72,13 +75,6 @@
     masApps = {
       "wireguard" = 1451685025;
     };
-  };
-
-  home-manager.users.julia = {
-    imports = [
-      ../../home/julia/librewolf.nix
-      ../../home/julia/git.nix
-    ];
   };
 
   system.stateVersion = 5;

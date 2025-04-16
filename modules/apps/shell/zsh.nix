@@ -1,9 +1,7 @@
 {
-  pkgs,
   lib,
   helpers,
   dotfiles,
-  settings,
   ...
 }: {
   options = with lib; {
@@ -14,25 +12,11 @@
   };
 
   config = lib.mkMerge [
-    (
-      if helpers.isDarwin
-      then {
-        environment.shells = [pkgs.zsh];
-
-        home.file.".zshrc".source = "${dotfiles.path}/zsh/.zshrc";
-        home.file.".config/zsh" = {
-          source = "${dotfiles.path}/zsh";
-          recursive = true;
-        };
-
-        environment.variables = {
-          ZDOTDIR = "${settings.user.home}/.config/zsh";
-        };
-      }
-      else {environment.systemPackages = [dotfiles.pkgs.zsh];}
-    )
-    {
+    (lib.optionalAttrs helpers.isLinux {
       programs.zsh.enable = true;
+    })
+    {
+      environment.systemPackages = [dotfiles.pkgs.zsh];
       programs.direnv = {
         enable = true;
         silent = true;
