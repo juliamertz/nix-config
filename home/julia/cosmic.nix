@@ -24,6 +24,24 @@
   in {
     enable = true;
 
+    configFile = {
+      "com.system76.CosmicSettings.Shortcuts" = {
+        entries = {
+          system_actions = {
+            Terminal = "kitty";
+          };
+        };
+        version = 1;
+      };
+      "com.system76.CosmicTerm" = {
+        entries = {
+          font_name = "JetBrains Mono";
+          font_size = 16;
+        };
+        version = 1;
+      };
+    };
+
     appearance.theme = let
       rose-pine = inputs.rose-pine-cosmic.packages.${pkgs.system}.default;
       readTheme = variant: let
