@@ -1,20 +1,5 @@
 # My system configurations
 
-## Structure
-- `hardware` - Hardware specific configurations per machine
-- `helpers` - Utility functions put in the global namespace
-- `modules` 
-- `profiles` - Configurations for nixos/nix-darwin system
-    - `base` - Shared files that should be imported for all system profiles
-        - `darwin.nix`
-        - `nixos.nix`
-        - `shared.nix`
-    - `homelab`
-    - `laptop` - Nix darwin configuration for laptop
-    - `workstation` - NixOS configuration for workstation
-- `scripts` - Shell scripts to automate some parts of bootstapping NixOS/nix-darin systems
-- `secrets` - Per system runtime secrets encrypted with [sops](https://github.com/getsops/sops)
-
 ## Bootstrapping a new system
 
 ### SSH Keys
@@ -70,15 +55,6 @@ passing the desired profile name to it as the first argument like this:
 ```sh
 ./scripts/rebuild-switch homelab
 ```
-
-The avaiable system configurations are:
-- NixOS
-    - workstation
-    - homelab
-    - vps
-    - work
-- Nix Darwin
-    - laptop
 
 > [!NOTE]
 > Consider setting up your home directory on a fresh system with `./scripts/setup-home`
