@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+SHELL="/run/current-system/sw/bin/zsh"
+KERNEL=$(uname -s)
+
+if [ "$KERNEL" = "Darwin" ]; then
+  if test ! -f "$SHELL"; then
+    echo "$SHELL not found, aborting."
+    exit 1
+  fi
+
+  sudo chsh -s "$SHELL" "$USER"
+fi
