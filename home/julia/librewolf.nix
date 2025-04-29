@@ -118,27 +118,41 @@ in
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = ["@np"];
           };
+
+          "Docs.rs" = {
+            urls = [
+              {
+                template = "https://docs.rs/releases/search";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+
+            definedAliases = ["@docsrs"];
+          };
+
+          "MyNixOS" = {
+            urls = [
+              {
+                template = "https://mynixos.com/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+
+            definedAliases = ["@mynixos"];
+          };
         };
 
         search.force = true;
-
-        # TODO:
-        # bookmarks = [
-        #   {
-        #     name = "NixOS bookmarks toolbar";
-        #     toolbar = true;
-        #     bookmarks = [
-        #       {
-        #         name = "lofi";
-        #         url = "https://music.youtube.com/watch?v=jfKfPfyJRdk";
-        #       }
-        #     ];
-        #   }
-        #   {
-        #     name = "https://www.epochconverter.com/";
-        #     url = "https://www.epochconverter.com/";
-        #   }
-        # ];
       };
     };
 

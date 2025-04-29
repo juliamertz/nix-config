@@ -21,7 +21,6 @@
 
   home-manager.users.julia.imports = [
     ../../home/julia/librewolf.nix
-    ../../home/julia/git.nix
   ];
 
   system = {
@@ -63,6 +62,10 @@
     neovim
     kitty
     lazygit
+    (git.override {
+      signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOY+XtPOqEdGLBzzHehlGxYmFRwu/KSqyNM2JQ4veqb";
+      use1Password = true;
+    })
     tmux
     w3m
   ];
