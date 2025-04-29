@@ -171,6 +171,10 @@
       };
     };
 
+    packages = nur.lib.allSystemsPkgs (pkgs: {
+      docker-image = pkgs.callPackage ./portable/image.nix {inherit inputs;};
+    });
+
     devShells = nur.lib.allSystems (
       system: let
         pkgs = nixpkgs-unstable.legacyPackages.${system};
