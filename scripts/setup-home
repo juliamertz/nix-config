@@ -5,6 +5,7 @@ REPO=https://github.com/juliamertz/dotfiles
 OUT="$DIR/dotfiles"
 
 mkdir -vp "$DIR/projects/$(date +%Y)"
+mkdir -vp "$DIR/source"
 mkdir -vp "$DIR/notes"
 mkdir -vp "$DIR/screenshots"
 mkdir -vp "$DIR/wallpapers"

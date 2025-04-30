@@ -26,8 +26,11 @@
 
   imports = [
     ./hardware.nix
-    ./wiregaurd.nix
-    ./caddy.nix
+
+    ./services/wiregaurd.nix
+    ./services/caddy.nix
+    ./services/blog.nix
+    ./services/valnetten.nix
 
     ../../modules/sops.nix
   ];

@@ -5,11 +5,6 @@
 }: let
   cfg = config.services.caddy;
 in {
-  imports = [
-    ./services/blog.nix
-    ./services/valnetten.nix
-  ];
-
   options.services.caddy = with lib; {
     domain = mkOption {
       type = types.nonEmptyStr;

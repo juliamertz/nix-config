@@ -4,6 +4,7 @@
 
 FLAKE=${FLAKE:-.}
 KERNEL=$(uname -s)
+OUTPUT="$FLAKE#$1"
 
 export NIX_CONFIG="
   extra-experimental-features = nix-command flakes pipe-operators
@@ -12,8 +13,8 @@ export NIX_CONFIG="
 "
 
 if test "$KERNEL" = "Linux"; then
-  sudo nixos-rebuild switch --flake "$FLAKE#$1"
+  sudo nixos-rebuild switch --flake "$OUTPUT"
 
 elif test "$KERNEL" = "Darwin"; then
-  nix run nix-darwin -- switch  --flake "$FLAKE#$1"
+  nix run nix-darwin -- switch  --flake "$OUTPUT"
 fi
