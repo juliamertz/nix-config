@@ -96,7 +96,7 @@ in {
     ../../modules/apps/shell/zsh.nix
     ../../modules/apps/media/spotify.nix
     # ../../modules/apps/browser/librewolf
-    ../../modules/apps/virtmanager.nix
+    ../../modules/virtualisation/virtmanager.nix
     ../../modules/apps/thunar.nix
     # ../../modules/apps/ollama.nix
 

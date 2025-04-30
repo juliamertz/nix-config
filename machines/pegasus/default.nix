@@ -1,4 +1,5 @@
 {
+inputs,
   pkgs,
   settings,
   dotfiles,
@@ -11,7 +12,8 @@
     ../../base/darwin.nix
     ../../base/work.nix
 
-    # ../../modules/wm/aerospace
+    ../../modules/wm/aerospace
+    ../../modules/virtualisation/linux-builder.nix
     ../../modules/apps/media/spotify.nix
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix

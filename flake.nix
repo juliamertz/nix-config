@@ -172,7 +172,7 @@
     };
 
     packages = nur.lib.allSystemsPkgs (pkgs: {
-      docker-image = pkgs.callPackage ./portable/image.nix {inherit inputs;};
+      oci-image = pkgs.callPackage ./portable/image.nix {inherit inputs;};
     });
 
     devShells = nur.lib.allSystems (

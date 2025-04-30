@@ -1,12 +1,15 @@
 {
   inputs,
-  pkgs,
+  system,
   lib,
-  linuxPlatform ? "x86_64-linux",
-  pkgsLinux ? import inputs.nixpkgs-unstable {system = linuxPlatform;},
   extraPackages ? [],
 }: let
-  dotfiles = inputs.dotfiles.packages.x86_64-linux;
+  nixpkgs = inputs.nixpkgs-unstable;
+  pkgs = nixpkgs.legacyPackages."${system}";
+
+  linuxSystem = builtins.replaceStrings ["darwin"] ["linux"] system;
+  linuxPkgs = nixpkgs.legacyPackages."${linuxSystem}";
+  dotfiles = inputs.dotfiles.packages.${linuxSystem};
 in
   pkgs.dockerTools.buildImage {
     name = "devenv";
@@ -17,21 +20,24 @@ in
       paths =
         extraPackages
         ++ (with dotfiles; [
-          git
+          # git
           zsh
-          neovim-minimal
-          lazygit
+          # tmux
+          # neovim-minimal
+          # lazygit
         ])
-        ++ (with pkgsLinux; [
-          findutils
-          netcat
-          lsof
+        ++ (with linuxPkgs; [
+          # sudo-rs
+          uutils-coreutils-noprefix
+          # findutils
+          # netcat
+          # lsof
           curl
         ]);
       pathsToLink = ["/bin"];
     };
 
     config = {
-      Cmd = [(lib.getExe dotfiles.zsh)];
+      Cmd = [(lib.getExe dotfiles.tmux)];
     };
   }
