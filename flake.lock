@@ -167,6 +167,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745812220,
+        "narHash": "sha256-hotBG0EJ9VmAHJYF0yhWuTVZpENHvwcJ2SxvIPrXm+g=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "d0c543d740fad42fe2c035b43c9d41127e073c78",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "dotfiles": {
       "inputs": {
         "nixpkgs": "nixpkgs_3",
@@ -933,6 +953,7 @@
         "cosmic": "cosmic",
         "cosmic-comp": "cosmic-comp",
         "cosmic-manager": "cosmic-manager",
+        "disko": "disko",
         "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",

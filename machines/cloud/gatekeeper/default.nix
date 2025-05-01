@@ -26,11 +26,7 @@
 
   imports = [
     ../base.nix
-
-    ./services/wiregaurd.nix
-    ./services/caddy.nix
-    ./services/blog.nix
-    ./services/valnetten.nix
+    ./disks.nix
 
     # ../../../modules/sops.nix
   ];
