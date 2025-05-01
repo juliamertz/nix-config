@@ -8,9 +8,7 @@ inputs,
 }: {
   imports = [
     ./hardware.nix
-
-    ../../base/darwin.nix
-    ../../base/work.nix
+    ./work.nix
 
     # ../../modules/wm/aerospace
     ../../modules/virtualisation/linux-builder.nix

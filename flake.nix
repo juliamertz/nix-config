@@ -47,11 +47,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # suyu = {
-    #   url = "git+https://git.suyu.dev/suyu/nix-flake";
-    #   inputs.nixpkgs.follows = "nixpkgs-24_05";
-    # };
-
     rose-pine-cosmic.url = "github:rose-pine/cosmic-desktop";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
 
@@ -68,7 +63,9 @@
 
   outputs = {
     nixpkgs-unstable,
+    nixpkgs-24_05,
     nix-darwin,
+    disko,
     nur,
     ...
   } @ inputs: let
@@ -115,80 +112,83 @@
         };
       };
     };
+
+    nixosBase = [
+      ./base/nixos.nix
+      ./modules/home-manager.nix
+    ];
+    darwinBase = [
+      ./base/darwin.nix
+      ./modules/home-manager.nix
+    ];
+
+    inherit (nix-darwin.lib) darwinSystem;
+    inherit (nixpkgs-unstable.lib) nixosSystem;
+    stableNixosSystem = nixpkgs-24_05.lib.nixosSystem;
   in {
-    nixosConfigurations = with nixpkgs-unstable.lib; let
-      base = [
+    nixosConfigurations.orion = nixosSystem {
+      modules = nixosBase ++ [./machines/orion];
+      specialArgs = getSpecialArgs {
+        hostname = "orion";
+        system = "x86_64-linux";
+      };
+    };
+
+    nixosConfigurations.hydra = nixosSystem {
+      modules = nixosBase ++ [./machines/hydra];
+      specialArgs = getSpecialArgs {
+        hostname = "hydra";
+        system = "x86_64-linux";
+      };
+    };
+
+    nixosConfigurations.andromeda = stableNixosSystem {
+      specialArgs = getSpecialArgs {
+        hostname = "andromeda";
+        system = "x86_64-linux";
+      };
+      modules = [
+        ./machines/cloud/main
         ./base/nixos.nix
-        ./modules/home-manager.nix
       ];
-    in {
-      # workstation
-      orion = nixosSystem {
-        modules = base ++ [./machines/orion];
-        specialArgs = getSpecialArgs {
-          hostname = "orion";
-          system = "x86_64-linux";
-        };
-      };
+    };
 
-      # homelab server
-      hydra = nixosSystem {
-        modules = base ++ [./machines/hydra];
-        specialArgs = getSpecialArgs {
-          hostname = "hydra";
-          system = "x86_64-linux";
-        };
+    nixosConfigurations.gatekeeper = stableNixosSystem {
+      specialArgs = getSpecialArgs {
+        hostname = "gatekeeper";
+        system = "x86_64-linux";
       };
+      modules = [
+        # disko.nixosModules.disko
+        ./machines/cloud/gatekeeper
+        ./base/nixos.nix
+      ];
+    };
 
-      # Use stable branch for vps
-      andromeda = inputs.nixpkgs-24_05.lib.nixosSystem {
-        specialArgs = getSpecialArgs {
-          hostname = "andromeda";
-          system = "x86_64-linux";
-        };
-        modules = [
-          ./machines/andromeda
-          ./base/nixos.nix
-        ];
-      };
-
-      gatekeeper = inputs.nixpkgs-24_05.lib.nixosSystem {
-        specialArgs = getSpecialArgs {
-          hostname = "gatekeeper";
-          system = "x86_64-linux";
-        };
-        modules = [
-          ./machines/cloud/gatekeeper
-          ./base/nixos.nix
-        ];
-      };
-
-      # liveboot ISO installer configuration
-      nebula = nixosSystem {
-        specialArgs = getSpecialArgs {
-          hostname = "nebula";
-          system = "x86_64-linux";
-        };
-        modules = base ++ [./machines/nebula];
+    # liveboot ISO installer configuration
+    nixosConfigurations.nebula = nixosSystem {
+      modules = nixosBase ++ [./machines/nebula];
+      specialArgs = getSpecialArgs {
+        hostname = "nebula";
+        system = "x86_64-linux";
       };
     };
 
-    darwinConfigurations = with nix-darwin.lib; {
-      pegasus = darwinSystem {
-        specialArgs = getSpecialArgs {
-          hostname = "pegasus";
-          system = "aarch64-darwin";
-        };
-        modules = [
-          ./machines/pegasus
-          ./modules/home-manager.nix
-        ];
+    darwinConfigurations.pegasus = darwinSystem {
+      modules = darwinBase ++ [./machines/pegasus];
+      specialArgs = getSpecialArgs {
+        hostname = "pegasus";
+        system = "aarch64-darwin";
       };
     };
 
-    packages = nur.lib.allSystemsPkgs (pkgs: {
-      oci-image = pkgs.callPackage ./portable/image.nix {inherit inputs;};
-    });
+    packages = nur.lib.allSystems (
+      system: let
+        pkgs = nixpkgs-unstable.legacyPackages.${system};
+      in {
+        oci-image = pkgs.callPackage ./portable/image.nix {inherit inputs;};
+      }
+    );
 
     devShells = nur.lib.allSystems (
       system: let
