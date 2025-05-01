@@ -2,8 +2,12 @@
   description = "My nixos/nix-darwin configuration";
 
   inputs = {
+    # for now we have to follow cosmic packages to get cached builds
+    # https://github.com/lilyinstarlight/nixos-cosmic/issues/663
+    #
     # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.follows = "cosmic/nixpkgs";
+
     nixpkgs-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -201,6 +205,10 @@
             alejandra
             treefmt
           ];
+
+          shellHook = ''
+            export PATH="$PATH:${./scripts}"
+          '';
         };
       }
     );

@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+command=$1
+target=$2
+flake=$3
+
+nixos-rebuild "$command" \
+  --target-host "$target" \
+  --build-host localhost \
+  --use-remote-sudo \
+  --flake "$flake"

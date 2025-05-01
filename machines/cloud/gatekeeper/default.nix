@@ -15,19 +15,17 @@
       harden = true;
     };
 
-    # environment.systemPackages = with dotfiles.pkgs; [
-    #   git
-    #   zsh
-    #   tmux
-    #   neovim
-    #   lazygit
-    # ];
+    environment.systemPackages = with dotfiles.pkgs; [
+      git
+      zsh
+      tmux
+      neovim-minimal
+      lazygit
+    ];
   };
 
   imports = [
-    # ./disks.nix
     ./hardware.nix
-
 
     ../bootloader.nix
     # ../../../modules/sops.nix
