@@ -20,24 +20,25 @@ in
       paths =
         extraPackages
         ++ (with dotfiles; [
-          # git
+          git
           zsh
-          # tmux
-          # neovim-minimal
-          # lazygit
+          tmux
+          neovim-minimal
         ])
         ++ (with linuxPkgs; [
-          # sudo-rs
+          sudo-rs
           uutils-coreutils-noprefix
-          # findutils
-          # netcat
-          # lsof
+          findutils
+          netcat
+          lsof
           curl
         ]);
       pathsToLink = ["/bin"];
     };
 
-    config = {
-      Cmd = [(lib.getExe dotfiles.tmux)];
+    config = let
+      shell = cmd: [(lib.getExe dotfiles.zsh) "-c" cmd];
+    in {
+      Cmd = shell "TMUX_TMPDIR=/ tmux";
     };
   }

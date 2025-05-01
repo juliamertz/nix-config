@@ -42,6 +42,10 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # suyu = {
     #   url = "git+https://git.suyu.dev/suyu/nix-flake";
@@ -144,6 +148,17 @@
         };
         modules = [
           ./machines/andromeda
+          ./base/nixos.nix
+        ];
+      };
+
+      gatekeeper = inputs.nixpkgs-24_05.lib.nixosSystem {
+        specialArgs = getSpecialArgs {
+          hostname = "gatekeeper";
+          system = "x86_64-linux";
+        };
+        modules = [
+          ./machines/cloud/gatekeeper
           ./base/nixos.nix
         ];
       };

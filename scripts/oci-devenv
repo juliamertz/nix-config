@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+
+docker container rm --force devenv
+
+docker image rm --force devenv
+
+nix build .#oci-image -o ./result
+
+docker load < ./result
+
+docker run --name devenv -it devenv /bin/zsh -c 'TERM=tmux-256color /bin/zsh'
