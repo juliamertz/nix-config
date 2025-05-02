@@ -1,5 +1,7 @@
 {dotfiles, ...}: {
   config = {
+    boot.loader.grub.device = "/dev/sda";
+
     settings = {
       timeZone = "Europe/Berlin";
       locale = "en_US.utf-8";
@@ -32,6 +34,6 @@
     ./services/blog.nix
     ./services/valnetten.nix
 
-    ../../modules/sops.nix
+    ../../../modules/sops.nix
   ];
 }
