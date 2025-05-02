@@ -23,6 +23,10 @@ in {
       type = types.str;
       default = "nettenshop";
     };
+    configPath = mkOption {
+      type = types.path;
+      default = "/etc/lightspeed-dhl";
+    };
     user = mkOption {
       type = types.str;
       default = "valnetten";
@@ -40,6 +44,8 @@ in {
       '';
     };
 
+    systemd.tmpfiles.rules = ["d ${cfg.configPath} 0755 ${cfg.user} ${cfg.group}"];
+
     systemd.services.${cfg.serviceName} = {
       description = "${cfg.serviceName} service";
 
@@ -48,8 +54,8 @@ in {
         User = cfg.user;
         Group = cfg.group;
 
-        WorkingDirectory = "/etc/lightspeed-dhl";
-        ExecStart = "${lib.getExe bin} /etc/lightspeed-dhl/config.toml";
+        WorkingDirectory = cfg.configPath;
+        ExecStart = "${lib.getExe bin} ${cfg.configPath}/config.toml";
       };
     };
 
