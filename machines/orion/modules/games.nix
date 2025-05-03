@@ -4,7 +4,7 @@
     enable = true;
     openFirewall = true;
     autoStart = true;
-    capSysAdmin = false; # enable for wayland
+    capSysAdmin = true; # enable for wayland
 
     package = pkgs.sunshine.override {
       cudaSupport = true;

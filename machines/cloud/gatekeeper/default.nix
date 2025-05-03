@@ -26,7 +26,9 @@ in {
         };
         jellyfin = {
           subdomain = "watch";
-          config = reverseProxy "http://${hosts.hydra.internal}:8096";
+          config = reverseProxy {
+            address = "http://${hosts.hydra.internal}:8096";
+          };
         };
       };
     };
