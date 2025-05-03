@@ -21,7 +21,7 @@
       git
       zsh
       tmux
-      neovim
+      neovim-minimal
       lazygit
     ];
   };
