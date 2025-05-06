@@ -140,29 +140,6 @@
       };
     };
 
-    nixosConfigurations.andromeda = stableNixosSystem {
-      specialArgs = getSpecialArgs {
-        hostname = "andromeda";
-        system = "x86_64-linux";
-      };
-      modules = [
-        ./machines/cloud/main
-        ./base/nixos.nix
-      ];
-    };
-
-    nixosConfigurations.gatekeeper = stableNixosSystem {
-      specialArgs = getSpecialArgs {
-        hostname = "gatekeeper";
-        system = "x86_64-linux";
-      };
-      modules = [
-        # disko.nixosModules.disko
-        ./machines/cloud/gatekeeper
-        ./base/nixos.nix
-      ];
-    };
-
     # liveboot ISO installer configuration
     nixosConfigurations.nebula = nixosSystem {
       modules = nixosBase ++ [./machines/nebula];
