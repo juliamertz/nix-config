@@ -7,8 +7,6 @@
   imports = [
     ../base/installer-desktop.nix
     ../base/graphical.nix
-
-    inputs.cosmic.nixosModules.default
   ];
 
   isoImage.edition = lib.mkDefault "cosmic";
@@ -21,11 +19,6 @@
   };
 
   services.desktopManager.cosmic.enable = true;
-
-  nix.settings = {
-    substituters = ["https://cosmic.cachix.org/"];
-    trusted-public-keys = ["cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="];
-  };
 
   installer-desktop.enable = false;
 
