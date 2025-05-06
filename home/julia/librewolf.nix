@@ -5,11 +5,14 @@
   helpers,
   ...
 }: let
-  firefoxAddons = inputs.nur.packages.${pkgs.system}.firefoxAddons;
+  inherit (pkgs) system;
+  firefoxAddons = inputs.nur.packages.${system}.firefoxAddons;
 in
   {
     programs.librewolf = {
       enable = true;
+      package = inputs.nixpkgs-24_11.legacyPackages.${system}.librewolf;
+
       profiles.julia = {
         isDefault = true;
 
