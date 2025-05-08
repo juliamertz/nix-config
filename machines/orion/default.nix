@@ -17,6 +17,11 @@ in {
       1112
     ];
 
+    networking.hosts = {
+      "10.100.0.1" = ["gatekeeper"];
+      "10.100.0.2" = ["main"];
+    };
+
     nerdfonts = {
       enable = true;
       enableUnfree = true;

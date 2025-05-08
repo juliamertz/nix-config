@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     # Darwin
     nix-darwin = {
@@ -41,14 +39,9 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
 
     rose-pine-cosmic.url = "github:rose-pine/cosmic-desktop";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";
-
     cosmic-comp.url = "github:juliamertz/cosmic-comp";
     cosmic-manager = {
       url = "github:juliamertz/cosmic-manager";
@@ -61,9 +54,7 @@
 
   outputs = {
     nixpkgs-unstable,
-    nixpkgs-24_05,
     nix-darwin,
-    disko,
     nur,
     ...
   } @ inputs: let
@@ -122,7 +113,6 @@
 
     inherit (nix-darwin.lib) darwinSystem;
     inherit (nixpkgs-unstable.lib) nixosSystem;
-    stableNixosSystem = nixpkgs-24_05.lib.nixosSystem;
   in {
     nixosConfigurations.orion = nixosSystem {
       modules = nixosBase ++ [./machines/orion];
