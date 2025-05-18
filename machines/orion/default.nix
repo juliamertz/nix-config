@@ -82,7 +82,7 @@ in {
     ./modules/games.nix
     ./modules/cosmic.nix
 
-    ../../modules/networking/zerotier
+    # ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix
     ../../modules/io/pipewire.nix
     ../../modules/sops.nix

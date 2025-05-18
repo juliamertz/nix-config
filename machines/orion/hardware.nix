@@ -65,7 +65,7 @@
   environment.systemPackages = with pkgs; [cudatoolkit];
 
   hardware.graphics.enable = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   services.xserver.videoDrivers = ["nvidia"];
 
   # Common kernel params required for many programs on linux to work
@@ -77,7 +77,7 @@
   hardware.nvidia = {
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
     powerManagement = {
       enable = true;
       finegrained = false;
