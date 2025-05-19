@@ -1,24 +1,21 @@
 {settings, ...}: let
-  port = 51820;
+  listenPort = 51820;
 in {
-  networking.firewall.allowedUDPPorts = [port];
-  networking.wireguard = {
-    enable = true;
-    interfaces = {
-      wg0 = {
-        ips = ["10.100.0.2/24"];
-        listenPort = port;
-        privateKeyFile = "${settings.user.home}/wireguard/private";
+  networking.firewall.allowedUDPPorts = [listenPort];
 
-        peers = [
-          {
-            publicKey = "mgQ/nNqnwBYN6gUJdxTAOzn7/9vNBH+4Hz9V6k1/YmU=";
-            allowedIPs = ["10.100.0.0/24"];
-            endpoint = "188.245.65.183:${builtins.toString port}";
-            persistentKeepalive = 25;
-          }
-        ];
-      };
+  networking.wg-quick.interfaces = {
+    wg0 = {
+      address = ["10.100.0.1/24"];
+      privateKeyFile = "${settings.user.home}/wireguard/private";
+
+      peers = [
+        {
+          publicKey = "+UMRNrDpies7uCO4wCgxKdyDuN1/FpmIilO8/NO66Uo=";
+          allowedIPs = ["10.100.0.0/24"];
+          endpoint = "116.203.24.1:51820";
+          persistentKeepalive = 25;
+        }
+      ];
     };
   };
 }
