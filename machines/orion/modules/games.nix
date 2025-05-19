@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   # Game streaming
   services.sunshine = {
-    enable = true;
+    enable = false;
     openFirewall = true;
     autoStart = true;
     capSysAdmin = true; # enable for wayland
