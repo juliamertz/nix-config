@@ -26,6 +26,8 @@
     ../../home/julia/browser/librewolf.nix
   ];
 
+  system.primaryUser = "julia";
+
   system = {
     keyboard = {
       enableKeyMapping = true;
