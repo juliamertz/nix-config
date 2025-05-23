@@ -70,7 +70,7 @@ in {
     home-manager.users.julia = {
       imports = [
         ../../home/julia/cosmic.nix
-        ../../home/julia/librewolf.nix
+        ../../home/julia/browser/librewolf.nix
         ../../home/julia/git.nix
       ];
     };

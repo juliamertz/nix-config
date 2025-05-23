@@ -1,5 +1,5 @@
 {
-inputs,
+  inputs,
   pkgs,
   settings,
   dotfiles,
@@ -10,8 +10,10 @@ inputs,
     ./hardware.nix
     ./work.nix
 
-    # ../../modules/wm/aerospace
-    ../../modules/virtualisation/linux-builder.nix
+    # FIX: this process runs in the background consuming all of the cpu draining my battery
+    # ../../modules/virtualisation/linux-builder.nix
+
+    ../../modules/wm/aerospace
     ../../modules/apps/media/spotify.nix
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
@@ -20,7 +22,8 @@ inputs,
   ];
 
   home-manager.users.julia.imports = [
-    ../../home/julia/librewolf.nix
+    ../../home/julia/browser/firefox.nix
+    ../../home/julia/browser/librewolf.nix
   ];
 
   system = {
@@ -48,6 +51,12 @@ inputs,
     };
   };
 
+  services.my-aerospace = {
+    enable = true;
+    autoStart = true;
+    configPath = "${dotfiles.path}/aerospace/config.toml";
+  };
+
   nerdfonts = {
     enable = true;
     enableUnfree = true;
@@ -57,18 +66,23 @@ inputs,
     "hass_token"
   ];
 
-  environment.systemPackages = with dotfiles.pkgs; [
-    scripts
-    neovim
-    kitty
-    lazygit
-    (git.override {
-      signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOY+XtPOqEdGLBzzHehlGxYmFRwu/KSqyNM2JQ4veqb";
-      use1Password = true;
-    })
-    tmux
-    w3m
-  ];
+  environment.systemPackages = with dotfiles.pkgs;
+    [
+      scripts
+      neovim
+      kitty
+      lazygit
+      (git.override {
+        signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOY+XtPOqEdGLBzzHehlGxYmFRwu/KSqyNM2JQ4veqb";
+        use1Password = true;
+      })
+      tmux
+      w3m
+    ]
+    ++ (with pkgs; [
+      devenv
+      attic-client
+    ]);
 
   homebrew = {
     casks = [

@@ -1,22 +1,45 @@
 {
   lib,
-  dotfiles,
+  pkgs,
+  config,
   ...
 }: let
-  package = dotfiles.pkgs.aerospace;
+  cfg = config.services.my-aerospace;
 in {
-  environment.systemPackages = [package];
+  options.services.my-aerospace = with lib; {
+    enable = mkEnableOption "Aerospace window manager";
 
-  launchd.user.agents.aerospace = {
-    command = "${package}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace";
-    serviceConfig = {
-      KeepAlive = true;
-      RunAtLoad = true;
+    autoStart = mkEnableOption "Automatically start Aerospace at launch";
+
+    package = mkOption {
+      type = types.package;
+      default = pkgs.aerospace;
+    };
+
+    configPath = mkOption {
+      type = types.path;
+      default = "/etc/aerospace/config.toml";
     };
   };
 
-  system.defaults = {
-    dock.expose-group-apps = true;
-    spaces.spans-displays = false;
+  config = lib.mkIf cfg.enable {
+
+    environment.systemPackages = [cfg.package];
+
+    launchd.user.agents.aerospace = lib.mkIf cfg.autoStart {
+      command = ''
+        ${cfg.package}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace \
+            --config-path ${cfg.configPath}
+      '';
+      serviceConfig = {
+        KeepAlive = true;
+        RunAtLoad = true;
+      };
+    };
+
+    system.defaults = {
+      dock.expose-group-apps = true;
+      spaces.spans-displays = false;
+    };
   };
 }
