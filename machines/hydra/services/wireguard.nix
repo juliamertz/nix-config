@@ -5,7 +5,7 @@ in {
 
   networking.wg-quick.interfaces = {
     wg0 = {
-      address = ["10.100.0.1/24"];
+      address = ["10.100.0.4/24"];
       privateKeyFile = "${settings.user.home}/wireguard/private";
 
       peers = [
