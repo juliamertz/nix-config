@@ -14,7 +14,7 @@ in {
 
     locale = mkOption {
       type = types.str;
-      default = "en_US.utf-8";
+      default = "en_US.UTF-8";
     };
     extraLocale = mkOption {
       type = types.str;

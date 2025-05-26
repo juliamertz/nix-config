@@ -96,8 +96,6 @@
         system = {
           inherit hostname;
           platform = system;
-          timeZone = "Europe/Amsterdam";
-          defaultLocale = "en_US.UTF-8";
         };
       };
     };
