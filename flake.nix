@@ -145,14 +145,6 @@
       };
     };
 
-    packages = nur.lib.allSystems (
-      system: let
-        pkgs = nixpkgs-unstable.legacyPackages.${system};
-      in {
-        oci-image = pkgs.callPackage ./portable/image.nix {inherit inputs;};
-      }
-    );
-
     devShells = nur.lib.allSystems (
       system: let
         pkgs = nixpkgs-unstable.legacyPackages.${system};
