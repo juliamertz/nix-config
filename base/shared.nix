@@ -61,7 +61,7 @@ in {
       description = fullName;
       inherit (settings.user) home;
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJaSMVfNtTgKjZBn0OurWXDpNrV+soaog7W0Svv4vE40"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfVB8IMsb81U7ySvg82PTlBhnKlQ7Lqs50p4XU1nAv3"
       ];
     };
   };
