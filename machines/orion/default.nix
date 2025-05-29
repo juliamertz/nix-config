@@ -81,6 +81,7 @@ in {
 
     ./modules/games.nix
     ./modules/cosmic.nix
+    ./modules/wireguard.nix
 
     # ../../modules/networking/zerotier
     ../../modules/io/bluetooth.nix
