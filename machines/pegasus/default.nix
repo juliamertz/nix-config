@@ -73,6 +73,8 @@
       scripts
       neovim
       kitty
+      zsh
+      fish
       lazygit
       (git.override {
         signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOY+XtPOqEdGLBzzHehlGxYmFRwu/KSqyNM2JQ4veqb";

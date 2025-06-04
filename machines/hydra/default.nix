@@ -17,6 +17,7 @@
         scripts
         git
         zsh
+        fish
         tmux
         neovim
         lazygit

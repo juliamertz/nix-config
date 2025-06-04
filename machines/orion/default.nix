@@ -40,6 +40,8 @@ in {
         lazygit
         kitty
         wezterm
+        zsh
+        fish
         w3m
         weechat
         zathura
