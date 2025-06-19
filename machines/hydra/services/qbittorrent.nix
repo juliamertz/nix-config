@@ -26,8 +26,8 @@
       };
 
       BitTorrent = {
-        Session-Interface = "tun0";
-        Session-InterfaceName = "tun0";
+        Session-Interface = "wg";
+        Session-InterfaceName = "wg";
         Session-DefaultSavePath = /home/media/downloads;
         Session-DisableAutoTMMByDefault = false;
         Session-DisableAutoTMMTriggers-CategorySavePathChanged = false;
