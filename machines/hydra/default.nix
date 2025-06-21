@@ -24,6 +24,11 @@
       ]);
   };
 
+    k3s = {
+      enable = true;
+      role = "agent";
+    };
+
   imports = [
     ./hardware.nix
 
@@ -39,6 +44,7 @@
     ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier
     ../../modules/sops.nix
+    ../../modules/k3s.nix
     ../../modules/apps/shell/zsh.nix
   ];
 }

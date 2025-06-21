@@ -69,6 +69,18 @@ in {
         ethtool
       ]);
 
+    k3s = {
+      enable = true;
+      role = "agent";
+    };
+
+    # services.k3s = {
+    #   enable = true;
+    #   role = "agent";
+    #   serverAddr = "https://192.168.0.100:6443";
+    #   token = "K10b2b06dcec98d07f70cbf4a6f099a6cf21d7cdbbb9f2cb81dd53ed9306ea8cd23::server:6043d533a01eedb75061195017a69a8f";
+    # };
+
     home-manager.users.julia = {
       imports = [
         ../../home/julia/cosmic.nix
@@ -86,6 +98,7 @@ in {
     ./modules/wireguard.nix
 
     # ../../modules/networking/zerotier
+    ../../modules/k3s.nix
     ../../modules/io/bluetooth.nix
     ../../modules/io/pipewire.nix
     ../../modules/sops.nix

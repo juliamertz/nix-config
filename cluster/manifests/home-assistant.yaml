@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-assistant
+spec:
+  selector:
+    app: home-assistant
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8123
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  labels:
+    app: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      containers:
+      - name: home-assistant
+        image: homeassistant/home-assistant:2025.6
+        ports:
+        - containerPort: 8123
+
