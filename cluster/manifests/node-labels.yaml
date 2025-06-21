@@ -1,0 +1,4 @@
+metadata:
+  name: orion
+  labels:
+    node-role.kubernetes.io/worker: worker

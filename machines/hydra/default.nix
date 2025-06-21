@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   dotfiles,
   ...
 }: {
@@ -22,6 +23,38 @@
         neovim
         lazygit
       ]);
+
+  k3s = {
+    enable = true;
+    openFirewall = true;
+    role = "server";
+    sopsFile = ../../secrets/cluster.yaml;
+  };
+
+    systemd.tmpfiles.rules = [
+      "d /exports          0755 nobody nogroup"
+      "d /exports/jellyfin 0755 nobody nogroup"
+    ];
+
+    services.nfs.server = {
+      enable = true;
+      exports = ''
+        /exports/jellyfin 192.168.0.0/24(rw,sync,no_subtree_check)
+
+        /home/media 192.168.0.0/24(rw,sync,no_subtree_check)
+      '';
+    };
+
+    networking.firewall = let
+      nfsPorts = [
+        2049 # NFS
+        111 # portmap/rpcbind
+        20048
+      ];
+    in {
+      allowedTCPPorts = nfsPorts ++ [6443];
+      allowedUDPPorts = nfsPorts;
+    };
   };
 
   imports = [
@@ -39,6 +72,7 @@
     ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier
     ../../modules/sops.nix
+    ../../modules/k3s.nix
     ../../modules/apps/shell/zsh.nix
   ];
 }

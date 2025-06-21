@@ -22,6 +22,9 @@ in {
       "10.100.0.2" = ["main"];
     };
 
+    services.rpcbind.enable = true;
+    boot.supportedFilesystems = ["nfs"];
+
     nerdfonts = {
       enable = true;
       enableUnfree = true;
@@ -69,6 +72,13 @@ in {
         ethtool
       ]);
 
+    k3s = {
+      enable = true;
+      openFirewall = true;
+      role = "agent";
+      sopsFile = ../../secrets/cluster.yaml;
+    };
+
     home-manager.users.julia = {
       imports = [
         ../../home/julia/cosmic.nix
@@ -86,6 +96,7 @@ in {
     ./modules/wireguard.nix
 
     # ../../modules/networking/zerotier
+    ../../modules/k3s.nix
     ../../modules/io/bluetooth.nix
     ../../modules/io/pipewire.nix
     ../../modules/sops.nix

@@ -155,6 +155,7 @@
             nix-fast-build
             alejandra
             treefmt
+            just
           ];
 
           shellHook = ''

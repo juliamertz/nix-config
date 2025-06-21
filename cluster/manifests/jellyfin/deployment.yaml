@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  namespace: jellyfin
+  labels:
+    app: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: orion
+      containers:
+        - name: jellyfin
+          image: docker.io/jellyfin/jellyfin
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /data/media
+              name: media
+              readOnly: True
+          ports:
+            - containerPort: 8096
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: media
+          nfs:
+            server: 192.168.0.100
+            path: /home/media
+        - name: config
+          nfs:
+            server: 192.168.0.100
+            path: /exports/jellyfin
