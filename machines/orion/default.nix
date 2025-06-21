@@ -22,6 +22,9 @@ in {
       "10.100.0.2" = ["main"];
     };
 
+    services.rpcbind.enable = true;
+    boot.supportedFilesystems = ["nfs"];
+
     nerdfonts = {
       enable = true;
       enableUnfree = true;
