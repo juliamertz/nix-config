@@ -558,6 +558,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1750964867,
+        "narHash": "sha256-aM2Vpn2xjlniD/BVFAmsNTBrjsT77dQtB5lXDRKozw4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "eb3a226ec5b5c1cd2f9790b8196b442c8398b40b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1751011381,
@@ -785,6 +801,7 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs-24_11": "nixpkgs-24_11",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "protonvpn-rs": "protonvpn-rs",

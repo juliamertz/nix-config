@@ -5,7 +5,12 @@
   dotfiles,
   helpers,
   ...
-}: {
+}: let
+  nixpkgs-master = import inputs.nixpkgs-master {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [
     ./hardware.nix
     ./work.nix
@@ -74,7 +79,6 @@
       neovim
       kitty
       zsh
-      fish
       lazygit
       (git.override {
         signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOY+XtPOqEdGLBzzHehlGxYmFRwu/KSqyNM2JQ4veqb";
@@ -86,6 +90,9 @@
     ++ (with pkgs; [
       devenv
       attic-client
+    ])
+    ++ (with nixpkgs-master; [
+      aptakube
     ]);
 
   homebrew = {

@@ -2,6 +2,7 @@
   description = "My nixos/nix-darwin configuration";
 
   inputs = {
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
 
