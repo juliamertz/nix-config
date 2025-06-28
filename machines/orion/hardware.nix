@@ -62,7 +62,12 @@
   swapDevices = [];
 
   # Nvidia GPU
-  environment.systemPackages = with pkgs; [cudatoolkit];
+  environment.systemPackages = with pkgs; [
+    cudatoolkit
+    # nvidia-container-toolkit
+  ];
+
+  hardware.nvidia-container-toolkit.enable = true;
 
   hardware.graphics.enable = true;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
