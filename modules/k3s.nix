@@ -77,6 +77,8 @@ in {
             "--write-kubeconfig-mode 644"
             "--tls-san 10.100.1.1"
             "--tls-san 192.168.0.100"
+            "--embedded-registry"
+            "--disable traefik"
           ]
           |> toString;
       });

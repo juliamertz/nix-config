@@ -24,12 +24,12 @@
         lazygit
       ]);
 
-  k3s = {
-    enable = true;
-    openFirewall = true;
-    role = "server";
-    sopsFile = ../../secrets/cluster.yaml;
-  };
+    k3s = {
+      enable = true;
+      openFirewall = true;
+      role = "server";
+      sopsFile = ../../secrets/cluster.yaml;
+    };
 
     systemd.tmpfiles.rules = [
       "d /exports          0755 nobody nogroup"
