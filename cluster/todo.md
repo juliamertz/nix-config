@@ -1,1 +1,0 @@
-- [ ] set up NFS on hydra so jellyfin can run on orion node

@@ -156,7 +156,10 @@
             nix-fast-build
             alejandra
             treefmt
-            just
+
+            kubectl
+            kustomize
+            kubie
           ];
 
           shellHook = ''

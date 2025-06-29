@@ -1,4 +1,5 @@
 {
+pkgs,
   lib,
   config,
   ...
@@ -56,6 +57,15 @@ in {
       owner = "julia";
       restartUnits = ["k3s.service"];
       content = with config.sops.placeholder; ''${token}'';
+    };
+
+    # required for longhorn distributed storage
+    environment.systemPackages = [
+      pkgs.openiscsi
+    ];
+    services.openiscsi= {
+      enable = true;
+      name = "iqn.2025-06.com.nixos:${config.networking.hostName}";
     };
 
     services.k3s =

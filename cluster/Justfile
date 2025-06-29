@@ -1,5 +1,0 @@
-HOME := `echo "~"`
-MANIFESTS := "manifests"
-
-node-labels:
-	kubectl patch node orion --patch-file {{MANIFESTS}}/node-labels.yaml --type merge
