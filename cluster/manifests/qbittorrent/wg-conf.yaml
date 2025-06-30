@@ -1,0 +1,16 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: wireguard-config
+# data:
+#   wg0.conf: |
+#     [Interface]
+#     ...
+#     # add these rules to avoid sysctl problems
+#     Table = off
+#     PostUp = ip route add 0.0.0.0/0 dev %i || true
+#     PostDown = ip route del 0.0.0.0/0 dev %i || true
+#     ...
+#
+#     [Peer]
+#     ...

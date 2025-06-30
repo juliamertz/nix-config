@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels:
+    app: qbittorrent
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      containers:
+        - name: wireguard
+          image: nixery.dev/shell/wireguard-tools/busybox/iptables
+          command:
+            - sh
+            - -c
+            - |
+              cp /etc/wireguard/wg0.conf /tmp/wg0.conf
+              chmod 600 /tmp/wg0.conf
+
+              wg-quick up /tmp/wg0.conf
+              wg show
+
+              while true; do
+                if ! wg show wg0 > /dev/null 2>&1; then
+                  echo "WireGuard interface down, restarting..."
+                  wg-quick down /tmp/wg0.conf || true
+                  wg-quick up /tmp/wg0.conf
+                fi
+                sleep 30
+              done
+
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - name: wireguard-config
+              mountPath: /etc/wireguard/wg0.conf
+              subPath: wg0.conf
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - wg show wg0
+            initialDelaySeconds: 10
+            periodSeconds: 30
+        - name: qbittorrent
+          image: qbittorrentofficial/qbittorrent-nox:5.0.5-1
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Etc/UTC"
+            - name: WEBUI_PORT
+              value: "8080"
+            - name: TORRENTING_PORT
+              value: "6881"
+          volumeMounts:
+            - name: config-storage
+              mountPath: /config
+            - name: qbittorrent-config
+              mountPath: /config/qBittorrent/config/qBittorrent.conf
+              subPath: qBittorrent.conf
+              readOnly: true
+              # # Mount for downloads
+              # - name: downloads
+              #   mountPath: /downloads
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+      volumes:
+        - name: wireguard-config
+          configMap:
+            name: wireguard-config
+        - name: qbittorrent-config
+          configMap:
+            name: qbittorrent-config
+            defaultMode: 0644
+        - name: config-storage
+          persistentVolumeClaim:
+            claimName: qbittorrent-config-pvc
+      # - name: downloads
+      #   persistentVolumeClaim:
+      #     claimName: qbittorrent-downloads-pvc
+
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - qbittorrent
+                topologyKey: kubernetes.io/hostname
