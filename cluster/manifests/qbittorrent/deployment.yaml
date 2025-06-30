@@ -19,6 +19,7 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      terminationGracePeriodSeconds: 5
       containers:
         - name: wireguard
           image: nixery.dev/shell/wireguard-tools/busybox/iptables
@@ -34,11 +35,9 @@ spec:
 
               while true; do
                 if ! wg show wg0 > /dev/null 2>&1; then
-                  echo "WireGuard interface down, restarting..."
-                  wg-quick down /tmp/wg0.conf || true
-                  wg-quick up /tmp/wg0.conf
+                  echo "WireGuard interface down, exiting..."
+                  exit 1
                 fi
-                sleep 30
               done
 
           securityContext:
@@ -85,16 +84,15 @@ spec:
               mountPath: /config/qBittorrent/config/qBittorrent.conf
               subPath: qBittorrent.conf
               readOnly: true
-              # # Mount for downloads
-              # - name: downloads
-              #   mountPath: /downloads
+            - name: downloads
+              mountPath: /downloads
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "100m"
+              memory: "2Gi"
+              cpu: "1000m"
             limits:
-              memory: "256Mi"
-              cpu: "200m"
+              memory: "4Gi"
+              cpu: "2000m"
       volumes:
         - name: wireguard-config
           configMap:
@@ -106,19 +104,7 @@ spec:
         - name: config-storage
           persistentVolumeClaim:
             claimName: qbittorrent-config-pvc
-      # - name: downloads
-      #   persistentVolumeClaim:
-      #     claimName: qbittorrent-downloads-pvc
-
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - qbittorrent
-                topologyKey: kubernetes.io/hostname
+        - name: downloads
+          nfs:
+            server: 192.168.0.100
+            path: /home/media/downloads

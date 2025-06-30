@@ -4,6 +4,4 @@ namespace: arr
 resources: 
   - namespace.yaml
   - radarr
-  - sonarr
-  - lidarr
   - jackett

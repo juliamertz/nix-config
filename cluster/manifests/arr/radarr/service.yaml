@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: radarr
+  name: radarr-service
 spec:
   selector:
     app: radarr

@@ -1,0 +1,17 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    api:
+      dashboard: true
+      insecure: true
+    gateway:
+      namespacePolicy: All
+    providers:
+      kubernetesIngress:
+        enabled: false
+      kubernetesGateway:
+        enabled: true

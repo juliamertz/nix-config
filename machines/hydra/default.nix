@@ -41,7 +41,8 @@
       exports = ''
         /exports/jellyfin 192.168.0.0/24(rw,sync,no_subtree_check)
 
-        /home/media 192.168.0.0/24(rw,sync,no_subtree_check)
+        /home/media           192.168.0.0/24(rw,sync,no_subtree_check)
+        /home/media/downloads 192.168.0.0/24(rw,sync,no_subtree_check)
       '';
     };
 

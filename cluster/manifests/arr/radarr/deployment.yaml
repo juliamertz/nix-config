@@ -14,14 +14,18 @@ spec:
       labels:
         app: radarr
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
       - name: radarr
         image: linuxserver/radarr:5.27.1-nightly
         ports:
         - containerPort: 7878
         volumeMounts:
-        - name: radarr-config
+        - name: radarr-config-storage
           mountPath: /config
+        - name: radarr-config
+          mountPath: /config/config.xml
+          subPath: config.xml
         - name: localtime
           mountPath: /etc/localtime
           readOnly: true
@@ -30,5 +34,9 @@ spec:
         hostPath:
           path: /etc/localtime
       - name: radarr-config
+        configMap:
+          name: radarr-config
+          defaultMode: 0644
+      - name: radarr-config-storage
         persistentVolumeClaim:
-          claimName: radarr-config
+          claimName: radarr-config-storage

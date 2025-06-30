@@ -6,7 +6,7 @@ data:
   qBittorrent.conf: |
     [BitTorrent]
     Session\AddTorrentStopped=false
-    Session\DefaultSavePath=/home/media/downloads
+    Session\DefaultSavePath=/downloads
     Session\DisableAutoTMMByDefault=false
     Session\DisableAutoTMMTriggers\CategorySavePathChanged=false
     Session\Interface=wg0
