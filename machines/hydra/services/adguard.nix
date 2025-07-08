@@ -87,7 +87,6 @@ in {
         blocked_services.ids = [
           # western spyware
           "4chan"
-          "amazon"
           "valorant"
           "vimeo"
           "skype"
