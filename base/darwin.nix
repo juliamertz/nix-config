@@ -11,9 +11,6 @@
   };
 
   environment.systemPackages = [
-    (pkgs.writeShellScriptBin "dr" ''
-      #!${pkgs.bash}
-      darwin-rebuild ''${1:-"switch"} --flake ''${2:-"."}
-    '')
+    pkgs.nh
   ];
 }

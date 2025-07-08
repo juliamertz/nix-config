@@ -8,7 +8,7 @@
 }: let
   unstable = helpers.getPkgs inputs.nixpkgs-unstable;
   inherit (lib) mkDefault;
-  inherit (settings.user) username fullName;
+  inherit (settings.user) username fullName home;
   inherit (settings.system) platform hostname;
 in {
   imports = [../modules/settings.nix];
@@ -25,10 +25,12 @@ in {
     ];
 
     environment.systemPackages = with pkgs; [
-      tealdeer # tldr client
+      tealdeer
       cachix
       openssl
       curl
+      fd
+      skim
     ];
 
     nixpkgs.config.allowUnfree = mkDefault true;
@@ -59,7 +61,7 @@ in {
 
     users.users.${username} = {
       description = fullName;
-      inherit (settings.user) home;
+      inherit home;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfVB8IMsb81U7ySvg82PTlBhnKlQ7Lqs50p4XU1nAv3"
       ];
