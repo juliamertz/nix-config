@@ -1,5 +1,5 @@
 {
-pkgs,
+  pkgs,
   lib,
   config,
   ...
@@ -63,7 +63,7 @@ in {
     environment.systemPackages = [
       pkgs.openiscsi
     ];
-    services.openiscsi= {
+    services.openiscsi = {
       enable = true;
       name = "iqn.2025-06.com.nixos:${config.networking.hostName}";
     };
@@ -74,7 +74,7 @@ in {
         inherit (cfg) role;
       }
       // (lib.optionalAttrs (cfg.role == "agent") {
-        serverAddr = "https://192.168.0.100:6443";
+        serverAddr = "https://10.100.1.1:6443";
         tokenFile = config.sops.templates.k3s-token.path;
         gracefulNodeShutdown = {
           enable = true;
@@ -88,7 +88,12 @@ in {
             "--tls-san 10.100.1.1"
             "--tls-san 192.168.0.100"
             "--embedded-registry"
-            "--disable traefik"
+            "--cluster-init"
+            # "--flannel-backend=none"
+            # "--disable-kube-proxy"
+            # "--disable servicelb"
+            # "--disable-network-policy"
+            # "--disable traefik"
           ]
           |> toString;
       });
