@@ -5,7 +5,7 @@ in {
 
   networking.wg-quick.interfaces = {
     wg0 = {
-      address = ["10.100.1.3/23"];
+      address = ["10.100.1.2/23"];
       privateKeyFile = "/etc/wireguard/julia/private";
 
       peers = [
