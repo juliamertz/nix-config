@@ -6,19 +6,21 @@
 }: let
   cfg = config.wm.aerospace;
 in {
-  options.wm.aerospace = with lib; {
-    enable = mkEnableOption "Aerospace window manager";
+  options = {
+    wm.aerospace = with lib; {
+      enable = mkEnableOption "Aerospace window manager";
 
-    autoStart = mkEnableOption "Automatically start Aerospace at launch";
+      autoStart = mkEnableOption "Automatically start Aerospace at launch";
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.aerospace;
-    };
+      package = mkOption {
+        type = types.package;
+        default = pkgs.aerospace;
+      };
 
-    configPath = mkOption {
-      type = types.path;
-      default = "/etc/aerospace/config.toml";
+      configPath = mkOption {
+        type = types.path;
+        default = "/etc/aerospace/config.toml";
+      };
     };
   };
 
