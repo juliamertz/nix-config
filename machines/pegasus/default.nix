@@ -15,15 +15,13 @@ in {
     ./hardware.nix
     ./work.nix
 
-    # FIX: this process runs in the background consuming all of the cpu draining my battery
-    # ../../modules/virtualisation/linux-builder.nix
-
     ../../modules/wm/aerospace
     ../../modules/apps/media/spotify.nix
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
     ../../modules/homebrew.nix
     ../../modules/apps/shell/zsh.nix
+    # ../../modules/virtualisation/linux-builder.nix
   ];
 
   home-manager.users.julia.imports = [
@@ -90,9 +88,6 @@ in {
     ++ (with pkgs; [
       devenv
       attic-client
-    ])
-    ++ (with nixpkgs-master; [
-      aptakube
     ]);
 
   homebrew = {

@@ -5,12 +5,14 @@
     docker
     kubie
     kubectl
+    kubectl-cnpg
     kubelogin
+    aptakube
   ];
 
   homebrew.casks = [
     "slack"
     "linear-linear"
-    "orbstack" # docker/kubernetes gui
+    "orbstack"
   ];
 }
