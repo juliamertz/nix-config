@@ -56,9 +56,9 @@ in {
     };
   };
 
-  services.my-aerospace = {
+  wm.aerospace = {
     enable = true;
-    autoStart = false;
+    autoStart = true;
     configPath = "${dotfiles.path}/aerospace/config.toml";
   };
 

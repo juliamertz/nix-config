@@ -4,9 +4,9 @@
   config,
   ...
 }: let
-  cfg = config.services.my-aerospace;
+  cfg = config.wm.aerospace;
 in {
-  options.services.my-aerospace = with lib; {
+  options.wm.aerospace = with lib; {
     enable = mkEnableOption "Aerospace window manager";
 
     autoStart = mkEnableOption "Automatically start Aerospace at launch";
@@ -23,7 +23,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-
     environment.systemPackages = [cfg.package];
 
     launchd.user.agents.aerospace = lib.mkIf cfg.autoStart {
@@ -31,6 +30,7 @@ in {
         ${cfg.package}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace \
             --config-path ${cfg.configPath}
       '';
+
       serviceConfig = {
         KeepAlive = true;
         RunAtLoad = true;
