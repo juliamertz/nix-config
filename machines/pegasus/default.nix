@@ -21,7 +21,7 @@ in {
     ../../modules/sops.nix
     ../../modules/homebrew.nix
     ../../modules/apps/shell/zsh.nix
-    # ../../modules/virtualisation/linux-builder.nix
+    ../../modules/virtualisation/linux-builder.nix
   ];
 
   home-manager.users.julia.imports = [
