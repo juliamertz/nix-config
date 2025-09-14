@@ -16,7 +16,7 @@ in {
     ./work.nix
 
     ../../modules/wm/aerospace
-    ../../modules/apps/media/spotify.nix
+    # ../../modules/apps/media/spotify.nix
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
     ../../modules/homebrew.nix
@@ -88,6 +88,8 @@ in {
     ++ (with pkgs; [
       devenv
       attic-client
+      # https://github.com/NixOS/nixpkgs/pull/442057
+      # spotify
     ]);
 
   homebrew = {
