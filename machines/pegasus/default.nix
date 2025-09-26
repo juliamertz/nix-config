@@ -88,6 +88,9 @@ in {
     ++ (with pkgs; [
       devenv
       attic-client
+      gh
+      repgrep
+      ripgrep
       # https://github.com/NixOS/nixpkgs/pull/442057
       # spotify
     ]);

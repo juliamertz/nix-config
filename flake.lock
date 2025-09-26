@@ -152,11 +152,11 @@
         "spotify-player": "spotify-player"
       },
       "locked": {
-        "lastModified": 1757854725,
-        "narHash": "sha256-1RpD5im3tW8jD2veKb7c7MpghjJwrJMNHOjfjJJDmTg=",
+        "lastModified": 1758671486,
+        "narHash": "sha256-AsGW2CbMis1ZRqqzUChX1kbpw2+7fNsoGiyZK8PagAo=",
         "owner": "juliamertz",
         "repo": "dotfiles",
-        "rev": "4cfd28e86ea91fcbeef89c77d72eb96057a512aa",
+        "rev": "4205aa9a7ca2677ed2e4f4c9e77134b00fca8afe",
         "type": "github"
       },
       "original": {
