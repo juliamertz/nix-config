@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.services.qbittorrent;
+  cfg = config.services.qbittorrent-nox;
 
   toString = value:
     if lib.isBool value

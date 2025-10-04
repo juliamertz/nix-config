@@ -56,6 +56,10 @@
       allowedTCPPorts = nfsPorts ++ [6443];
       allowedUDPPorts = nfsPorts;
     };
+
+    services.tailscale = {
+      enable = true;
+    };
   };
 
   imports = [
@@ -68,7 +72,7 @@
     ./services/qbittorrent.nix
     ./services/wireguard.nix
     ./services/multimedia.nix
-    ./services/home-assistant
+    # ./services/home-assistant
 
     ../../modules/networking/zerotier
     ../../modules/sops.nix

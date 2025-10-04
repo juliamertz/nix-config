@@ -92,10 +92,7 @@ in {
             "--disable traefik"
             "--disable local-storage"
             "--cluster-init"
-            # "--flannel-backend=none"
-            # "--disable-kube-proxy"
-            # "--disable servicelb"
-            # "--disable-network-policy"
+            "--disable traefik"
           ]
           |> toString;
       });

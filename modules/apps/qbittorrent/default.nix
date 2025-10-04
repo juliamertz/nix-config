@@ -6,15 +6,11 @@
   ...
 }:
 with lib; let
-  cfg = config.services.qbittorrent;
+  cfg = config.services.qbittorrent-nox;
   pkgs = helpers.getPkgs inputs.nixpkgs-unstable;
   qbittorrentConf = import ./config.nix {inherit config pkgs lib;};
 in {
-  imports = [./flood.nix];
-
-  # disabledModules = ["services/torrent/qbittorrent.nix"];
-
-  options.services.qbittorrent = {
+  options.services.qbittorrent-nox = {
     enable = mkEnableOption (lib.mdDoc "qBittorrent headless");
 
     dataDir = mkOption {
@@ -64,7 +60,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.qbittorrent = {
+    services.qbittorrent-nox = {
       userInterfaces = mkForce (pkgs.callPackage ./webui.nix {});
     };
 

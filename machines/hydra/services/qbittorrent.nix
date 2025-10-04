@@ -7,15 +7,14 @@
 
   reverse-proxy.services.qbittorrent = {
     subdomain = "qbittorrent";
-    port = config.services.qbittorrent.port;
+    port = config.services.qbittorrent-nox.port;
     theme = true;
   };
 
-  services.qbittorrent = {
+  services.qbittorrent-nox = {
     enable = true;
     port = 8280;
     openFirewall = true;
-    flood.enable = false;
 
     user = settings.user.username;
     group = "users";

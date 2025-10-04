@@ -129,7 +129,7 @@ in {
 
     # Change working directory to source where plugins reside
     systemd.services.traefik.serviceConfig = {
-      WorkingDirectory = "${config.services.traefik.package}/bin";
+      WorkingDirectory = lib.mkForce "${config.services.traefik.package}/bin";
     };
   };
 }
