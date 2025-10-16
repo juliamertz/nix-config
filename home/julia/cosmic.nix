@@ -82,20 +82,20 @@
       };
     };
 
-    wallpapers = [
-      {
-        filter_by_theme = true;
-        filter_method = ron.enum "Lanczos";
-        output = "all";
-        rotation_frequency = 600;
-        sampling_method = ron.enum "Alphanumeric";
-        scaling_mode = ron.enum "Zoom";
-        source = ron.enum {
-          variant = "Path";
-          value = [../../wallpaper.png];
-        };
-      }
-    ];
+    # wallpapers = [
+    #   {
+    #     filter_by_theme = true;
+    #     filter_method = ron.enum "Lanczos";
+    #     output = "all";
+    #     rotation_frequency = 600;
+    #     sampling_method = ron.enum "Alphanumeric";
+    #     scaling_mode = ron.enum "Zoom";
+    #     source = ron.enum {
+    #       variant = "Path";
+    #       value = [../../wallpaper];
+    #     };
+    #   }
+    # ];
 
     shortcuts = [
       # disable some default keybindings
