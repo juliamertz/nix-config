@@ -1,22 +1,16 @@
 {
-  inputs,
   pkgs,
   settings,
   dotfiles,
   helpers,
   ...
-}: let
-  nixpkgs-master = import inputs.nixpkgs-master {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
-in {
+}: {
   imports = [
     ./hardware.nix
     ./work.nix
 
     ../../modules/wm/aerospace
-    # ../../modules/apps/media/spotify.nix
+    ../../modules/apps/media/spotify.nix
     ../../modules/nerdfonts.nix
     ../../modules/sops.nix
     ../../modules/homebrew.nix
@@ -24,10 +18,7 @@ in {
     ../../modules/virtualisation/linux-builder.nix
   ];
 
-  home-manager.users.julia.imports = [
-    ../../home/julia/browser/firefox.nix
-    ../../home/julia/browser/librewolf.nix
-  ];
+  home-manager.users.julia.imports = [../../home/julia/browser/firefox.nix];
 
   system.primaryUser = "julia";
 
@@ -70,6 +61,8 @@ in {
   sops.secrets = helpers.ownedSecrets settings.user.username [
     "hass_token"
   ];
+
+  services.tailscale.enable = true;
 
   environment.systemPackages = with dotfiles.pkgs;
     [
