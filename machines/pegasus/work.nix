@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: let
+  pkgs-24_11 = import inputs.nixpkgs-24_11 {inherit (pkgs) system;};
+in {
   environment.systemPackages = with pkgs; [
     k9s
     docker
@@ -6,7 +12,7 @@
     kubie
     kubectl
     kubectl-cnpg
-    kubelogin
+    pkgs-24_11.kubelogin
     (aptakube.overrideAttrs (let
       version = "1.13.1";
     in {
