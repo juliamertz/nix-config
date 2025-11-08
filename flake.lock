@@ -94,11 +94,11 @@
         "rust": "rust"
       },
       "locked": {
-        "lastModified": 1746472025,
-        "narHash": "sha256-qfZ4qeMlgt3ohW0/5WzeoZ6lMJ1WAXk8ygXsCTgoyvI=",
+        "lastModified": 1762625803,
+        "narHash": "sha256-sV6nMo5I5fT0yQ5EXY7chfs62TOY6wW1Hyw1iefTA5s=",
         "owner": "juliamertz",
         "repo": "cosmic-comp",
-        "rev": "9be6e647c2621e82de144415d171322882054b1c",
+        "rev": "7023b3910fe981e7db15527cfc0262ffe86adfdb",
         "type": "github"
       },
       "original": {
@@ -357,11 +357,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1762619701,
-        "narHash": "sha256-pbz/6oy0kt7qkaWhTwfLrMsyPKbUIFDyPhRvMBDiBrU=",
+        "lastModified": 1762623826,
+        "narHash": "sha256-HGcZsCcdKU9kVzgnZtePJK+6YTUWZjahOYaupYSv3Jw=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "5a3579a4d1c30c0f49885192dbee88e3acf696d7",
+        "rev": "dd87ee5ad0b19875bfa61a785f6b9283146cfdd9",
         "type": "github"
       },
       "original": {
