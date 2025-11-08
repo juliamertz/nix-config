@@ -12,6 +12,8 @@ with lib; let
 in {
   imports = [./flood.nix];
 
+  # disabledModules = ["services/torrent/qbittorrent.nix"];
+
   options.services.qbittorrent = {
     enable = mkEnableOption (lib.mdDoc "qBittorrent headless");
 

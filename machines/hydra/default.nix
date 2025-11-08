@@ -70,7 +70,6 @@
     ./services/multimedia.nix
     ./services/home-assistant
 
-    ../../modules/containers/sponsorblock-atv.nix
     ../../modules/networking/zerotier
     ../../modules/sops.nix
     ../../modules/k3s.nix

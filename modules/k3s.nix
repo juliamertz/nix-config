@@ -60,12 +60,13 @@ in {
     };
 
     # required for longhorn distributed storage
-    environment.systemPackages = [
-      pkgs.openiscsi
-    ];
     services.openiscsi = {
       enable = true;
       name = "iqn.2025-06.com.nixos:${config.networking.hostName}";
+    };
+    systemd.services.iscsid.serviceConfig = {
+      PrivateMounts = "yes";
+      BindPaths = "/run/current-system/sw/bin:/bin";
     };
 
     services.k3s =
@@ -88,12 +89,13 @@ in {
             "--tls-san 10.100.1.1"
             "--tls-san 192.168.0.100"
             "--embedded-registry"
+            "--disable traefik"
+            "--disable local-storage"
             "--cluster-init"
             # "--flannel-backend=none"
             # "--disable-kube-proxy"
             # "--disable servicelb"
             # "--disable-network-policy"
-            # "--disable traefik"
           ]
           |> toString;
       });

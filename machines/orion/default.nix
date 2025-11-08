@@ -11,6 +11,8 @@ in {
     secrets.profile = "personal";
     users.defaultUserShell = pkgs.zsh;
 
+    networking.firewall.trustedInterfaces = ["enp4s0" "virbr0"];
+
     # open ports for development
     networking.firewall.allowedTCPPorts = [
       1111
@@ -29,6 +31,8 @@ in {
       enable = true;
       enableUnfree = true;
     };
+
+    services.tailscale.enable = true;
 
     environment.variables = {
       BROWSER = "librewolf";
