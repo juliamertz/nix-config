@@ -1,4 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+  pkgs-25_05 = import inputs.nixpkgs-25_05 {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+  };
+in {
   # Game streaming
   services.sunshine = {
     enable = false;
@@ -14,6 +23,7 @@
 
   programs.steam = {
     enable = true;
+    package = pkgs-25_05.steam;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
@@ -26,7 +36,7 @@
 
     # Game launchers
     prismlauncher
-    lutris
+    pkgs-25_05.lutris
     # inputs.suyu.packages.x86_64-linux.suyu
 
     # Misc
