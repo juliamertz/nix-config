@@ -97,7 +97,7 @@ in {
 
     ./modules/games.nix
     ./modules/cosmic.nix
-    ./modules/wireguard.nix
+    # ./modules/wireguard.nix
 
     # ../../modules/networking/zerotier
     ../../modules/k3s.nix
