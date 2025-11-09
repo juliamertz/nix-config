@@ -3,9 +3,12 @@
   settings,
   dotfiles,
   helpers,
+inputs,
   ...
 }: {
   imports = [
+    inputs.rift.darwinModules.rift
+
     ./hardware.nix
     ./work.nix
 
@@ -17,6 +20,10 @@
     ../../modules/apps/shell/zsh.nix
     ../../modules/virtualisation/linux-builder.nix
   ];
+
+  services.rift = {
+    enable = true;
+  };
 
   home-manager.users.julia.imports = [../../home/julia/browser/firefox.nix];
 
