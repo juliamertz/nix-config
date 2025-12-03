@@ -51,8 +51,6 @@
         home-manager.follows = "home-manager";
       };
     };
-
-    rift.url = "path:/Users/julia/projects/2025/rift";
   };
 
   outputs = {
