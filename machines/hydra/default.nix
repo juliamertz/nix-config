@@ -24,13 +24,6 @@
         lazygit
       ]);
 
-    k3s = {
-      enable = true;
-      openFirewall = true;
-      role = "server";
-      sopsFile = ../../secrets/cluster.yaml;
-    };
-
     systemd.tmpfiles.rules = [
       "d /exports          0755 nobody nogroup"
       "d /exports/jellyfin 0755 nobody nogroup"
@@ -70,13 +63,10 @@
     ./services/forgejo.nix
     ./services/samba.nix
     ./services/qbittorrent.nix
-    ./services/wireguard.nix
     ./services/multimedia.nix
-    # ./services/home-assistant
+    ./services/home-assistant
 
-    ../../modules/networking/zerotier
     ../../modules/sops.nix
-    ../../modules/k3s.nix
     ../../modules/apps/shell/zsh.nix
   ];
 }
