@@ -5,7 +5,7 @@
       name = "nixpkgs-pavucontrol-5.0";
       url = "https://github.com/nixos/nixpkgs/archive/b60793b86201040d9dee019a05089a9150d08b5b.tar.gz";
       sha256 = "sha256:1g1j4fg5jmd92dxzjzrbb8f63qkwqxgr8z339cxjzz2pfg4zyliy";
-    }) {system = pkgs.system;}
+    }) {system = pkgs.stdenv.hostPlatform.system;}
   );
 in {
   environment.systemPackages = with pinned; [pavucontrol];

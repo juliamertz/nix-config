@@ -5,7 +5,7 @@
   helpers,
   ...
 }: let
-  firefoxAddons = inputs.nur.packages.${pkgs.system}.firefoxAddons;
+  firefoxAddons = inputs.nur.packages.${pkgs.stdenv.hostPlatform.system}.firefoxAddons;
   profile = import ./profile.nix {inherit pkgs firefoxAddons;};
 in
   {

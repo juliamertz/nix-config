@@ -10,7 +10,7 @@
     repo = "juliamertz/theme.park";
     rev = "0f99c377e6a41dd90c12e007eacbae18a36c5286";
   in
-    (builtins.getFlake "github:${repo}/${rev}?dir=nix").packages.${pkgs.system}.default;
+    (builtins.getFlake "github:${repo}/${rev}?dir=nix").packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   options.services.theme-park = with lib; {
     enable = mkEnableOption (mkDoc "theme.park");

@@ -43,7 +43,7 @@
     };
 
     appearance.theme = let
-      rose-pine = inputs.rose-pine-cosmic.packages.${pkgs.system}.default;
+      rose-pine = inputs.rose-pine-cosmic.packages.${pkgs.stdenv.hostPlatform.system}.default;
       readTheme = variant: let
         content = builtins.readFile "${rose-pine}/${variant}/cosmic-settings.ron";
         theme = ron.from content;

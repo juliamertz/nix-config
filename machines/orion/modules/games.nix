@@ -4,7 +4,7 @@
   ...
 }: let
   pkgs-25_05 = import inputs.nixpkgs-25_05 {
-    inherit (pkgs) system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
 in {

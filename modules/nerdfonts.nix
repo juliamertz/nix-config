@@ -22,7 +22,7 @@ in {
         let
           revision = "5dd5da7823475972be33eaf2d8df0933896b67db";
           repo = "git+ssh://git@github.com/juliamertz/fonts.git?rev=${revision}";
-          fonts = (builtins.getFlake repo).packages.${pkgs.system};
+          fonts = (builtins.getFlake repo).packages.${pkgs.stdenv.hostPlatform.system};
         in
           with fonts; [
             berkeley-mono

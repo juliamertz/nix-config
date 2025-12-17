@@ -8,7 +8,7 @@
 
     nixpkgs.overlays = [
       (prev: final: {
-        cosmic-comp = inputs.cosmic-comp.packages.${pkgs.system}.default.overrideAttrs {
+        cosmic-comp = inputs.cosmic-comp.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
           useXWayland = true;
         };
       })

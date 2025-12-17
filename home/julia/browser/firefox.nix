@@ -3,8 +3,8 @@
   pkgs,
   ...
 }: let
-  pkgs-25_05 = import inputs.nixpkgs-25_05 {inherit (pkgs) system;};
-  firefoxAddons = inputs.nur.packages.${pkgs.system}.firefoxAddons;
+  pkgs-25_05 = import inputs.nixpkgs-25_05 {inherit (pkgs.stdenv.hostPlatform) system;};
+  firefoxAddons = inputs.nur.packages.${pkgs.stdenv.hostPlatform.system}.firefoxAddons;
   profile = import ./profile.nix {inherit pkgs firefoxAddons;};
 in {
   programs.firefox = {

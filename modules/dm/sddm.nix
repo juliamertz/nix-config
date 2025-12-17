@@ -5,7 +5,7 @@
   ...
 }: {
   environment.systemPackages = [
-    inputs.nur.packages.${pkgs.system}.sddm-rose-pine
+    inputs.nur.packages.${pkgs.stdenv.hostPlatform.system}.sddm-rose-pine
   ];
 
   services.displayManager = {

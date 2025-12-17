@@ -5,7 +5,7 @@
   settings,
   ...
 }: let
-  nurPackages = inputs.nur.packages.${pkgs.system};
+  nurPackages = inputs.nur.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   config = {
     secrets.profile = "personal";
