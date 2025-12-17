@@ -41,6 +41,8 @@ in {
 
     # Misc
     mangohud
+    gamescope
+    gamemode
     discord
   ];
 }
