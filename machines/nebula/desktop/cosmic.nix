@@ -14,7 +14,7 @@
   home-manager.users.nixos = {
     imports = [
       inputs.cosmic-manager.homeManagerModules.cosmic-manager
-      ../../home/julia/cosmic.nix
+      ../../../home/julia/cosmic.nix
     ];
   };
 

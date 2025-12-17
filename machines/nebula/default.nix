@@ -7,8 +7,7 @@
   imports = [
     ./base/calamares.nix
     ./desktop/cosmic.nix
-
-    ../modules/nerdfonts.nix
+    ../../modules/nerdfonts.nix
   ];
 
   environment.systemPackages = [

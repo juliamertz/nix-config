@@ -25,6 +25,7 @@
     };
 
     # Misc
+    systems.url = "github:nix-systems/default";
     dotfiles.url = "github:juliamertz/dotfiles";
     nur.url = "github:juliamertz/nur";
 
@@ -56,7 +57,7 @@
   outputs = {
     nixpkgs-unstable,
     nix-darwin,
-    nur,
+    systems,
     ...
   } @ inputs: let
     userSettings = {
@@ -146,7 +147,7 @@
       };
     };
 
-    devShells = nur.lib.allSystems (
+    devShells = nixpkgs-unstable.lib.genAttrs (import systems) (
       system: let
         pkgs = nixpkgs-unstable.legacyPackages.${system};
       in {

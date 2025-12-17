@@ -4,11 +4,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    # Calamares for graphical installation
-    libsForQt5.kpmcore
     calamares-nixos
     calamares-nixos-extensions
-    # Get list of locales
     glibcLocales
   ];
 
