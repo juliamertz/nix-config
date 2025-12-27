@@ -52,6 +52,7 @@ in {
         w3m
         weechat
         zathura
+        spotify
       ])
       ++ (with nurPackages; [
         nixpins
