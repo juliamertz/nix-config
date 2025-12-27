@@ -10,7 +10,6 @@
     vendorId
     productId
     ;
-
   id = "${vendorId}:${productId}";
 in {
   options.hardware.wheel.g920 = with lib; {
@@ -30,11 +29,11 @@ in {
 
     services.udev = {
       packages = with pkgs; [oversteer];
-      extraRules = lib.concatStringsSep ", " [
-        "ATTR{idVendor}=='${vendorId}'"
-        "ATTR{idProduct}=='${productId}'"
-        ''RUN+="${pkgs.usb-modeswitch} -c '/etc/usb_modeswitch.d/${id}'"''
-      ];
+      extraRules = ''
+        ATTR{idVendor}=="${vendorId}", \
+        ATTR{idProduct}=="${productId}", \
+        RUN+="${lib.getExe pkgs.usb-modeswitch} -c /etc/usb_modeswitch.d/${id}"
+      '';
     };
 
     environment.etc."usb_modeswitch.d/${id}".text = ''
