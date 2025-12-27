@@ -90,6 +90,8 @@ in {
         ../../home/julia/git.nix
       ];
     };
+
+    hardware.wheel.g920.enable = true;
   };
 
   imports = [
@@ -97,6 +99,7 @@ in {
 
     ./modules/games.nix
     ./modules/cosmic.nix
+    ../../modules/hardware/g920.nix
     # ./modules/wireguard.nix
 
     # ../../modules/networking/zerotier
