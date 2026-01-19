@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   dotfiles,
-  settings,
   ...
 }: let
   nurPackages = inputs.nur.packages.${pkgs.stdenv.hostPlatform.system};
@@ -18,11 +17,6 @@ in {
       1111
       1112
     ];
-
-    networking.hosts = {
-      "10.100.0.1" = ["gatekeeper"];
-      "10.100.0.2" = ["main"];
-    };
 
     services.rpcbind.enable = true;
     boot.supportedFilesystems = ["nfs"];
