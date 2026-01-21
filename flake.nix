@@ -41,6 +41,10 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    comin = {
+      url = "github:nlewo/comin";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     rose-pine-cosmic.url = "github:rose-pine/cosmic-desktop";
     protonvpn-rs.url = "github:juliamertz/protonvpn-rs/dev?dir=nix";

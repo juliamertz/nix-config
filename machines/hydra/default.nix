@@ -66,6 +66,7 @@
     ./services/multimedia.nix
     ./services/home-assistant
 
+    ../../modules/comin.nix
     ../../modules/sops.nix
     ../../modules/apps/shell/zsh.nix
   ];
