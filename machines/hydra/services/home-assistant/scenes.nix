@@ -63,11 +63,10 @@
 in
   with colors; [
     (mkUniformLightScene "Daylight" lights {
-      color = temperature 3750;
+      color = temperature 3000;
     })
     (mkUniformLightScene "Warm" lights {
       color = temperature 2000;
-      brightness = 230;
     })
     (mkLightScene "Soho" {
       bed.color = rgb 255 101 99;
