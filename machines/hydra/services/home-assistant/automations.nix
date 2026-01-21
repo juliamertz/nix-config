@@ -7,7 +7,7 @@
 in {
   services.home-assistant = {
     config.input_datetime = {
-      only_time = {
+      wakeup_time = {
         name = "wakeup_time";
         has_date = false;
         has_time = true;
