@@ -24,7 +24,7 @@ in {
     extraComponents = [
       "default_config"
       "isal" # faster alternative to zlib compression
-      "accuweather" # weather provider
+      "open_meteo" # weather provider
       "hue"
     ];
 
