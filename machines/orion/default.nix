@@ -120,6 +120,7 @@ in {
     ../../modules/virtualisation/virtmanager.nix
     ../../modules/apps/thunar.nix
     # ../../modules/apps/ollama.nix
+    ../../modules/comin.nix
 
     inputs.stylix.nixosModules.stylix
   ];
