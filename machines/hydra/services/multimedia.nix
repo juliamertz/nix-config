@@ -4,7 +4,6 @@
   settings,
   ...
 }: let
-  cfg = config.jellyfin;
   # specific version where radarr/sonarr/jackett don't have weird dotnet requirements.
   pkgs =
     import
@@ -17,21 +16,20 @@
       system = settings.system.platform;
     };
 in {
-  imports = [../../../modules/containers/jellyfin.nix];
-
   config = {
-    jellyfin = let
-      user = settings.user.home;
-    in {
-      configDir = "${user}/jellyfin";
-      volumes = [
-        "/home/media/shows:/shows"
-        "/home/media/movies:/movies"
-        "/home/media/music:/music"
-      ];
+    users.groups.multimedia = {};
+    users.users."${settings.user.username}".extraGroups = ["multimedia"];
+
+    systemd.tmpfiles.rules = ["d /home/media 0770 - multimedia - -"];
+
+    services.jellyfin = {
+      enable = true;
+      configDir = "/home/media/jellyfin";
+      openFirewall = true;
+      group = "multimedia";
     };
 
-    nixpkgs.config = lib.mkIf cfg.enableTorrent {
+    nixpkgs.config = {
       packageOverrides = _: {
         inherit
           (pkgs)
@@ -44,24 +42,24 @@ in {
     };
 
     services.jellyseerr = {
-      enable = cfg.enableTorrent;
+      enable = true;
       openFirewall = true;
       port = 5055;
     };
     services.radarr = {
-      enable = cfg.enableTorrent;
+      enable = true;
       openFirewall = true;
       group = "multimedia";
       port = 7878;
     };
     services.sonarr = {
-      enable = cfg.enableTorrent;
+      enable = true;
       openFirewall = true;
       group = "multimedia";
       port = 8989;
     };
     services.jackett = {
-      enable = cfg.enableTorrent;
+      enable = true;
       openFirewall = true;
       group = "multimedia";
       port = 9117;
@@ -70,7 +68,7 @@ in {
     reverse-proxy.services = {
       jellyfin = {
         subdomain = "jellyfin";
-        port = config.jellyfin.port;
+        port = 8096;
       };
       jellyseerr = {
         subdomain = "jellyseerr";
