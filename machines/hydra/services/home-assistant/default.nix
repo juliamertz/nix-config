@@ -55,6 +55,15 @@ in {
         ];
       };
 
+      auth_oidc = {
+        client_id = "home-assistant";
+        # TODO: provision this secret with sops to /var/lib/hass/secrets.yaml
+        client_secret = "!secret oidc_client_secret";
+        discovery_url = "https://auth.juliamertz.dev/.well-known/openid-configuration";
+        display_name = "Authelia";
+        roles = {admin = "home-assistant-admins";};
+      };
+
       scene = include ./scenes.nix;
     };
 
