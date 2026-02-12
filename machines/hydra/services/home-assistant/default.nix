@@ -62,6 +62,7 @@ in {
         discovery_url = "https://auth.juliamertz.dev/.well-known/openid-configuration";
         display_name = "Authelia";
         roles = {admin = "home-assistant-admins";};
+        features.force_https = true;
       };
 
       scene = include ./scenes.nix;
