@@ -30,6 +30,7 @@ in {
 
     customComponents = with custom-components; [
       localtuya
+      auth_oidc
     ];
 
     config = {
