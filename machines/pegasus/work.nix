@@ -14,11 +14,11 @@ in {
     kubectl-cnpg
     pkgs-24_11.kubelogin
     (aptakube.overrideAttrs (let
-      version = "1.14.0";
+      version = "1.14.2";
     in {
       src = fetchurl {
         url = "https://github.com/aptakube/aptakube/releases/download/${version}/Aptakube_${version}_universal.dmg";
-        sha256 = "sha256-WHnYwD4dMhjFEICJbuW8b6G0cENxOPgwdm9cTmS7RYc=";
+        sha256 = "sha256-H9zZt+TziwdId4Vl9x2rFxgMWwMgr7IaWWf1ZyNSD7U=";
       };
     }))
   ];
