@@ -10,7 +10,7 @@
 in {
   # Game streaming
   services.sunshine = {
-    enable = false;
+    enable = true;
     openFirewall = true;
     autoStart = true;
     capSysAdmin = true; # enable for wayland
@@ -23,7 +23,6 @@ in {
 
   programs.steam = {
     enable = true;
-    package = pkgs-25_05.steam;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };

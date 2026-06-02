@@ -109,6 +109,7 @@ in {
     # desktop environment
     ../../modules/wm/awesome
     ../../modules/dm/sddm.nix
+    # ../../modules/dm/lemurs
     ../../modules/wm/hyprland
     ../../modules/io/keyd.nix
     ../../modules/themes/rose-pine
