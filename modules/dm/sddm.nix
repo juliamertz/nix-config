@@ -8,13 +8,10 @@
 in {
   environment.systemPackages = [sddm-rose-pine];
 
-  services.displayManager = {
-    defaultSession = "none+awesome";
-    sddm = {
-      enable = true;
-      theme = "rose-pine";
-      extraPackages = [sddm-rose-pine];
-    };
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "rose-pine";
+    extraPackages = [sddm-rose-pine];
   };
 
   services.xserver.displayManager.setupCommands =

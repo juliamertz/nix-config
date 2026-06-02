@@ -6,6 +6,9 @@ in {
   stylix.polarity = "dark";
   stylix.base16Scheme = colors.moon;
 
+  # uses deprecated nixos options (i don't use this anyway)
+  stylix.targets.kmscon.enable = false;
+
   home.config.stylix.targets.gtk.enable = false;
 
   environment.systemPackages = with pkgs; [

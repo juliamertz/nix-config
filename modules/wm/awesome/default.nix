@@ -38,6 +38,8 @@
     };
   };
 
+  services.displayManager.defaultSession = "none+awesome";
+
   environment.systemPackages = with pkgs; [
     rofi
     pamixer
