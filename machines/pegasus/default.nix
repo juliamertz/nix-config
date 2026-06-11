@@ -55,7 +55,7 @@
 
   nerdfonts = {
     enable = true;
-    enableUnfree = true;
+    enableUnfree = false;
   };
 
   sops.secrets = helpers.ownedSecrets settings.user.username [
