@@ -5,16 +5,11 @@
 FLAKE=${FLAKE:-.}
 KERNEL=$(uname -s)
 OUTPUT="$FLAKE#$1"
-
-export NIX_CONFIG="
-  extra-experimental-features = nix-command flakes pipe-operators
-  extra-substituters = https://juliamertz.cachix.org
-  trusted-users = root $(whoami)
-"
+FEATURES="nix-command flakes pipe-operators"
 
 if test "$KERNEL" = "Linux"; then
-  sudo nixos-rebuild switch --flake "$OUTPUT"
-
+  sudo NIX_CONFIG="extra-experimental-features = $FEATURES" nixos-rebuild switch --flake "$OUTPUT"
 elif test "$KERNEL" = "Darwin"; then
-  nix run nix-darwin -- switch  --flake "$OUTPUT"
+  sudo NIX_CONFIG="extra-experimental-features = $FEATURES" nix \
+       run nix-darwin -- switch --flake "$OUTPUT"
 fi
