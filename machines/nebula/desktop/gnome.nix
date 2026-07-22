@@ -24,7 +24,7 @@
       |> lib.concatStringsSep ", ";
   in {
     enable = true;
-    favoriteAppsOverride = ''
+    extraGSettingsOverrides = ''
       [org.gnome.shell]
       favorite-apps=[ ${favoriteApps} ] '';
   };

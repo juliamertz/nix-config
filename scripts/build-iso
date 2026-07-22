@@ -4,5 +4,5 @@ FLAKE=$(dirname "$0/../")
 
 nix run nixpkgs#nixos-generators -- \
   --format iso \
-  --flake .#installerIso \
+  --flake .#nebula \
   -o result

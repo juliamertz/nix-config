@@ -6,7 +6,7 @@
 }: {
   imports = [
     ./base/calamares.nix
-    ./desktop/cosmic.nix
+    ./desktop/gnome.nix
     ../../modules/nerdfonts.nix
   ];
 
