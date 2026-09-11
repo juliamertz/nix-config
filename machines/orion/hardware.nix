@@ -59,7 +59,10 @@
     ];
   };
 
-  swapDevices = [];
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024;
+  }];
 
   # Nvidia GPU
   environment.systemPackages = with pkgs; [
