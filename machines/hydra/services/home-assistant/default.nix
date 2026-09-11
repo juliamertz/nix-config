@@ -17,6 +17,7 @@
 
   include = path: pkgs.callPackage path {inherit lights;};
 in {
+  networking.firewall.allowedTCPPorts = [8123];
   services.home-assistant = {
     enable = true;
 
