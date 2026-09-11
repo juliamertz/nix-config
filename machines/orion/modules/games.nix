@@ -42,6 +42,5 @@ in {
     mangohud
     gamescope
     gamemode
-    discord
   ];
 }
