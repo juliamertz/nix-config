@@ -7,7 +7,7 @@
       # Network shares
       samba = {
         package = pkgs.samba4Full;
-        enable = true;
+        enable = false;
         openFirewall = true;
 
         # extraConfig = ''
@@ -27,11 +27,11 @@
         publish.enable = true;
         publish.userServices = true;
         nssmdns4 = true;
-        enable = true;
+        enable = false;
         openFirewall = true;
       };
       samba-wsdd = {
-        enable = true;
+        enable = false;
         openFirewall = true;
       };
     };
