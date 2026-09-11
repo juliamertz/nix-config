@@ -19,7 +19,6 @@
 in {
   services.home-assistant = {
     enable = true;
-    openFirewall = true;
 
     extraComponents = [
       "default_config"
@@ -85,7 +84,7 @@ in {
 
   reverse-proxy.services.home-assistant = {
     subdomain = "hass";
-    port = config.services.home-assistant.port;
+    port = 8123;
   };
 
   imports = [
